@@ -1,0 +1,8 @@
+{
+    "name": "The Tedious App",
+    "short_name": "Tedious",
+    "description": "An application for finding freelancing in South Africa.",
+    "background": "#0f172a",
+    "display": "standalone",
+    "theme_color": "#0f172a"
+}
