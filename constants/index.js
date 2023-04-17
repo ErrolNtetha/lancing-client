@@ -1,0 +1,5 @@
+const ACTION = {
+    USERNAME: 'USERNAME',
+    PASSWORD: 'PASSWORD',
+    HIDE: 'HIDE'
+};
