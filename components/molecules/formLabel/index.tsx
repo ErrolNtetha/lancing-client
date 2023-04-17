@@ -12,9 +12,10 @@ interface IProps extends InputProps {
     type: string;
     handleHideIcon?: React.MouseEventHandler<HTMLSpanElement>;
     hasHideIcon?: boolean;
+    isHidden?: boolean;
 }
 
-export const FormLabel = ({ onChange, handleHideIcon, type, value, name, placeholder, htmlFor, hasHideIcon, labelName  }: IProps) => {
+export const FormLabel = ({ onChange, handleHideIcon, isHidden, type, value, name, placeholder, htmlFor, hasHideIcon, labelName  }: IProps) => {
     return (
         <section className='py-2'>
             <Label htmlFor={htmlFor} labelName={labelName}
@@ -27,6 +28,7 @@ export const FormLabel = ({ onChange, handleHideIcon, type, value, name, placeho
                 hasHideIcon={hasHideIcon}
                 onChange={onChange}
                 placeholder={placeholder}
+                isHidden={isHidden}
             />
         </section>
     );

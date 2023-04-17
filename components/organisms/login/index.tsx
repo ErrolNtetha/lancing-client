@@ -9,6 +9,8 @@ const reducer = (state: any, action: any) => {
             return { ...state, username: action.payload } 
         case 'PASSWORD':
             return { ...state, password: action.payload } 
+        case 'HIDE':
+            return { ...state, hidden: !state.hidden } 
 
         default:
          new Error();
@@ -17,18 +19,18 @@ const reducer = (state: any, action: any) => {
 
 const ACTION = {
     USERNAME: 'USERNAME',
-    PASSWORD: 'PASSWORD'
+    PASSWORD: 'PASSWORD',
+    HIDE: 'HIDE'
 };
 
 export const LoginForm = () => {
-    const [hidden, setHidden] = useState(true);
     const [state, dispatch] = useReducer(reducer, {
         username: '',
         password: '',
+        hidden: false
     });
 
     const submitHandler = () => {
-        console.log('submit: ', state);
         dispatch({ type: ACTION.USERNAME, payload: '' });
         dispatch({ type: ACTION.PASSWORD, payload: '' });
     }
@@ -48,7 +50,7 @@ export const LoginForm = () => {
                         name='username'
                     />
                     <FormLabel
-                        type={hidden ? 'password' : 'text'}
+                        type={state.hidden ? 'password' : 'text'}
                         onChange={(e) => dispatch({ type: ACTION.PASSWORD, payload: e.target.value })}
                         placeholder='Enter password'
                         value={state.password}
@@ -56,7 +58,8 @@ export const LoginForm = () => {
                         labelName='Password'
                         name='password'
                         hasHideIcon={true}
-                        handleHideIcon={() => setHidden(!hidden)}
+                        handleHideIcon={() => dispatch({ type: ACTION.HIDE })}
+                        isHidden={state.hidden}
                     />
                     <Button
                         handleClick={submitHandler} 

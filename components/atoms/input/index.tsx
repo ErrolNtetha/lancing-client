@@ -8,11 +8,12 @@ export interface InputProps {
     name: string;
     type: string;
     hasHideIcon?: boolean;
+    isHidden?: boolean;
     onChange: React.ChangeEventHandler<HTMLInputElement>
     handleHideIcon?: React.MouseEventHandler<HTMLSpanElement>;
 }
 
-export const Input = ({ value, name, type, onChange, handleHideIcon, placeholder, hasHideIcon = false }: InputProps) => {
+export const Input = ({ value, name, type, onChange, handleHideIcon, placeholder, hasHideIcon = false, isHidden }: InputProps) => {
     return (
         <section className={inputContainer}>
             <input
@@ -26,7 +27,7 @@ export const Input = ({ value, name, type, onChange, handleHideIcon, placeholder
             />
             { (hasHideIcon && value.length > 0) && 
             <span onClick={handleHideIcon} className='pl-4 hover:cursor-pointer'> 
-                Hide 
+                { isHidden ? 'Show' : 'Hide' }
             </span> 
             }
         </section>
