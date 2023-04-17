@@ -14,7 +14,8 @@ module.exports = {
         'white': '#f8fafc',
         'black': '#000',
         'indigo': '#33ff33',
-        'gray': '#cccccc'
+        'gray': '#cccccc',
+        'white-p': '#fff'
     },
     extend: {
         backgroundImage: {
