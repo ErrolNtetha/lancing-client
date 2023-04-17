@@ -6,7 +6,7 @@ import React from 'react';
 
 export const Header = () => {
     return (
-        <header className='flex justify-between text-white bg-slate py-3 px-5 md:p-5'>
+        <header className='flex justify-between text-white bg-slate h-[5vh] px-6'>
             <Image src='/images/logo.svg' alt='company logo' className='' width={80} height={20} />
             <nav className='md:flex items-center space-x-8 gap-8 peer:text-black hidden'>
                 <ul className='md:flex space-x-8 peer:text-black hidden'>
