@@ -1,19 +1,38 @@
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import { Button } from '../../atoms/button';
 import { FormLabel } from '../../molecules/formLabel';
 
+const reducer = (state: any, action: any) => {
+    switch (action.type) {
+        case 'USERNAME':
+            return { ...state, username: action.payload } 
+        case 'PASSWORD':
+            return { ...state, password: action.payload } 
+
+        default:
+         new Error();
+    };
+};
+
+const ACTION = {
+    USERNAME: 'USERNAME',
+    PASSWORD: 'PASSWORD'
+};
+
 export const LoginForm = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
     const [hidden, setHidden] = useState(true);
+    const [state, dispatch] = useReducer(reducer, {
+        username: '',
+        password: '',
+    });
 
     const submitHandler = () => {
-        console.log('submit: ', username, password);
-        setUsername('');
-        setPassword('');
+        console.log('submit: ', state);
+        dispatch({ type: ACTION.USERNAME, payload: '' });
+        dispatch({ type: ACTION.PASSWORD, payload: '' });
     }
-    
+ 
     return (
         <section className='flex justify-center items-center bg-hero-bg bg-cover h-[95vh]'>
             <section className='w-[20rem] md:w-[23rem]'>
@@ -21,18 +40,18 @@ export const LoginForm = () => {
                     <h4 className='pb-6 pt-2 text-center font-bold divide-gray'> Login To Your Account </h4>
                     <FormLabel
                         type='text'
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={(e) => dispatch({ type: ACTION.USERNAME, payload: e.target.value })}
                         placeholder='Enter username'
-                        value={username}
+                        value={state.username}
                         htmlFor='username'
                         labelName='Username'
                         name='username'
                     />
                     <FormLabel
                         type={hidden ? 'password' : 'text'}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => dispatch({ type: ACTION.PASSWORD, payload: e.target.value })}
                         placeholder='Enter password'
-                        value={password}
+                        value={state.password}
                         htmlFor='password'
                         labelName='Password'
                         name='password'
