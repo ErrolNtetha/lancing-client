@@ -1,10 +1,10 @@
 import React from 'react';
-import { RegisterForm } from '../../components/organisms/register';
+import { Registration } from '../../components/templates/register';
 
 const Register = () => {
     return (
-        <section className='bg-slate'>
-            <RegisterForm />
+        <section className='bg-slate h-[95vh]'>
+            <Registration />
         </section>
     );
 };
