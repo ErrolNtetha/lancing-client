@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-key */
+
 import Head from 'next/head';
 import React from 'react';
-import { ClientProject } from '../../organisms/project';
+import { ClientProject } from '../../organisms/client/';
 
 const users = [
     {
@@ -9,6 +11,7 @@ const users = [
             lastName: 'Ntetha'
         },
         occupation: 'Marketing Manager',
+        verifiedPayment: true,
         projectDuration: 'Ongoing',
         key: 1,
         photos: 2,
@@ -22,6 +25,7 @@ const users = [
             lastName: 'Dlamini'
         },
         occupation: 'Project Manager',
+        verifiedPayment: true,
         projectDuration: 'Ongoing',
         key: 2,
         photos: 4,
@@ -31,10 +35,11 @@ const users = [
     },
     {
         name: {
-            firstName: 'Kwanele',
-            lastName: 'Dlamini'
+            firstName: 'Njabulo',
+            lastName: 'Ndlovu'
         },
         occupation: 'Office Administrator',
+        verifiedPayment: false,
         projectDuration: 'Once-off',
         key: 3,
         photos: 2,
@@ -45,16 +50,13 @@ const users = [
 ]
 
 export const Client = () => {
+
     return (
         <section>
             <Head>
                 <title> Browse Projects and Send Proposals | Duello </title>
             </Head>
-
-            {users.map((user) => (
-                //@ts-ignore
-                <ClientProject {...user} />
-            ))}
+                {users.map((user) => <ClientProject {...user} /> )}
         </section>
     )
 }
