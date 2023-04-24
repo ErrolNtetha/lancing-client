@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { Modal } from '../modal';
+import { Proposal } from './proposal';
 
 type ClientProps = {
     name: {
@@ -64,11 +65,13 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                     <span className='border-2 border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>
                         Send Proposal
                     </span>
-                    { modal && <Modal 
-                        handleModal={handleModal} 
-                        previewText={projectDescription.slice(0, 40).concat('...')} 
-                        recipient={props.name} 
-                    /> 
+                    { modal && 
+                    <Modal>
+                        <Proposal
+                            handleModal={handleModal}
+                            recipient={props.name}
+                        />
+                    </Modal> 
                     }
                 </section>
             </section>
