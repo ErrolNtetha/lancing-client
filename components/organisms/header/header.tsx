@@ -10,7 +10,7 @@ export const Header = () => {
     const [nav, setNav] = useState(false);
 
     return (
-        <header className='flex justify-between items-center sticky text-white bg-slate h-[5vh] px-6'>
+        <header className='flex z-10 justify-between items-center sticky text-white bg-slate h-[5vh] px-6'>
             <Image src='/images/logo.svg' alt='company logo' className='' width={80} height={20} />
             <FiAlignRight onClick={() => setNav(!nav)} className='hover:cursor-pointer text-[1.8rem]' />
             {nav && (
