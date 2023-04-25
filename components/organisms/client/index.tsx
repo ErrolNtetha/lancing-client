@@ -42,7 +42,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                     <span className='flex gap-3'>
                         <Image
                             src='/assets/images/errol.png'
-                            alt='user avatar'
+                            alt={`${firstName}&apos;s avatar`}
                             width={60}
                             height={60}
                             className='rounded-full ring-1 ring-gray object-cover'
