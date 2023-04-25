@@ -72,6 +72,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                         <Proposal
                             handleModal={handleModal}
                             recipient={props.name}
+                            budget={budget}
                         />
                     </Modal> 
                     }
