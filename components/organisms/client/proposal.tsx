@@ -36,7 +36,7 @@ export const Proposal = ({ handleModal, recipient, budget }: ProposalProps) => {
 
     return (
         <section className='z-30'>
-            <section className='pt-3 z-10 px-3'>
+            <section className='pt-3 z-10 px-3 mb-6'>
                 <h3 className='font-semibold text-lg sticky top-0 bg-white-p'> Send Proposal </h3>
                 <p className='my-2'> To: <span className='font-bold'> {recipient.firstName} {recipient.lastName} </span> </p>
                 <p className='my-2'> Budget: <span className=''> R{formatNumber(budget)} </span> </p>
