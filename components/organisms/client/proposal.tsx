@@ -33,12 +33,12 @@ export const Proposal = ({ handleModal, recipient }: ProposalProps) => {
     };
 
     return (
-        <section>
-            <section className='pt-3 px-3'>
+        <section className='z-30'>
+            <section className='pt-3 z-10 px-3'>
                 <h3 className='font-semibold text-lg sticky top-0 bg-white-p'> Send Proposal </h3>
                 <p className='my-2'> To: <span className='font-bold'> {recipient.firstName} {recipient.lastName} </span> </p>
             </section>
-            <section className='pb-3 px-3'>
+            <section className='pb-3 px-3 z-10'>
                 <FormLabel
                     labelName='Subject'
                     name='subject'
