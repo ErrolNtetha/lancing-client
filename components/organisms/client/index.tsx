@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { formatNumber } from '../../../utilities/format';
 import { Modal } from '../modal';
 import { Proposal } from './proposal';
+import { MdVerifiedUser } from 'react-icons/md';
+import { FiImage } from 'react-icons/fi';
 
 type ClientProps = {
     name: {
@@ -15,6 +17,8 @@ type ClientProps = {
     createdAt: string;
     photos: number;
     budget: number;
+    avatar: string;
+    verifiedPayment: boolean;
 }
 
 export const ClientProject: React.FC<ClientProps> = (props) => {
@@ -35,6 +39,8 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
         projectDescription,
         photos,
         budget,
+        avatar,
+        verifiedPayment
     } = props;
 
     return (
@@ -43,7 +49,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                 <section className='flex items-center justify-between mb-4'>
                     <span className='flex gap-3'>
                         <Image
-                            src='/assets/images/errol.png'
+                            src={avatar}
                             alt={`${firstName}&apos;s avatar`}
                             width={60}
                             height={60}
@@ -51,7 +57,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                         />
                         <span>
                             <h2 className='text-sm md:text-lg font-semibold'>{firstName} {lastName} </h2>
-                            <p>{occupation}</p>
+                            <p className='flex items-center gap-1'> {occupation} {verifiedPayment && <MdVerifiedUser />} </p>
                             <p> {projectDuration} </p>
                         </span>
                     </span>
@@ -59,10 +65,10 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                 </section>
                 <p className='mb-4'> {projectDescription} </p>
                 <hr className='opacity-10 my-4' />
-                <section className='flex justify-between text-sm'>
-                    <span className='flex gap-2'>
-                        <span className='p-2 bg-gray hover:cursor-pointer'> {photos} photos </span>
-                        <span className='p-2 text-[.7rem]'> Budget: R{formatNumber(budget)} </span>
+                <section className='flex justify-between items-center text-sm'>
+                    <span className='flex items-center gap-2'>
+                        <span className='flex items-center gap-1 hover:cursor-pointer'> <FiImage /> {photos} photos </span>|
+                        <span className='py-2 text-[.7rem]'> Budget: R{formatNumber(budget)} </span>
                     </span>
                     <span className='border-2 border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>
                         Send Proposal
