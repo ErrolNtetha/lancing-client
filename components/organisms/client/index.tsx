@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { formatNumber } from '../../../utilities/format';
 import { Modal } from '../modal';
 import { Proposal } from './proposal';
 
@@ -35,6 +36,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
         photos,
         budget,
     } = props;
+
     return (
         <section className='text-black text-[.8rem] md:text-sm mb-3 border border-gray bg-white shadow-md w-full md:w-[35rem] max-h-max p-4'>
             <section>
@@ -60,7 +62,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                 <section className='flex justify-between text-sm'>
                     <span className='flex gap-2'>
                         <span className='p-2 bg-gray hover:cursor-pointer'> {photos} photos </span>
-                        <span className='p-2 text-[.7rem]'> Budget: R{budget} </span>
+                        <span className='p-2 text-[.7rem]'> Budget: R{formatNumber(budget)} </span>
                     </span>
                     <span className='border-2 border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>
                         Send Proposal
