@@ -1,10 +1,12 @@
 import React, { useReducer } from 'react';
+import { formatNumber } from '../../../utilities/format';
 import { Button } from '../../atoms/button';
 import { FormLabel } from '../../molecules/formLabel';
 import { Textarea } from '../../molecules/textArea';
 
 type ProposalProps = {
     handleModal: React.MouseEventHandler<HTMLElement>;
+    budget: number;
     recipient: {
         firstName: string;
         lastName: string;
@@ -20,7 +22,7 @@ const reducer = (state, action) => {
     }
 };
 
-export const Proposal = ({ handleModal, recipient }: ProposalProps) => {
+export const Proposal = ({ handleModal, recipient, budget }: ProposalProps) => {
     const [state, dispatch] = useReducer(reducer, {
         subject: '',
         description: ''
@@ -37,6 +39,7 @@ export const Proposal = ({ handleModal, recipient }: ProposalProps) => {
             <section className='pt-3 z-10 px-3'>
                 <h3 className='font-semibold text-lg sticky top-0 bg-white-p'> Send Proposal </h3>
                 <p className='my-2'> To: <span className='font-bold'> {recipient.firstName} {recipient.lastName} </span> </p>
+                <p className='my-2'> Budget: <span className=''> R{formatNumber(budget)} </span> </p>
             </section>
             <section className='pb-3 px-3 z-10'>
                 <FormLabel
