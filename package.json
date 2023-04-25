@@ -10,11 +10,21 @@
   },
   "dependencies": {
     "@next/font": "^13.1.5",
+    "d3-format": "^3.1.0",
+    "date-fns": "^2.29.3",
+    "firebase": "^9.20.0",
     "next": "12.3.1",
+    "next-auth": "^4.22.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.9",
+    "react-icons": "^4.8.0",
+    "uuid": "^9.0.0",
+    "zod": "^3.21.4",
+    "zustand": "^4.3.7"
   },
   "devDependencies": {
+    "@testing-library/react": "^14.0.0",
     "@types/node": "18.8.3",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
