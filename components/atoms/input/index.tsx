@@ -6,7 +6,7 @@ const inputContainer = 'flex items-center justify-between p-2 bg-white-p border 
 export interface InputProps {
     placeholder: string;
     name: string;
-    type: string;
+    type?: string;
     hasHideIcon?: boolean;
     isHidden?: boolean;
     handleHideIcon?: React.MouseEventHandler<HTMLSpanElement>;
