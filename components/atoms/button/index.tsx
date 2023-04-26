@@ -3,7 +3,7 @@ import React from 'react';
 interface ButtonProps {
     handleClick: React.MouseEventHandler<HTMLButtonElement>;
     className: string;
-    buttonText: string;
+    buttonText: string | React.ReactNode;
 }
 
 export const Button = ({ handleClick, className, buttonText }: ButtonProps) => (
