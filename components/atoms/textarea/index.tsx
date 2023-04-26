@@ -2,15 +2,14 @@ import React from 'react';
 
 const inputContainer = 'flex items-center justify-between p-2 bg-white-p border border-gray outline-black w-full block';
 
-export interface InputProps {
-    value: string;
+export interface TextareaProps {
     placeholder: string;
     name: string;
-    type: string;
-    onChange: React.ChangeEventHandler<HTMLTextAreaElement>
+    required: boolean;
+    register: Function;
 }
 
-export const TextareaInput = ({ value, name, onChange, placeholder }: InputProps) => {
+export const TextareaInput = ({ required, name, register, placeholder }: TextareaProps) => {
     return (
         <section className={inputContainer}>
             <textarea
@@ -21,8 +20,7 @@ export const TextareaInput = ({ value, name, onChange, placeholder }: InputProps
                 placeholder={placeholder}
                 autoComplete='off'
                 className='outline-none w-full'
-                value={value}
-                onChange={onChange}
+                {...register(name, { required })}
             />
         </section>
     );

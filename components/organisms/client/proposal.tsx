@@ -1,8 +1,9 @@
-import React, { useReducer } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { formatNumber } from '../../../utilities/format';
 import { Button } from '../../atoms/button';
 import { FormLabel } from '../../molecules/formLabel';
-import { Textarea } from '../../molecules/textArea';
+import { TextareaLabel } from '../../molecules/textArea';
 
 type ProposalProps = {
     handleModal: React.MouseEventHandler<HTMLElement>;
@@ -13,29 +14,15 @@ type ProposalProps = {
     };
 }
 
-const reducer = (state, action) => {
-    switch(action.type) {
-        case 'SUBJECT':
-         return { ...state, subject: action.payload }
-        case 'DESCRIPTION':
-         return { ...state, description: action.payload }
-    }
-};
-
 export const Proposal = ({ handleModal, recipient, budget }: ProposalProps) => {
-    const [state, dispatch] = useReducer(reducer, {
-        subject: '',
-        description: ''
-    });
+    const { register, handleSubmit } = useForm();
 
-    const handleProposalSubmit = () => {
-        dispatch({ type: 'SUBJECT', payload: '' });
-        dispatch({ type: 'DESCRIPTION', payload: '' });
-        console.log(state);
+    const handleProposalSubmit = (data: any) => {
+        console.log('Form data: ', data);
     };
 
     return (
-        <section className='z-30'>
+        <form onSubmit={handleSubmit(handleProposalSubmit)} className='z-30'>
             <section className='pt-3 z-10 px-3 mb-6'>
                 <h3 className='font-semibold text-lg sticky top-0 bg-white-p'> Send Proposal </h3>
                 <p className='my-2'> To: <span className='font-bold'> {recipient.firstName} {recipient.lastName} </span> </p>
@@ -44,20 +31,18 @@ export const Proposal = ({ handleModal, recipient, budget }: ProposalProps) => {
             <section className='pb-3 px-3 z-10'>
                 <FormLabel
                     labelName='Subject'
-                    name='subject'
                     type='text'
                     placeholder='Type a subject'
-                    htmlFor='subject'
-                    value={state.subject}
-                    onChange={(e) => dispatch({ type: 'SUBJECT', payload: e.target.value })}
+                    name='subject'
+                    register={register}
+                    required={true}
                 />
-                <Textarea
+                <TextareaLabel
                     placeholder='Type proposal message'
-                    value={state.description}
                     labelName='Description'
-                    htmlFor='description'
                     name='description'
-                    onChange={(e) => dispatch({ type: 'DESCRIPTION', payload: e.target.value })}
+                    required={true}
+                    register={register}
                 />
             </section>
             <section className='flex bg-white-p items-center gap-2 p-3 sticky bottom-0 left-0 w-full'>
@@ -72,6 +57,6 @@ export const Proposal = ({ handleModal, recipient, budget }: ProposalProps) => {
                     handleClick={handleProposalSubmit}
                 />
             </section>
-        </section>
+        </form>
     );
 };
