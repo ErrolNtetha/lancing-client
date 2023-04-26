@@ -44,7 +44,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
     } = props;
 
     return (
-        <section className='text-black text-[.8rem] md:text-sm mb-3 border border-gray bg-white shadow-md w-full md:w-[35rem] max-h-max p-4'>
+        <section className='text-black text-[.8rem] md:text-sm my-3 border border-gray bg-white shadow-md w-full md:w-[35rem] max-h-max p-2'>
             <section>
                 <section className='flex items-center justify-between mb-4'>
                     <span className='flex gap-3'>
@@ -63,8 +63,8 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                     </span>
                     <span className='self-start'> {createdAt} </span>
                 </section>
-                <p className='mb-4'> {projectDescription} </p>
-                <hr className='opacity-10 my-4' />
+                <p className='mb-2'> {projectDescription} </p>
+                <hr className='opacity-10 my-2' />
                 <section className='flex justify-between items-center text-sm'>
                     <span className='flex items-center gap-2'>
                         <span className='flex items-center gap-1 hover:cursor-pointer'> <FiImage /> {photos} photos </span>|
