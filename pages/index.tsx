@@ -10,7 +10,7 @@ const Home: NextPage = () => {
   return (
     <div>
       <Head>
-        <title> Join The Newsletter for Freelancers in South Africa </title>
+        <title> Join The Newsletter for Freelancers in South Africa | Duello </title>
         <meta name="description" content="Find freelancers all over South Africa!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

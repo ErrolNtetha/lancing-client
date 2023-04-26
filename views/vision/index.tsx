@@ -3,7 +3,7 @@ import React from 'react';
 
 export const OurVision = () => {
     return (
-        <section id='our-vision' className='flex items-center justify-center bg-vision-bg bg-cover h-screen'>
+        <section className='flex items-center justify-center bg-vision-bg bg-cover h-[100vh]'>
             <section className='md:flex items-center justify-center'>
                 <aside className='text-black max-w-30 m-8'>
                     <h4 className='text-sm md:text-lg font-bold opacity-30'> Our Vision </h4>
