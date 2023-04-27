@@ -4,16 +4,16 @@ import { useProfileStore } from '../../../hooks/useGlobalStore';
 import { Client } from '../../organisms/client/';
 
 export const ClientUI = () => {
-    const role = useProfileStore((state) => state?.profile?.role);
-    const render = role === 'client' ? <Client /> : 'Vendor';
+    const isClient = useProfileStore((state) => state.profile?.isClient);
+    const render = isClient ? 'Vendor UI' : <Client />;
 
     return (
-        <section>
+        <>
             <Head>
                 <title> Feed | Duello </title>
             </Head>
 
             {render}
-        </section>
-    )
-}
+        </>
+    );
+};
