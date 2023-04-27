@@ -14,5 +14,5 @@ const myProfile: Profile = {
 
 export const useProfileStore = create((set) => ({
     profile: {...myProfile},
-    switchProfile: (user: Profile) => set(() => ({ profile: user })),
+    addProfile: (user: Profile) => set(() => ({ profile: user })),
 }));
