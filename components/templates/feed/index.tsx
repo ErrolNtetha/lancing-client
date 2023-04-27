@@ -5,7 +5,7 @@ import { Client } from '../../organisms/client/';
 
 export const ClientUI = () => {
     const isClient = useProfileStore((state) => state.profile?.isClient);
-    const render = isClient ? 'Vendor UI' : <Client />;
+    const renderUI = isClient ? 'Vendor UI' : <Client />;
 
     return (
         <>
@@ -13,7 +13,7 @@ export const ClientUI = () => {
                 <title> Feed | Duello </title>
             </Head>
 
-            {render}
+            {renderUI}
         </>
     );
 };
