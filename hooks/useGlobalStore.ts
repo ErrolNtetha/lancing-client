@@ -3,13 +3,13 @@ import { create } from 'zustand';
 type Profile = {
     firstName: string;
     lastName: string;
-    role: 'client' | 'vendor';
+    isClient: boolean;
 };
 
 const myProfile: Profile = {
         firstName: 'Mphumeleli Errol',
         lastName: 'Ntetha',
-        role: 'client'
+        isClient: false
     }
 
 export const useProfileStore = create((set) => ({
