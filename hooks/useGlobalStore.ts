@@ -9,7 +9,7 @@ type Profile = {
 const myProfile: Profile = {
         firstName: 'Mphumeleli Errol',
         lastName: 'Ntetha',
-        isClient: false
+        isClient: true
     }
 
 export const useProfileStore = create((set) => ({
