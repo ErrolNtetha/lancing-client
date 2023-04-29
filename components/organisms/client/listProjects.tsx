@@ -4,7 +4,7 @@ import Head from 'next/head';
 import React from 'react';
 import { ClientProject } from './clientProject';
 
-const users = [
+const clients = [
     {
         name: {
             firstName: 'Mphumeleli',
@@ -59,7 +59,7 @@ export const ListProjects = () => {
             <Head>
                 <title> Browse Projects and Send Proposals | Duello </title>
             </Head>
-                {users.map((user) => <ClientProject {...user} /> )}
+                {clients.map((client) => <ClientProject {...client} /> )}
         </section>
     )
 }
