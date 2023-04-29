@@ -1,14 +1,20 @@
 import { create } from 'zustand';
 
 type Profile = {
-    firstName: string;
-    lastName: string;
+    avatar: string;
+    name: {
+        firstName: string;
+        lastName: string;
+    },
     isClient: boolean;
 };
 
 const myProfile: Profile = {
-        firstName: 'Mphumeleli Errol',
-        lastName: 'Ntetha',
+        avatar: '/assets/images/errol.png',
+        name: {
+            firstName: 'Mphumeleli Errol',
+            lastName: 'Ntetha',
+        },
         isClient: true
     }
 
