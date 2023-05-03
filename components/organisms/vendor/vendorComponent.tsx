@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { FiSend, FiStar } from 'react-icons/fi';
 import { Modal } from '../modal';
 import { EnquiryModal } from './enquiryModal';
+import { PortfolioModal } from './portfolioModal';
 
 type VendorProps = {
     recipient: {
@@ -23,6 +24,7 @@ export const VendorComponent = ({
     pitchText
 }: VendorProps) => {
     const [modal, setModal] = useState(false);
+    const [viewPortfolio, setViewPortfolio] = useState(false);
     const stars = <span className='flex items-center fill-black'> <FiStar /> <FiStar /> <FiStar /><FiStar /><FiStar /></span>
 
     const handleModal = () => setModal(!modal);
@@ -50,12 +52,19 @@ export const VendorComponent = ({
                 <hr className='opacity-10 my-2' />
                 <section className='flex justify-between items-center text-sm'>
                     <span className='flex items-center gap-2'>
-                        <span className='flex items-center gap-1 hover:cursor-pointer'> photos </span>|
+                        <span className='flex items-center gap-1 hover:cursor-pointer' onClick={() => setViewPortfolio(!viewPortfolio)}> View Portfolio </span>|
                         <span className='py-2 text-[.7rem]'> Budget </span>
                     </span>
                     <span className='flex items-center gap-2 border-2 border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>
                         <FiSend /> Enquire
                     </span>
+                    {viewPortfolio && (
+                        <Modal>
+                            <PortfolioModal 
+                                handleModal={() => setViewPortfolio(!viewPortfolio)}
+                            />
+                        </Modal> 
+                    )}
                     { modal && 
                     <Modal>
                         <EnquiryModal
