@@ -3,7 +3,7 @@ import { Button } from './';
 import '@testing-library/jest-dom';
 
 describe('Button', () => {
-    test('displays a button', () => {
+    it('renders the button', () => {
         render(
             <Button 
                 className='buttonText'
@@ -11,6 +11,7 @@ describe('Button', () => {
             />
         );
 
-        expect(screen.getByText('Test'));
+        const button = screen.getByText('Test')
+        expect(button);
     });
 });
