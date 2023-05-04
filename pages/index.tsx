@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { OurTeam } from '../views/ourTeam'
-import { OurVision } from '../views/vision'
-import { Footer } from '../components/footer';
-import { Hero } from '../views/hero'
-import { Newsletter } from '../views/newsletter/';
+import { OurVision } from '../components/organisms/ourVison';
+import { OurTeam } from '../components/organisms/ourTeam';
+import { Footer } from '../components/organisms/footer';
+import { Hero } from '../components/organisms/hero';
+import { Newsletter } from '../components/organisms/newsletter';
 
 const Home: NextPage = () => {
   return (
