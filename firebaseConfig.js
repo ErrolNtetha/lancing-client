@@ -4,13 +4,13 @@ import { getFireStore } from 'firebase/firestore';
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCkQSgSFXib_KH1SqCRz17nm55pZejSWtY",
-  authDomain: "lancers-112c0.firebaseapp.com",
-  projectId: "lancers-112c0",
-  storageBucket: "lancers-112c0.appspot.com",
-  messagingSenderId: "1298819311",
-  appId: "1:1298819311:web:cfadd61d80bffd4934531a",
-  measurementId: "G-9W464PT189"
+  apiKey: NEXT_APP_APIKEY,
+  authDomain: NEXT_APP_AUTHDOMAIN,
+  projectId: NEXT_APP_PROJECTID,
+  storageBucket: NEXT_APP_STORAGEBUCKET,
+  messagingSenderId: NEXT_APP_MESSAGINGSENDERID,
+  appId: NEXT_APP_APPID,
+  measurementId: NEXT_APP_MEASUREMENTID
 };
 
 // Initialize Firebase
