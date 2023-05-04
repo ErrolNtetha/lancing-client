@@ -1,5 +1,5 @@
 import React from 'react';
-import { Subscribe } from '../../components/subscribe';
+import { Subscribe } from '../../molecules/subscribe';
 
 export const Newsletter = () => {
     return (

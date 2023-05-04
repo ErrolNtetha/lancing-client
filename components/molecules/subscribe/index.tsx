@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from './atoms/button';
+import { Button } from '../../atoms/button';
 
 export const Subscribe = () => {
     const [firstName, setFirstName] = useState('');
@@ -43,7 +43,7 @@ export const Subscribe = () => {
                     <label htmlFor="firstName"> Email </label>
                     <input type='email' className='p-2 outline-gray block w-full' placeholder='johndoe@example.com' onChange={(e) => setEmail(e.target.value)} value={email} />
                 </section>
-                <Button className={className} handleClick={handleSubscribe} />
+                <Button buttonText='Subscribe' className={className} handleClick={handleSubscribe} />
             </form>
             {response ? <p className='pt-5 text-green block'> {response} </p> : error ? <p className='pt-5 text-green block'> There was an error subscribing. </p> : null}
         </section>

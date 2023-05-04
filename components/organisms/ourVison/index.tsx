@@ -3,15 +3,15 @@ import React from 'react';
 
 export const OurVision = () => {
     return (
-        <section id='our-vision' className='flex items-center justify-center bg-vision-bg bg-cover h-screen'>
+        <section className='flex items-center justify-center bg-vision-bg bg-cover h-screen'>
             <section className='md:flex items-center justify-center'>
                 <aside className='text-black max-w-30 m-8'>
                     <h4 className='text-sm md:text-lg font-bold opacity-30'> Our Vision </h4>
-                    <h1 className='max-w-lg font-extrabold text-black text-2xl mb-2'>
+                    <h1 className='max-w-md font-extrabold text-black text-2xl mb-2'>
                         Striving to be the go-to destination for anyone seeking quality freelance services.
                     </h1>
                     <p className='max-w-lg text-sm mb-8 md:text-lg'> 
-                        At Tedious, our vision is to empower freelancers in South Africa to work smarter, not harder.
+                        At Duello, our vision is to empower freelancers in South Africa to work smarter, not harder.
                         We believe that by simplifying the process of finding and hiring top talent, we can enable individuals to 
                         achieve their goals faster and more efficiently.
                         <br />

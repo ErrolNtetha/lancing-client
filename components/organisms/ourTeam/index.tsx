@@ -17,12 +17,12 @@ export const OurTeam = () => {
                 />
                 <section className='flex justify-center items-center mt-4 flex-col'>
                     <h1 className='font-extrabold'> Mphumeleli Errol Ntetha </h1>
-                    <p> Creator of Tedious </p>
+                    <p> Creator of Duello </p>
                 </section>
             </section>
             <span className='flex gap-y-6'>
-                <span className='text-white font-extrabold text-lg'>&lsquo;&lsquo;</span>
                 <p className='m-6 text-white text-sm md:text-lg max-w-md'> 
+                    <span className='block text-white font-extrabold text-lg'>&lsquo;&lsquo;</span>
                      I have been falling short of people who will do my
                     tedious tasks that I have no idea about, and not knowing where to find them. That is why I have
                     had to develop this platform.
