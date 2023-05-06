@@ -1,44 +1,41 @@
 import Link from 'next/link';
 import React from 'react';
-import { FormLabel } from '../../molecules/formLabel';
+import { FormLabel, FormLabelProps } from '../../molecules/formLabel';
 
-    export interface RProps {
-        component: React.ReactNode;
-        initialState: any;
-        onChange: React.ChangeEventHandler
-    }
+export interface RProps extends FormLabelProps {
+    register: Function;
+    handleSubmit: Function;
+    component: React.ReactNode;
+}
 
 
-export const ProjectsPortfolio = ({ component, initialState, onChange }: RProps) => {
+export const ProjectsPortfolio = ({ component, register }: RProps) => {
     return (
         <React.Fragment>
             <h4 className='divide-gray font-bold mb-4 text-center'> Portfolio Projects </h4>
             <FormLabel
                 type='text'
-                value={initialState.title}
                 placeholder='Title'
                 labelName='Project Title'
                 name='title'
-                htmlFor='title'
-                onChange={onChange}
+                register={register}
+                required={true}
             />
             <FormLabel
                 type='tel'
-                value={initialState.duration}
                 placeholder='How many months/years did the projects take?'
                 labelName='Project Duration'
                 name='duration'
-                htmlFor='duration'
-                onChange={onChange}
+                register={register}
+                required={true}
             />
             <FormLabel
                 type='text'
-                value={initialState.description}
                 placeholder='What was the project about?'
                 labelName='Description'
                 name='description'
-                htmlFor='description'
-                onChange={onChange}
+                register={register}
+                required={true}
             />
             <section className='mt-4'>
                 {component}

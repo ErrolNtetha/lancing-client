@@ -2,7 +2,7 @@ import React from 'react';
 import { Input, InputProps } from '../../atoms/input';
 import { Label } from '../../atoms/label';
 
-interface IProps extends InputProps {
+export interface FormLabelProps extends InputProps {
     placeholder: string;
     labelName: string;
     type: string;
@@ -23,7 +23,7 @@ export const FormLabel = ({
     hasHideIcon, 
     labelName,
     errors
-}: IProps) => {
+}: FormLabelProps) => {
     return (
         <section className='py-2'>
             <Label htmlFor={labelName} labelName={labelName}
