@@ -3,18 +3,21 @@ import React from 'react';
 import { Button } from '../../atoms/button';
 import { FormLabel } from '../../molecules/formLabel';
 import { useForm } from 'react-hook-form';
-// import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
-    /* const loginSchema = z.object({
-        username: z.string().email({ message: 'Email is invalid.' }),
-        password: z.string().min(6, { message: 'Your password must be 6 characters long.' })
-    }); */
+const loginSchema = z.object({
+    username: z.string().email({ message: 'Your email is invalid.' }),
+    password: z.string().min(6, { message: 'Your password must be 6 characters long.' })
+});
 
 export const LoginForm = () => {
     const [hidden, setHidden] = React.useState(true);
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: zodResolver(loginSchema)
+    });
     const handleLogin = (data: any) => console.log(data);
- 
+   
     return (
         <section className='flex justify-center items-center bg-hero-bg bg-cover h-[95vh]'>
             <section className='w-[20rem] md:w-[23rem]'>
@@ -27,6 +30,7 @@ export const LoginForm = () => {
                         name='username'
                         register={register}
                         required={true}
+                        errorMessage={errors.username && errors.username?.message}
                     />
                     <FormLabel
                         type={hidden ? 'password' : 'text'}
@@ -38,6 +42,7 @@ export const LoginForm = () => {
                         isHidden={hidden}
                         register={register}
                         required={true}
+                        errorMessage={errors.password && errors.password?.message}
                     />
                     <Button
                         handleClick={handleLogin} 
