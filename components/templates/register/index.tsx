@@ -21,7 +21,7 @@ export const Registration = () => {
         else {
             setFirstPage(true);
         }
-    }, [currentPage]);
+    }, [currentPage, forms.length]);
 
     const handleNext = () => {
         if (currentPage !== (forms.length - 1)) {
