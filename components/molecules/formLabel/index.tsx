@@ -9,7 +9,7 @@ export interface FormLabelProps extends InputProps {
     handleHideIcon?: React.MouseEventHandler<HTMLSpanElement>;
     hasHideIcon?: boolean;
     isHidden?: boolean;
-    errors?: string | undefined;
+    errorMessage?: string;
 }
 
 export const FormLabel = ({ 
@@ -22,7 +22,7 @@ export const FormLabel = ({
     placeholder, 
     hasHideIcon, 
     labelName,
-    errors
+    errorMessage
 }: FormLabelProps) => {
     return (
         <section className='py-2'>
@@ -38,7 +38,7 @@ export const FormLabel = ({
                 register={register}
                 required={required}
             />
-            {errors === 'required' && <p className='text-xs py-1 text-[red]'> This field is required. </p>}
+            <p className='text-xs py-1 text-[red]'> {errorMessage} </p>
         </section>
     );
 };
