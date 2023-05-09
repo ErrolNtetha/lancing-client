@@ -11,7 +11,7 @@ export const ClientSettings = () => {
             <Link href='/banking-details' className='block px-2 py-1'> Confirm banking details </Link>
 
             <h2 className='p-1 bg-gray flex items-center gap-2'> <FiCreditCard /> Payments & Withdrawals </h2>
-            <Link href='/banking-details' className='block px-2 py-1'> Update your banking details </Link>
+            <Link href='/settings/banking-details' className='block px-2 py-1'> Update your banking details </Link>
             <hr className='opacity-20' />
             <Link href='/verify-banking-details' className='block px-2 py-1'> Verify banking details </Link>
 
