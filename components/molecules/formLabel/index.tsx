@@ -38,7 +38,7 @@ export const FormLabel = ({
                 register={register}
                 required={required}
             />
-            <p className='text-xs py-1 text-[red]'> {errorMessage} </p>
+            {errorMessage && <p className='text-xs py-1 text-[red]'> {errorMessage} </p>}
         </section>
     );
 };
