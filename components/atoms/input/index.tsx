@@ -1,20 +1,20 @@
 import React from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { InputProps } from '../../../typings';
 
-const inputContainer = 'flex items-center justify-between p-2 bg-white-p border border-gray outline-black w-full block';
+export const Input = ({ 
+    name, 
+    type, 
+    disabled = false, 
+    required, 
+    register, 
+    handleHideIcon, 
+    placeholder, 
+    hasHideIcon = false, 
+    isHidden 
+}: InputProps) => {
+    const inputContainer = `flex items-center justify-between p-2 ${disabled && 'bg-[#eeeeee] text-gray'} border border-gray outline-black w-full block`;
 
-export interface InputProps {
-    placeholder: string;
-    name: string;
-    type?: string;
-    hasHideIcon?: boolean;
-    isHidden?: boolean;
-    handleHideIcon?: React.MouseEventHandler<HTMLSpanElement>;
-    required: boolean;
-    register: Function;
-}
-
-export const Input = ({ name, type, required, register, handleHideIcon, placeholder, hasHideIcon = false, isHidden }: InputProps) => {
     return (
         <section className={inputContainer}>
             <input
@@ -22,6 +22,7 @@ export const Input = ({ name, type, required, register, handleHideIcon, placehol
                 placeholder={placeholder}
                 autoComplete='off'
                 className='outline-none w-full'
+                disabled={disabled}
                 {...register(name, { required })}
             />
             {hasHideIcon && (

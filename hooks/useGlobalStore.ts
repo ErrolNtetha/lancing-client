@@ -7,6 +7,12 @@ type Profile = {
         lastName: string;
     },
     isClient: boolean;
+    bankDetails: {
+        accountHolder: string;
+        accountType: string;
+        accountNumber: string;
+        branchCode: string;
+    }
 };
 
 const myProfile: Profile = {
@@ -15,7 +21,13 @@ const myProfile: Profile = {
             firstName: 'Mphumeleli Errol',
             lastName: 'Ntetha',
         },
-        isClient: true
+        isClient: true,
+        bankDetails: {
+            accountHolder: 'Mphumeleli Errol Ntetha',
+            accountType: 'savings',
+            accountNumber: '10128807421',
+            branchCode: '051001'
+        },
     }
 
 export const useProfileStore = create((set) => ({

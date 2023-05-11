@@ -1,16 +1,12 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import Edit from './edit';
+import EditProfileClient from '../../../components/organisms/client/settings/editProfile';
+import { useProfileStore } from '../../../hooks/useGlobalStore';
 
-const EditProfile = () => {
-    const { register } = useForm();
-    return (
-        <>
-            <Edit 
-                register={register}
-            />
-        </>
-      );
+
+const Edit = () => {
+    const { isClient } = useProfileStore().profile;
+
+    return isClient ? <EditProfileClient /> : 'vendor edit profile page';
 };
 
-export default EditProfile;
+export default Edit;

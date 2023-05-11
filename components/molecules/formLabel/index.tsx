@@ -1,5 +1,6 @@
 import React from 'react';
-import { Input, InputProps } from '../../atoms/input';
+import { InputProps } from '../../../typings';
+import { Input } from '../../atoms/input';
 import { Label } from '../../atoms/label';
 
 export interface FormLabelProps extends InputProps {
@@ -22,7 +23,8 @@ export const FormLabel = ({
     placeholder, 
     hasHideIcon, 
     labelName,
-    errorMessage
+    errorMessage,
+    disabled
 }: FormLabelProps) => {
     return (
         <section className='py-2'>
@@ -37,6 +39,7 @@ export const FormLabel = ({
                 name={name}
                 register={register}
                 required={required}
+                disabled={disabled}
             />
             {errorMessage && <p className='text-xs py-1 text-[red]'> {errorMessage} </p>}
         </section>
