@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '../../atoms/button';
 import { Navigation } from '../../organisms/navigation';
-import { ProjectsPortfolio, PersonalDetails, WorkExperience } from '../../organisms/register';
+import { ProjectsPortfolio, PersonalDetails, AccountType, WorkExperience } from '../../organisms/register';
 
 export const Registration = () => {
     const [currentPage, setCurrentPage] = useState(0);
@@ -21,7 +21,7 @@ export const Registration = () => {
         else {
             setFirstPage(true);
         }
-    }, [currentPage, forms.length]);
+    }, [currentPage]);
 
     const handleNext = () => {
         if (currentPage !== (forms.length - 1)) {
@@ -75,6 +75,11 @@ export const Registration = () => {
     );
 
     const forms = [
+        <AccountType 
+            key={2}
+            component={navButton}
+            register={register}
+        />,
         <PersonalDetails 
             key={0} 
             register={register} 
