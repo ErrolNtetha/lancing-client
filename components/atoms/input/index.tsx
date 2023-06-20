@@ -21,7 +21,7 @@ export const Input = ({
                 type={type}
                 placeholder={placeholder}
                 autoComplete='off'
-                className='outline-none w-full'
+                className='outline-none bg-white w-full'
                 disabled={disabled}
                 {...register(name, { required })}
             />

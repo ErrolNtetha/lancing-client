@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '../../atoms/button';
 import { Navigation } from '../../organisms/navigation';
-import { ProjectsPortfolio, PersonalDetails, AccountType, WorkExperience } from '../../organisms/register';
+import { ProjectsPortfolio, PersonalDetails, AccountType } from '../../organisms/register';
 
 export const Registration = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [firstPage, setFirstPage] = useState<boolean | null>(true);
     const [lastPage, setLastPage] = useState(false);
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, getValues } = useForm();
  
     useEffect(() => {
         if (currentPage === forms.length - 1) {
@@ -79,6 +79,7 @@ export const Registration = () => {
             key={2}
             component={navButton}
             register={register}
+            account={getValues('accountType')}
         />,
         <PersonalDetails 
             key={0} 
