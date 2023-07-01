@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { Button } from '../../../atoms/button';
 import { FormLabel } from '../../../molecules/formLabel';
 import { TextareaLabel } from '../../../molecules/textArea';
+import { db } from '../../../../firebaseConfig';
+import { collection, addDoc } from 'firebase/firestore';
 
 type  GigProps = {
     handleModalToggle: React.MouseEventHandler<HTMLElement>
@@ -10,13 +12,24 @@ type  GigProps = {
 
 export const PostGig = ({ handleModalToggle }: GigProps) => {
     const { register, handleSubmit } = useForm();
-    const handleGig = (data: any) => console.log('Data: ', data);
+    const jobs = collection(db, 'jobs');
+
+    const handleGig = async (data: any) => {
+        try {
+            const response = await addDoc(jobs, { ...data });
+            console.log('Sent: ', response);
+        } catch (error) {
+            console.log('Error: ', error);
+        }
+    };
+
 
     return (
         <section className='p-2'>
             <section className='p-2'>
                 <p className='text-center text-lg font-semibold'> Create New Gig </p>
             </section>
+            <hr />
 
             <form onSubmit={handleSubmit(handleGig)} className='py-4'>
                 <FormLabel
@@ -42,21 +55,21 @@ export const PostGig = ({ handleModalToggle }: GigProps) => {
                     required={true}
                     register={register}
                 />
-            </form>
 
-            <section className='flex items-center gap-2'>
-                <Button
-                    buttonText='Cancel'
-                    type='button'
-                    handleClick={handleModalToggle}
-                    className='flex-1 border border-gray p-2'
-                />
-                <Button
-                    buttonText='Post'
-                    handleClick={handleGig}
-                    className='flex-1 bg-slate p-2 text-white'
-                />
-            </section>
+                <section className='flex items-center pt-4 gap-2'>
+                    <Button
+                        buttonText='Cancel'
+                        type='button'
+                        handleClick={handleModalToggle}
+                        className='flex-1 border border-gray p-2'
+                    />
+                    <Button
+                        buttonText='Post'
+                        handleClick={handleGig}
+                        className='flex-1 bg-slate p-2 text-white'
+                    />
+                </section>
+            </form>
         </section>
     );
 };
