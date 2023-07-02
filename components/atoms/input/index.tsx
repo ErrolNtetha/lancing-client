@@ -1,6 +1,6 @@
 import React from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-import { InputProps } from '../../../typings';
+import { InputProps } from '../../../types';
 
 export const Input = ({ 
     name, 
