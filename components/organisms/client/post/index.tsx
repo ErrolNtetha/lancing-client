@@ -15,21 +15,25 @@ export const PostGig = ({ handleModalToggle }: GigProps) => {
     const jobs = collection(db, 'jobs');
 
     const handleGig = async (data: any) => {
+        const { description, title, budget } = data;
+        if (!(description || title || budget)) return;
         try {
-            const response = await addDoc(jobs, { ...data });
-            console.log('Sent: ', response);
+            const docRef = await addDoc(jobs, { 
+                ...data,
+                completed: false, 
+                posted: new Date(),
+            });
+            console.log('Document writen: ', docRef);
         } catch (error) {
-            console.log('Error: ', error);
+            console.error('an error: ', error);
         }
     };
-
 
     return (
         <section className='p-2'>
             <section className='p-2'>
                 <p className='text-center text-lg font-semibold'> Create New Gig </p>
             </section>
-            <hr />
 
             <form onSubmit={handleSubmit(handleGig)} className='py-4'>
                 <FormLabel
