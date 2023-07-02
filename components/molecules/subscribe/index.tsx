@@ -9,7 +9,7 @@ export const Subscribe = () => {
     const [error, setError] = useState(false);
     const className = 'bg-slate hover:bg-gray hover:text-black hover:border-black text-white p-2 mt-8 shadow-lg block';
 
-    const handleSubscribe = async (e) => {
+    const handleSubscribe = async (e: any) => {
         e.preventDefault();
         setFirstName('');
         setLastName('');
