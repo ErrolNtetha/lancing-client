@@ -10,7 +10,7 @@ export interface FormLabelProps extends InputProps {
     handleHideIcon?: React.MouseEventHandler<HTMLSpanElement>;
     hasHideIcon?: boolean;
     isHidden?: boolean;
-    errorMessage?: string;
+    errorMessage?: string | undefined;
 }
 
 export const FormLabel = ({ 
