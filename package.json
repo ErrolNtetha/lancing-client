@@ -8,14 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install",
-    "test": "jest"
+    "test": "jest",
+    "type:check": "tsc"
   },
-    "husky": {
-        "pre-commit": "lint-staged"
-    },
-    "lint-staged": {
-        "**/*.tsx": "tsc-files --noEmit"
-    },
   "dependencies": {
     "@hookform/resolvers": "^3.1.0",
     "@next/font": "^13.1.5",

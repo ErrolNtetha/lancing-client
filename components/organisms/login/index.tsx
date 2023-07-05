@@ -30,7 +30,7 @@ export const LoginForm = () => {
                         name='username'
                         register={register}
                         required={true}
-                        errorMessage={errors?.username && errors.username.message.toString()}
+                        errorMessage={errors?.username && errors?.username?.message?.toString()}
                     />
                     <FormLabel
                         type={hidden ? 'password' : 'text'}
@@ -42,7 +42,7 @@ export const LoginForm = () => {
                         isHidden={hidden}
                         register={register}
                         required={true}
-                        errorMessage={errors?.password && errors.password.message.toString()}
+                        errorMessage={errors?.password && errors?.password?.message?.toString()}
                     />
                     <Button
                         handleClick={handleLogin} 

@@ -10,7 +10,7 @@ import { Vendor } from '../../organisms/vendor';
 
 export const ClientUI = () => {
     const [modal, setModal] = useState(false);
-    const isClient = useProfileStore((state) => state.profile?.isClient);
+    const isClient = useProfileStore((state: any) => state.profile?.isClient);
     const renderUI = isClient ? <Vendor /> : <Client />;
 
     return (

@@ -1,10 +1,9 @@
 import Link from 'next/link';
 import React from 'react';
-import { FormLabel, FormLabelProps } from '../../molecules/formLabel';
+import { FormLabel } from '../../molecules/formLabel';
 
-export interface RProps extends FormLabelProps {
+export interface RProps {
     register: Function;
-    handleSubmit: Function;
     component: React.ReactNode;
 }
 

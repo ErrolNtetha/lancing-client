@@ -1,5 +1,6 @@
 export interface InputProps {
     placeholder: string;
+    id?: string;
     name: string;
     type?: string;
     hasHideIcon?: boolean;
