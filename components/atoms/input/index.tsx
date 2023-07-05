@@ -1,10 +1,11 @@
 import React from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-import { InputProps } from '../../../typings';
+import { InputProps } from '../../../types';
 
 export const Input = ({ 
     name, 
     type, 
+    id,
     disabled = false, 
     required, 
     register, 
@@ -19,6 +20,7 @@ export const Input = ({
         <section className={inputContainer}>
             <input
                 type={type}
+                id={id}
                 placeholder={placeholder}
                 autoComplete='off'
                 className='outline-none w-full'
@@ -26,7 +28,11 @@ export const Input = ({
                 {...register(name, { required })}
             />
             {hasHideIcon && (
-                <span onClick={handleHideIcon} className='pl-4 hover:cursor-pointer'> 
+                <span
+                    onClick={handleHideIcon} 
+                    role='button' 
+                    className='pl-4 hover:cursor-pointer'
+                > 
                     { isHidden ? <FiEye /> : <FiEyeOff /> }
                 </span> 
             )}

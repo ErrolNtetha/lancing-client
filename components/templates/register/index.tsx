@@ -11,18 +11,6 @@ export const Registration = () => {
     const [lastPage, setLastPage] = useState(false);
     const { register, handleSubmit } = useForm();
  
-    useEffect(() => {
-        if (currentPage === forms.length - 1) {
-            setLastPage(true);
-        } else if (currentPage === 0) {
-            setLastPage(false);
-            setFirstPage(true);
-        }
-        else {
-            setFirstPage(true);
-        }
-    }, [currentPage, forms.length]);
-
     const handleNext = () => {
         if (currentPage !== (forms.length - 1)) {
             setCurrentPage((prevState) => prevState + 1);
@@ -82,10 +70,24 @@ export const Registration = () => {
         />, 
         <ProjectsPortfolio 
             key={1}
-            component={navButton}
             register={register}
+            component={navButton}
         />
     ];
+
+
+    useEffect(() => {
+        if (currentPage === forms.length - 1) {
+            setLastPage(true);
+        } else if (currentPage === 0) {
+            setLastPage(false);
+            setFirstPage(true);
+        }
+        else {
+            setFirstPage(true);
+        }
+    }, [currentPage, forms.length]);
+
     
     return (
         <React.Fragment> 

@@ -45,7 +45,7 @@ export const LoginForm = () => {
                         isHidden={hidden}
                         register={register}
                         required={true}
-                        errorMessage={errors?.password && errors.password?.message?.toString()}
+                        errorMessage={errors?.password && errors?.password?.message?.toString()}
                     />
                     <Button
                         handleClick={handleLogin} 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputProps } from '../../../typings';
+import { InputProps } from '../../../types';
 import { Input } from '../../atoms/input';
 import { Label } from '../../atoms/label';
 
@@ -10,7 +10,7 @@ export interface FormLabelProps extends InputProps {
     handleHideIcon?: React.MouseEventHandler<HTMLSpanElement>;
     hasHideIcon?: boolean;
     isHidden?: boolean;
-    errorMessage?: string;
+    errorMessage?: string | undefined;
 }
 
 export const FormLabel = ({ 
@@ -28,10 +28,11 @@ export const FormLabel = ({
 }: FormLabelProps) => {
     return (
         <section className='py-2'>
-            <Label htmlFor={labelName} labelName={labelName}
+            <Label htmlFor={name} labelName={name}
             />
             <Input
                 type={type}
+                id={labelName}
                 handleHideIcon={handleHideIcon}
                 hasHideIcon={hasHideIcon}
                 placeholder={placeholder}

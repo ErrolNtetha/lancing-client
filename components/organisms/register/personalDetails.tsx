@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { FormLabel, FormLabelProps } from '../../molecules/formLabel';
+import { FormLabel } from '../../molecules/formLabel';
 
-interface IProps extends FormLabelProps {
+interface IProps {
     register: Function;
     component: React.ReactNode;
 }

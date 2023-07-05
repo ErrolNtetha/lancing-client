@@ -2,43 +2,40 @@ import Link from 'next/link';
 import React from 'react';
 import { FormLabel } from '../../molecules/formLabel';
 
-    export interface RProps {
-        component: React.ReactNode;
-        initialState: any;
-        onChange: React.ChangeEventHandler
-    }
+export interface RProps {
+    component: React.ReactNode;
+    initialState: any;
+    register: Function;
+}
 
 
-export const WorkExperience = ({ component, initialState, onChange }: RProps) => {
+export const WorkExperience = ({ component, register }: RProps) => {
     return (
         <React.Fragment>
             <h4 className='divide-gray font-bold mb-4 text-center'> Work Experience </h4>
             <FormLabel
                 type='text'
-                value={initialState.companyName}
                 placeholder='Name of the company'
                 labelName='Company Name'
                 name='companyName'
-                htmlFor='companyName'
-                onChange={onChange}
+                required={false}
+                register={register}
             />
             <FormLabel
                 type='tel'
-                value={initialState.numOfYears}
                 placeholder='How many years'
                 labelName='Years of Experience'
                 name='numOfYears'
-                htmlFor='numOfYears'
-                onChange={onChange}
+                required={false}
+                register={register}
             />
             <FormLabel
                 type='text'
-                value={initialState.jobTitle}
                 placeholder='Job title'
                 labelName='Job Title'
                 name='jobTitle'
-                htmlFor='jobTitle'
-                onChange={onChange}
+                required={false}
+                register={register}
             />
             <section className='mt-4'>
                 {component}
