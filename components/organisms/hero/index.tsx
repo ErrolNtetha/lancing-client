@@ -3,7 +3,7 @@ import React from 'react';
 
 export const Hero = () => {
     return (
-        <section className="flex items-center p-8 justify-between bg-hero-bg bg-cover h-[95vh] sm:text-slate">
+        <section className="container mx-auto flex items-center justify-between bg-hero-bg bg-cover h-[92vh] sm:text-slate">
             <section className='text-white max-w-4 md:max-w-2xl pl-6 md:pl-20'>
                 <h1 className='font-semibold text-xl md:max-w-lg md:text-4xl'>
                     Say goodbye to <span className='text-indigo border-b-indigo'>tedious</span> tasks,
