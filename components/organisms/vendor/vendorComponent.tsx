@@ -33,13 +33,14 @@ export const VendorComponent = ({
             <section>
                 <section className='flex items-center justify-between mb-4'>
                     <span className='flex gap-3'>
-                        <Image
-                            src={avatar}
-                            alt={`${recipient.firstName}&apos;s avatar`}
-                            width={50}
-                            height={50}
-                            className='rounded-full ring-1 ring-gray object-cover'
-                        />
+                        <span className='relative w-[60px] h-[60px]'>
+                            <Image
+                                src={avatar}
+                                alt={`${recipient.firstName}&apos;s avatar`}
+                                fill={true}
+                                className='rounded-full ring-1 ring-gray object-cover'
+                            />
+                        </span>
                         <span>
                             <h2 className='text-md md:text-lg font-semibold'>{recipient.firstName} {recipient.lastName} </h2>
                             <p className='flex items-center gap-1'> {service} </p>
