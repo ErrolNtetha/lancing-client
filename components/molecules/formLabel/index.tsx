@@ -28,11 +28,11 @@ export const FormLabel = ({
 }: FormLabelProps) => {
     return (
         <section className='py-2'>
-            <Label htmlFor={name} labelName={name}
+            <Label htmlFor={name} labelName={labelName}
             />
             <Input
                 type={type}
-                id={labelName}
+                id={name}
                 handleHideIcon={handleHideIcon}
                 hasHideIcon={hasHideIcon}
                 placeholder={placeholder}
