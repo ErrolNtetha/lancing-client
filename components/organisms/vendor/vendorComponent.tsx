@@ -17,7 +17,7 @@ type VendorProps = {
     pitchText: string;
 };
 
-export const VendorComponent = ({ 
+export const VendorComponent = ({
     avatar,
     recipient,
     service,
@@ -32,13 +32,13 @@ export const VendorComponent = ({
         <section className='text-black text-[.8rem] md:text-sm my-3 border border-gray bg-white shadow-md w-full md:w-[35rem] max-h-max p-2'>
             <section>
                 <section className='flex items-center justify-between mb-4'>
-                    <span className='flex gap-3'>
+                    <span className='flex gap-2'>
                         <span className='relative w-[60px] h-[60px]'>
                             <Image
                                 src={avatar}
                                 alt={`${recipient.firstName}&apos;s avatar`}
                                 fill={true}
-                                className='rounded-full ring-1 ring-gray object-cover'
+                                className='rounded-full ring-1 ring-gray object-cover'  
                             />
                         </span>
                         <span>
@@ -54,7 +54,7 @@ export const VendorComponent = ({
                 <hr className='opacity-10 mb-2' />
                 <section className='flex justify-between items-center text-sm'>
                     <span className='flex items-center gap-2'>
-                        <span className='flex items-center gap-1 hover:cursor-pointer' onClick={() => setViewPortfolio(!viewPortfolio)}> <FiUser /> View </span>|
+                        <span className='flex items-center gap-1 hover:cursor-pointer'onClick={() => setViewPortfolio(!viewPortfolio)}> <FiUser /> View </span>|
                         <span className='py-2 text-[.7rem]'> From: R2,000 </span>
                     </span>
 
@@ -81,3 +81,4 @@ export const VendorComponent = ({
         </section>
     );
 };
+
