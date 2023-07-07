@@ -4,11 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-// import { useScreenWidth } from '../../../hooks/useScreenWidth';
 import { FiAlignRight } from 'react-icons/fi';
 import { useProfileStore } from '../../../hooks/useGlobalStore';
 import { Button } from '../../atoms/button';
+import { ImageSrc } from '../../molecules/image';
 import { MobileMenu } from './mobileMenu';
+import { UserHead } from './userHead';
 
 export const Header = () => {
     const [nav, setNav] = useState(false);
@@ -24,7 +25,7 @@ export const Header = () => {
 
     return (
         <header className='flex z-10 justify-between items-center text-white w-full bg-slate h-[8vh]'>
-            <section className='container p-4 mx-auto w-full h-full flex z-10 justify-between items-center'>
+            <section className='container mx-auto w-full h-full flex z-10 justify-between items-center'>
                 <Link href='/'>
                     <Image src='/images/logo.svg' alt='company logo' className='' width={80} height={20} />
                 </Link>
@@ -35,7 +36,7 @@ export const Header = () => {
                             <Link className='block w-full' href='/feed'>Home</Link>
                         </li>
                         <li className='ml-4 mr-4'>
-                            <Link className='block w-full' href='/browse'>Browse</Link>
+                            <Link className='block w-full' href='/blog'>Blog</Link>
                         </li>
                         <li className='ml-4 mr-4'>
                             <Link href='/contact'>Contact</Link>
@@ -44,10 +45,11 @@ export const Header = () => {
                             <Link href='/about'>About</Link>
                         </li>
                         <li className='ml-4 mr-4'>
-                            <Link href='/settings'>Settings</Link>
+                            <Link href='/faq'>FAQ</Link>
                         </li>
                     </ul>
                 </section>
+                <UserHead />
                 {nav && (
                     <section className='fixed bg-slate top-0 left-0 bottom-0 w-full'>
                         <MobileMenu avatar={profile.avatar} name={profile.name} handleMenuToggle={() => setNav(!nav)} />

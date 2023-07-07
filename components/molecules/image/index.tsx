@@ -5,18 +5,18 @@ type ImageProps = {
     size: string;
     src: string;
     alt: string;
-    isRound?: boolean;
+    isRounded?: boolean;
 }
 
-export const ImageSrc = ({ src, alt, isRound = true, size = '60px' }: ImageProps) => {
+export const ImageSrc = ({ src, alt, isRounded = true, size }: ImageProps) => {
     return (
         <span className={`relative w-[${size}] h-[${size}]`}>
             <Image
                 src={src}
                 fill={true}
-                className={`${isRound && `rounded-full`} ring-1 ring-gray object-cover`}
+                className={`${isRounded && `rounded-full`} ring-1 ring-gray object-cover h-full`}
                 alt={alt}
             />
         </span>
-    )
-}
+    );
+};
