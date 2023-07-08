@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import { FiAlignRight } from 'react-icons/fi';
 import { useProfileStore } from '../../../hooks/useGlobalStore';
 import { Button } from '../../atoms/button';
+import { LoginButton } from '../login/loginButton';
 import { MobileMenu } from './mobileMenu';
 
 export const Header = () => {
@@ -44,10 +45,11 @@ export const Header = () => {
                             <Link href='/about'>About</Link>
                         </li>
                         <li className='ml-4 mr-4'>
-                            <Link href='/settings'>Settings</Link>
+                            <Link href='/settings'>FAQ</Link>
                         </li>
                     </ul>
                 </section>
+                <LoginButton />
                 {nav && (
                     <section className='fixed bg-slate top-0 left-0 bottom-0 w-full'>
                         <MobileMenu avatar={profile.avatar} name={profile.name} handleMenuToggle={() => setNav(!nav)} />
