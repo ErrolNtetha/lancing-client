@@ -13,9 +13,15 @@ import { MobileMenu } from './mobileMenu';
 
 export const Header = () => {
     const [nav, setNav] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(false);
     const p = useProfileStore();
     const { profile } = p;
     const router = useRouter();
+
+    const handleLogIn = () => {
+        setLoggedIn(!loggedIn);
+        router.push('/feed')
+    };
 
     const handleLogout = () => {
         console.log('logged out')
@@ -52,12 +58,12 @@ export const Header = () => {
                 <LoginButton />
                 {nav && (
                     <section className='fixed bg-slate top-0 left-0 bottom-0 w-full'>
-                        <MobileMenu avatar={profile.avatar} name={profile.name} handleMenuToggle={() => setNav(!nav)} />
+                        <MobileMenu isLoggedIn={loggedIn} avatar={profile.avatar} name={profile.name} handleMenuToggle={() => setNav(!nav)} />
                         <section className='flex items-center justify-center absolute w-full left-0 bottom-4'>
                             <Button
                                 className='border-2 border-white font-extrabold w-full p-2 my-1 mx-4'
-                                buttonText='Logout'
-                                handleClick={handleLogout}
+                                buttonText={`${loggedIn ? 'Logout' : 'Login'}`}
+                                handleClick={() => `${loggedIn ? handleLogout() : handleLogIn()}`}
                             />
                         </section>
                     </section>
