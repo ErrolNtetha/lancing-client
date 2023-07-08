@@ -4,6 +4,8 @@ import { Button } from '../../atoms/button';
 import { FormLabel } from '../../molecules/formLabel';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../../firebaseConfig';
 import { z } from 'zod';
 
 const loginSchema = z.object({
@@ -16,12 +18,27 @@ export const LoginForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(loginSchema)
     });
-    const handleLogin = (data: any) => console.log(data);
+
+    const handleLogin = async (data: any) => {
+        const { username, password } = data;
+        if (!(username && password)) {
+            return;
+        }
+
+        try {
+            const response = await signInWithEmailAndPassword(auth, username, password);
+            console.log('Response: ', response);
+        } catch (error) {
+            if (error) {
+                console.log('Erorr message: ', error);
+            }
+        };
+    };
    
     return (
         <section className='flex justify-center items-center bg-hero-bg bg-cover h-[95vh]'>
             <section className='w-[20rem] md:w-[23rem]'>
-                <form onSubmit={handleSubmit(handleLogin)}  className='bg-white text-xs md:text-sm shadow-2xl w-full p-6'>
+                <form onSubmit={handleSubmit(handleLogin)} className='bg-white text-xs md:text-sm shadow-2xl w-full p-6'>
                     <section className='pb-4'>
                         <h1 className='pt-2 text-xl font-extrabold'> Welcome to Duello </h1>
                         <h5 className='inline text-[gray] font-bold'> New here? </h5> <Link href='/register' className='font-bold text-[green]'> Create Account </Link>
