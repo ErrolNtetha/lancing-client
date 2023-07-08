@@ -1,10 +1,10 @@
+'use client'
 /* eslint-disable @next/next/no-img-element */
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-// import { useScreenWidth } from '../../../hooks/useScreenWidth';
 import { FiAlignRight } from 'react-icons/fi';
 import { useProfileStore } from '../../../hooks/useGlobalStore';
 import { Button } from '../../atoms/button';
@@ -19,7 +19,7 @@ export const Header = () => {
     const handleLogout = () => {
         console.log('logged out')
         setNav(!nav);
-        router.push('/login');
+        router.push('/login')
     };
 
     return (
