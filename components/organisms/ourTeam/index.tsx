@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-
 import React from 'react';
 import { ImageSrc } from '../../molecules/image';
 
@@ -9,7 +7,7 @@ export const OurTeam = () => {
             <section className='flex items-center justify-center flex-col text-white'>
                 <ImageSrc
                     src='/assets/images/errol.png'
-                    size='150px'
+                    size={20}
                     alt='Smiling picture of the creator of Duello'
                 />
                 <section className='flex justify-center items-center mt-4 flex-col'>
