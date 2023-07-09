@@ -3,10 +3,10 @@ import { ImageSrc } from '../../molecules/image';
 
 export const UserHead = () => {
     return (
-        <section className='flex align-center justify-center gap-2 h-full hover:bg-gray hover:cursor-pointer  max-h-full'>
+        <section className='hidden md:flex align-center justify-center gap-2 hover:bg-gray hover:cursor-pointer'>
             <ImageSrc
                 src='/assets/images/errol.png'
-                size='50px'
+                size={10}
                 alt='Smiling picture of the creator of Duello'
             />
             <span className='flex-col align-center justify-center gap-2'>
