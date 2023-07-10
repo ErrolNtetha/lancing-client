@@ -25,7 +25,6 @@ export const Header = () => {
     };
 
     const handleLogout = () => {
-        console.log('logged out')
         setNav(!nav);
         router.push('/login')
     };
