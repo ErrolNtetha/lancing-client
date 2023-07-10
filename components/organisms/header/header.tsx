@@ -14,7 +14,7 @@ import { UserHead } from './userHead';
 
 export const Header = () => {
     const [nav, setNav] = useState(false);
-    const [loggedIn, setLoggedIn] = useState(true);
+    const [loggedIn, setLoggedIn] = useState(false);
     const p = useProfileStore();
     const { profile } = p;
     const router = useRouter();
