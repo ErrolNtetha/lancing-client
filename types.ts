@@ -7,6 +7,7 @@ export interface InputProps {
     isHidden?: boolean;
     handleHideIcon?: React.MouseEventHandler<HTMLSpanElement>;
     required: boolean;
+    inputHasValue?: boolean | undefined;
     register: Function;
     disabled?: boolean;
 }
