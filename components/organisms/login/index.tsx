@@ -15,9 +15,10 @@ const loginSchema = z.object({
 
 export const LoginForm = () => {
     const [hidden, setHidden] = React.useState(true);
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, watch, formState: { errors } } = useForm({
         resolver: zodResolver(loginSchema)
     });
+    const showIcon = watch('password');
 
     const handleLogin = async (data: any) => {
         const { username, password } = data;
@@ -57,12 +58,13 @@ export const LoginForm = () => {
                         placeholder='Enter password'
                         labelName='Password'
                         name='password'
-                        hasHideIcon={true}
+                        hasHideIcon={false}
                         handleHideIcon={() => setHidden(!hidden)}
                         isHidden={hidden}
                         register={register}
                         required={true}
                         errorMessage={errors?.password && errors?.password?.message?.toString()}
+                        inputHasValue={showIcon ? true : false}
                     />
                     <Button
                         handleClick={handleLogin} 
