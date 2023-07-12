@@ -2,13 +2,16 @@
 
 <h4 align="center"> A South African freelance platform to find freelancers for small, daunting business tasks. </h4>
 
-## Description
-Duello aims to bring forth the skills of South African freelancers together in one place and make it painless for businesses who require digital services to find what they are looking for. This application enables freelancers and clients to register a 'vendor' and 'client' account, respectively. Clients create a post with the description and their budget and freelancers send proposals to those clients' posts.
+### Description
+Duello aims to bring forth the skills of South African freelancers together in one place and make it painless for businesses who require digital services to find what they are looking for.
 
-## Technologies
+This application enables freelancers and clients to register a 'vendor' and 'client' account, respectively. Clients create a post with the description and their budget amount. Freelancers send proposals to those clients' posts.
+
+### Technologies
 This project uses:
-* NextJS - a ReactJS framework
+* NextJS 13 - a ReactJS framework
 * Firebase - a BaaS database for storing application data
+* TailwindCSS- for styling UI comments 
 
 <h2 align="center"> Application screenshots </h2>
 
