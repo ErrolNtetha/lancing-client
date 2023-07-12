@@ -1,6 +1,5 @@
 ![duelloCover](https://github.com/ErrolNtetha/lancing-client/assets/42877124/f6419a4f-6b4d-4bb5-976b-61775b9cc407)
 
-<h2 align="center"> Duello </h2>
 <h4 align="center"> A South African freelance platform to find freelancers for small, daunting business tasks. </h4>
 
 ## Description
@@ -9,10 +8,11 @@ Duello aims to bring forth the skills of South African freelancers together in o
 ## Technologies
 This project uses:
 * NextJS - a ReactJS framework
-* Firebase - a database for storing application data
+* Firebase - a BaaS database for storing application data
 
 <h2 align="center"> Application screenshots </h2>
-### Home page
+
+### Home (/)
 
 ![Screenshot from 2023-07-08 18-57-33](https://github.com/ErrolNtetha/lancing-client/assets/42877124/01cc5a9c-796a-4eb4-ae68-81767951ba22)
 
@@ -25,10 +25,10 @@ This project uses:
 ![Screenshot from 2023-07-07 18-21-00](https://github.com/ErrolNtetha/lancing-client/assets/42877124/080c4e34-e374-4aa1-94a5-b0c200d976fc)
 
 
-### Login Screen
+### Login (/login)
 ![Screenshot from 2023-07-12 17-33-07](https://github.com/ErrolNtetha/lancing-client/assets/42877124/de931c71-d6d7-4d9c-86b3-1b0450c507a8)
 
-### Registration
+### Registration (/registration)
 ![Screenshot from 2023-07-12 17-33-16](https://github.com/ErrolNtetha/lancing-client/assets/42877124/f7a8d55e-f3d2-4168-b023-bb72fd387cca)
 
 
