@@ -5,9 +5,10 @@ import { FormLabel } from '../../molecules/formLabel';
 interface IProps {
     register: Function;
     component: React.ReactNode;
+    watch: Function;
 }
 
-export const PersonalDetails = ({ component, register }: IProps) => {
+export const PersonalDetails = ({ component, register, watch }: IProps) => {
     const [hidden, setHidden] = useState(true);
 
     return (
@@ -53,8 +54,9 @@ export const PersonalDetails = ({ component, register }: IProps) => {
                     register={register}
                     required={true}
                     handleHideIcon={() => setHidden(!hidden)}
-                    hasHideIcon={true}
+                    hasHideIcon={false}
                     isHidden={hidden}
+                    inputHasValue={watch ? true : false}
                 />
                 <section className='mt-4 block'>
                     {component}

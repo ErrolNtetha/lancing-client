@@ -11,6 +11,7 @@ export const Input = ({
     register,
     handleHideIcon,
     placeholder,
+    inputHasValue,
     hasHideIcon = false,
     isHidden
 }: InputProps) => {
@@ -27,7 +28,7 @@ export const Input = ({
                 disabled={disabled}
                 {...register(name, { required })}
             />
-            {hasHideIcon && (
+            {(hasHideIcon || inputHasValue) && (
                 <span
                     onClick={handleHideIcon}
                     role='button'

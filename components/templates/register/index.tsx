@@ -9,7 +9,8 @@ export const Registration = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [firstPage, setFirstPage] = useState<boolean | null>(true);
     const [lastPage, setLastPage] = useState(false);
-    const { register, handleSubmit } = useForm();
+    const { register, watch, handleSubmit } = useForm();
+    const showIcon = watch('password');
  
     const handleNext = () => {
         if (currentPage !== (forms.length - 1)) {
@@ -67,6 +68,7 @@ export const Registration = () => {
             key={0} 
             register={register} 
             component={navButton} 
+            watch={watch('password')}
         />, 
         <ProjectsPortfolio 
             key={1}

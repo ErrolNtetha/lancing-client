@@ -11,6 +11,7 @@ export interface FormLabelProps extends InputProps {
     hasHideIcon?: boolean;
     isHidden?: boolean;
     errorMessage?: string | undefined;
+    inputHasValue?: boolean;
 }
 
 export const FormLabel = ({ 
@@ -24,8 +25,10 @@ export const FormLabel = ({
     hasHideIcon, 
     labelName,
     errorMessage,
-    disabled
+    disabled,
+    inputHasValue
 }: FormLabelProps) => {
+
     return (
         <section className='py-2'>
             <Label htmlFor={name} labelName={labelName}
@@ -39,6 +42,7 @@ export const FormLabel = ({
                 isHidden={isHidden}
                 name={name}
                 register={register}
+                inputHasValue={inputHasValue}
                 required={required}
                 disabled={disabled}
             />
