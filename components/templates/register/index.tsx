@@ -1,15 +1,22 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import { Button } from '../../atoms/button';
 import { Navigation } from '../../organisms/navigation';
 import { ProjectsPortfolio, PersonalDetails, AccountType } from '../../organisms/register';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../../../firebaseConfig';
 
 export const Registration = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [firstPage, setFirstPage] = useState<boolean | null>(true);
     const [lastPage, setLastPage] = useState(false);
     const { register, watch, handleSubmit, getValues } = useForm();
+    const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<null | string>(null);
+    const router = useRouter();
     const showIcon = watch('password');
  
     const handleNext = () => {
@@ -34,11 +41,52 @@ export const Registration = () => {
         } 
     };
 
-    const onSubmit = (data: any) => {
-        console.log(data);
+    const onSubmit = async (data: any) => {
+        const { 
+            email,
+            password,
+            firstName,
+            lastName
+        } = data; 
+
+        setLoading(true);
+        setErrorMessage(null);
+
+        try {
+            const { user } = await createUserWithEmailAndPassword(auth, email, password);
+            const clientsRef = doc(db, 'clients', user.uid);
+
+            if (user && auth.currentUser) {
+                await updateProfile(auth.currentUser, { displayName: `${firstName} ${lastName}`});
+                await setDoc(clientsRef, {
+                    email: user.email,
+                    emailVerified: user.emailVerified,
+                    photoURL: user.photoURL,
+                    name: {
+                        firstName,
+                        lastName
+                    }
+                });
+            }
+            router.push('/feed');
+
+        } catch (error: any) {
+            switch(error.code) {
+                case 'auth/email-already-in-use':
+                    setErrorMessage('This email has already been used. Try a different email.');
+                    break;
+
+                default:
+                    setErrorMessage('An error occured while trying to register your account.');
+            }
+
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const buttonText = `${lastPage ? 'Create New Account' : 'Proceed'}`;
+    const renderLoading = loading ? 'Creating account...' : 'Create New Account';
+    const buttonText = `${lastPage ? renderLoading : 'Proceed'}`;
     const handleClick = lastPage ? onSubmit : handleNext;
 
     const navButton = (
@@ -57,7 +105,8 @@ export const Registration = () => {
                 <Button
                     buttonText={buttonText}
                     handleClick={() => handleClick}
-                    className='bg-slate hover:opacity-80 px-4 py-2 text-white'
+                    disabled= {loading ? true : false}
+                    className={`hover:opacity-80 px-4 py-2 text-white ${loading ? 'bg-gray hover:cursor-not-allowed' : 'bg-slate hover:cursor-pointer'}`}
                 />
             </section>
         </section>
@@ -74,9 +123,9 @@ export const Registration = () => {
             key={0} 
             register={register} 
             component={navButton} 
-            watch={watch('password')}
+            watch={showIcon}
         />, 
-        <ProjectsPortfolio 
+        <ProjectsPortfolio
             key={1}
             register={register}
             component={navButton}
@@ -105,6 +154,9 @@ export const Registration = () => {
                 <section className='py-4'>
                     <form onSubmit={handleSubmit(handleClick)} className='shadow-2xl text-xs sm:text-sm bg-white h-max w-[20] md:w-[25rem] px-6 py-6'>
                         {forms[currentPage]}
+                        {errorMessage && <section className=' text-center text-[red] py-4 flex justify-center mt-4'>
+                            <p> {errorMessage} </p>
+                        </section>}
                     </form>
                     <section className='text-white text-center text-sm m-4'>
                         <p> Already have an account? <span className='underline'> <Link href='/login'> Login </Link> </span></p> 

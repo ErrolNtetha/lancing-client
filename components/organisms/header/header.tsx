@@ -31,7 +31,7 @@ export const Header = () => {
 
     return (
         <header className='flex z-10 justify-between items-center text-white w-full bg-slate h-[8vh]'>
-            <section className='container mx-auto w-full h-full flex z-10 justify-between items-center'>
+            <section className='container mx-auto px-4 w-full h-full flex z-10 justify-between items-center'>
                 <Link href='/'>
                     <Image src='/images/logo.svg' alt='company logo' className='' width={80} height={20} />
                 </Link>

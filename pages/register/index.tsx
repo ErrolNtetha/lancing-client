@@ -3,7 +3,7 @@ import { Registration } from '../../components/templates/register';
 
 const Register = () => {
     return (
-        <section className='bg-slate h-[95vh]'>
+        <section className='bg-slate h-[92vh]'>
             <Registration />
         </section>
     );
