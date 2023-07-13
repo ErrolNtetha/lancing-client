@@ -39,14 +39,6 @@ export const PersonalDetails = ({ component, register, watch }: IProps) => {
                     required={true}
                 />
                 <FormLabel
-                    type='text'
-                    placeholder='935 Mitchelle Street, Durban 4001'
-                    labelName='Address'
-                    name='address'
-                    register={register}
-                    required={true}
-                />
-                <FormLabel
                     type={hidden ? 'password' : 'text'}
                     placeholder='Minimum of 6 characters'
                     labelName='Create New Password'
