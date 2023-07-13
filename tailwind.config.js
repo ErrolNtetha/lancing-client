@@ -18,6 +18,9 @@ module.exports = {
         'white-p': '#fff',
         'white-o': 'rgba(256, 255, 255, .2)'
     },
+    container: {
+        center: true,
+    },
     extend: {
         backgroundImage: {
             'hero-bg': 'url("/assets/images/svg/bg.svg")',
