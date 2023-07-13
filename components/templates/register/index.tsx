@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import { Button } from '../../atoms/button';
 import { Navigation } from '../../organisms/navigation';
 import { ProjectsPortfolio, PersonalDetails, WorkExperience } from '../../organisms/register';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../../firebaseConfig';
 
 export const Registration = () => {
     const [currentPage, setCurrentPage] = useState(0);
@@ -34,8 +36,14 @@ export const Registration = () => {
         } 
     };
 
-    const onSubmit = (data: any) => {
-        console.log(data);
+    const onSubmit = async (data: any) => {
+        const { email, password } = data
+        try {
+            const response = await createUserWithEmailAndPassword(auth, email, password)
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const buttonText = `${lastPage ? 'Create New Account' : 'Proceed'}`;
