@@ -69,7 +69,6 @@ export const Registration = () => {
             component={navButton}
             register={register}
             account={getValues('accountType')}
-            watch={watch('accountType')}
         />,
         <PersonalDetails 
             key={0} 
