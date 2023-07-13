@@ -30,7 +30,7 @@ const myProfile: Profile = {
         },
     }
 
-export const useProfileStore = create((set) => ({
+export const useProfileStore: any = create((set: any) => ({
     profile: {...myProfile},
     addProfile: (user: Profile) => set(() => ({ profile: user })),
 }));

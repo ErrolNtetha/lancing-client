@@ -4,6 +4,8 @@ import { Button } from '../../atoms/button';
 import { FormLabel } from '../../molecules/formLabel';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../../firebaseConfig';
 import { z } from 'zod';
 
 const loginSchema = z.object({
@@ -13,16 +15,35 @@ const loginSchema = z.object({
 
 export const LoginForm = () => {
     const [hidden, setHidden] = React.useState(true);
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, watch, formState: { errors } } = useForm({
         resolver: zodResolver(loginSchema)
     });
-    const handleLogin = (data: any) => console.log(data);
+    const showIcon = watch('password');
+
+    const handleLogin = async (data: any) => {
+        const { username, password } = data;
+        if (!(username && password)) {
+            return;
+        }
+
+        try {
+            const response = await signInWithEmailAndPassword(auth, username, password);
+            console.log('Response: ', response);
+        } catch (error) {
+            if (error) {
+                console.log('Erorr message: ', error);
+            }
+        };
+    };
    
     return (
         <section className='flex justify-center items-center bg-hero-bg bg-cover h-[95vh]'>
             <section className='w-[20rem] md:w-[23rem]'>
-                <form onSubmit={handleSubmit(handleLogin)}  className='bg-white text-xs md:text-sm shadow-2xl w-full p-6'>
-                    <h4 className='pb-6 pt-2 text-center font-bold divide-gray'> Login To Your Account </h4>
+                <form onSubmit={handleSubmit(handleLogin)} className='bg-white text-xs md:text-sm shadow-2xl w-full p-6'>
+                    <section className='pb-4'>
+                        <h1 className='pt-2 text-xl font-extrabold'> Welcome to Duello </h1>
+                        <h5 className='inline text-[gray] font-bold'> New here? </h5> <Link href='/register' className='font-bold text-[green]'> Create Account </Link>
+                    </section>
                     <FormLabel
                         type='text'
                         placeholder='Enter username'
@@ -30,19 +51,20 @@ export const LoginForm = () => {
                         name='username'
                         register={register}
                         required={true}
-                        errorMessage={errors.username && errors.username?.message}
+                        errorMessage={errors?.username && errors?.username?.message?.toString()}
                     />
                     <FormLabel
                         type={hidden ? 'password' : 'text'}
                         placeholder='Enter password'
                         labelName='Password'
                         name='password'
-                        hasHideIcon={true}
+                        hasHideIcon={false}
                         handleHideIcon={() => setHidden(!hidden)}
                         isHidden={hidden}
                         register={register}
                         required={true}
-                        errorMessage={errors.password && errors.password?.message}
+                        errorMessage={errors?.password && errors?.password?.message?.toString()}
+                        inputHasValue={showIcon ? true : false}
                     />
                     <Button
                         handleClick={handleLogin} 
@@ -51,7 +73,6 @@ export const LoginForm = () => {
                     />
                     <section className='pt-4 text-xs md:text-sm'>
                         <p className='pb-2'> Forgot your password? <Link href='reset' className='underline'> Reset here. </Link> </p>
-                        <p> Don&apos;t have an account? <Link href='register' className='underline'> Register now. </Link> </p>
                     </section>
                     </form>
             </section>

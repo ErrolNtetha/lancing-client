@@ -1,15 +1,24 @@
-/** @type {import('jest').Config} */
 import nextJest from 'next/jest.js';
 
 const createJestConfig = nextJest({
-    dir: './',
+    dir: './'
 });
 
+/** @type {import('jest').Config} */
 const config = {
-    testEnvironment: 'jest-environment-jsdom',
-    transformIgnorePatterns: ['<rootDir>/node_modules/', '/node_modules'],
+    testEnvironment: "jest-environment-jsdom",
+    testEnvironmentOptions: {
+        customExportConditions: [] // don't load 'browser' fields
+    },
+    transformIgnorePatterns: [
+        "/node_modules/(?!d3-format)",
+        "/node_modules/",
+    ],
     transform: {
-        '/node_modules/': 'babel-jest',
+        "/node_modules/": "babel-jest"
+    },
+    moduleNameMapper: {
+        "d3-format": "d3-format",
     }
 };
 

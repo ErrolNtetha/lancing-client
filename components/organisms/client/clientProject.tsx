@@ -48,13 +48,14 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
             <section>
                 <section className='flex items-center justify-between mb-4'>
                     <span className='flex gap-3'>
-                        <Image
-                            src={avatar}
-                            alt={`${firstName}&apos;s avatar`}
-                            width={60}
-                            height={60}
-                            className='rounded-full ring-1 ring-gray object-cover'
-                        />
+                        <span className='relative w-[60px] h-[60px]'>
+                            <Image
+                                src={avatar}
+                                alt={`${firstName}&apos;s avatar`}
+                                fill={true}
+                                className='rounded-full ring-1 ring-gray object-cover'
+                            />
+                        </span>
                         <span>
                             <h2 className='text-sm md:text-lg font-semibold'>{firstName} {lastName} </h2>
                             <p className='flex items-center gap-1'> {occupation} {verifiedPayment && <MdVerifiedUser />} </p>
@@ -70,9 +71,9 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                         <span className='flex items-center gap-1 hover:cursor-pointer'> <FiImage /> {photos} photos </span>|
                         <span className='py-2 text-[.7rem]'> Budget: R{formatNumber(budget)} </span>
                     </span>
-                    <span className='border-2 border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>
+                    <button className='border-2 border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>
                         Send Proposal
-                    </span>
+                    </button>
                     { modal && 
                     <Modal>
                         <Proposal

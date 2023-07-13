@@ -9,20 +9,9 @@ export const Registration = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [firstPage, setFirstPage] = useState<boolean | null>(true);
     const [lastPage, setLastPage] = useState(false);
-    const { register, handleSubmit, getValues } = useForm();
+    const { register, watch, handleSubmit, getValues } = useForm();
+    const showIcon = watch('password');
  
-    useEffect(() => {
-        if (currentPage === forms.length - 1) {
-            setLastPage(true);
-        } else if (currentPage === 0) {
-            setLastPage(false);
-            setFirstPage(true);
-        }
-        else {
-            setFirstPage(true);
-        }
-    }, [currentPage]);
-
     const handleNext = () => {
         if (currentPage !== (forms.length - 1)) {
             setCurrentPage((prevState) => prevState + 1);
@@ -80,18 +69,34 @@ export const Registration = () => {
             component={navButton}
             register={register}
             account={getValues('accountType')}
+            watch={watch('accountType')}
         />,
         <PersonalDetails 
             key={0} 
             register={register} 
             component={navButton} 
+            watch={watch('password')}
         />, 
         <ProjectsPortfolio 
             key={1}
-            component={navButton}
             register={register}
+            component={navButton}
         />
     ];
+
+
+    useEffect(() => {
+        if (currentPage === forms.length - 1) {
+            setLastPage(true);
+        } else if (currentPage === 0) {
+            setLastPage(false);
+            setFirstPage(true);
+        }
+        else {
+            setFirstPage(true);
+        }
+    }, [currentPage, forms.length]);
+
     
     return (
         <React.Fragment> 
