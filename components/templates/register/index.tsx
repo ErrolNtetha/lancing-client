@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { Button } from '../../atoms/button';
 import { Navigation } from '../../organisms/navigation';
-import { ProjectsPortfolio, PersonalDetails, AccountType } from '../../organisms/register';
+import { PersonalDetails, AccountType } from '../../organisms/register';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../../firebaseConfig';
@@ -117,21 +117,15 @@ export const Registration = () => {
             key={2}
             component={navButton}
             register={register}
-            account={getValues('accountType')}
+            account={watch('accountType')}
         />,
         <PersonalDetails 
             key={0} 
             register={register} 
             component={navButton} 
             watch={showIcon}
-        />, 
-        <ProjectsPortfolio
-            key={1}
-            register={register}
-            component={navButton}
-        />
+        />,
     ];
-
 
     useEffect(() => {
         if (currentPage === forms.length - 1) {

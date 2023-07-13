@@ -13,7 +13,7 @@ export const AccountType = ({ component, register, account }: Props) => {
 
     return (
         <section className='w-full'>
-            <h1 className='text-center font-extrabold text-md'> Account Type </h1>
+            <h1 className='text-center font-extrabold text-lg'> Account Type </h1>
             <section>
                 <section className='my-4'>
                     <input type='radio' value='client' {...register('accountType')} id='client' name='accountType' className='hidden' />
