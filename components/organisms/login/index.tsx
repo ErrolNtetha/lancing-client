@@ -16,6 +16,7 @@ const loginSchema = z.object({
 
 export const LoginForm = () => {
     const [hidden, setHidden] = React.useState(true);
+    const [loading, setLoading] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
     const { register, handleSubmit, watch, formState: { errors } } = useForm({
         resolver: zodResolver(loginSchema)
@@ -25,9 +26,12 @@ export const LoginForm = () => {
 
     const handleLogin = async (data: any) => {
         const { username, password } = data;
+
         if (!(username && password)) {
             return;
         }
+
+        setLoading(true);
 
         try {
             const user = await signInWithEmailAndPassword(auth, username, password);
@@ -51,7 +55,9 @@ export const LoginForm = () => {
                     setErrorMessage('Something went wrong. Please try again later.');
                     break;
             }
-        };
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -86,8 +92,8 @@ export const LoginForm = () => {
                     />
                     <Button
                         handleClick={handleLogin}
-                        buttonText='Login'
-                        className='bg-slate text-white px-3 py-2 mt-3 w-full hover:opacity-80'
+                        buttonText={`${loading ? 'Logging in...' : 'Login'}`}
+                        className={`${loading ? 'bg-gray hover:cursor-not-allowed' : 'bg-slate'} text-white px-3 py-2 mt-3 w-full hover:opacity-80`}
                     />
                     {errorMessage && <p className='text-sm mt-4 text-[red]'> {errorMessage} </p>}
                     <section className='pt-4 text-xs md:text-sm'>
