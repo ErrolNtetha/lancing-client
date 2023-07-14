@@ -24,7 +24,7 @@ export const Input = ({
                 id={id}
                 placeholder={placeholder}
                 autoComplete='off'
-                className={`${disabled && 'hover:cursor-not-allowed'} outline-none w-full`}
+                className={`${disabled && 'hover:cursor-not-allowed'} bg-[inherit] outline-none w-full`}
                 disabled={disabled}
                 {...register(name, { required })}
             />
