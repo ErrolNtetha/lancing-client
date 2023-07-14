@@ -39,7 +39,7 @@ export const LoginForm = () => {
 
         try {
             const { user } = await signInWithEmailAndPassword(auth, username, password);
-            const docRef = doc(db, 'clients', user.uid);
+            const docRef = doc(db, 'users', user.uid);
 
             if (user) {
                 const snapShot = await getDoc(docRef);
@@ -54,6 +54,7 @@ export const LoginForm = () => {
                 router.push('/feed');
             }
         } catch (error: any) {
+            console.log(error);
             switch (error.code) {
                 case 'auth/user-not-found':
                     setErrorMessage('Email or password incorrect.');
