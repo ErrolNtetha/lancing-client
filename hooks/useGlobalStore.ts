@@ -31,7 +31,7 @@ const myProfile: Profile = {
         },
     }
 
-export const useProfileStore = create(
+export const useProfileStore: any = create(
     persist(
         (set) => ({
             profile: {...myProfile},
