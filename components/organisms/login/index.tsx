@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../firebaseConfig';
 import { z } from 'zod';
+import { useRouter } from 'next/navigation';
 
 const loginSchema = z.object({
     username: z.string().email({ message: 'Your email is invalid.' }),
@@ -15,10 +16,12 @@ const loginSchema = z.object({
 
 export const LoginForm = () => {
     const [hidden, setHidden] = React.useState(true);
+    const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
     const { register, handleSubmit, watch, formState: { errors } } = useForm({
         resolver: zodResolver(loginSchema)
     });
     const showIcon = watch('password');
+    const router = useRouter();
 
     const handleLogin = async (data: any) => {
         const { username, password } = data;
@@ -27,15 +30,30 @@ export const LoginForm = () => {
         }
 
         try {
-            const response = await signInWithEmailAndPassword(auth, username, password);
-            console.log('Response: ', response);
-        } catch (error) {
-            if (error) {
-                console.log('Erorr message: ', error);
+            const user = await signInWithEmailAndPassword(auth, username, password);
+            if (user) {
+                // logic to save user profile in the Zustand state
+
+                // redirect user to the /feed page
+                router.push('/feed');
+            }
+        } catch (error: any) {
+            switch (error.code) {
+                case 'auth/user-not-found':
+                    setErrorMessage('Email or password incorrect.');
+                    break;
+
+                case 'auth/wrong-password':
+                    setErrorMessage('Email or password incorrect.');
+                    break;
+
+                default:
+                    setErrorMessage('Something went wrong. Please try again later.');
+                    break;
             }
         };
     };
-   
+
     return (
         <section className='flex justify-center items-center bg-hero-bg bg-cover h-[95vh]'>
             <section className='w-[20rem] md:w-[23rem]'>
@@ -67,14 +85,15 @@ export const LoginForm = () => {
                         inputHasValue={showIcon ? true : false}
                     />
                     <Button
-                        handleClick={handleLogin} 
-                        buttonText='Login' 
+                        handleClick={handleLogin}
+                        buttonText='Login'
                         className='bg-slate text-white px-3 py-2 mt-3 w-full hover:opacity-80'
                     />
+                    {errorMessage && <p className='text-sm mt-4 text-[red]'> {errorMessage} </p>}
                     <section className='pt-4 text-xs md:text-sm'>
                         <p className='pb-2'> Forgot your password? <Link href='reset' className='underline'> Reset here. </Link> </p>
                     </section>
-                    </form>
+                </form>
             </section>
         </section>
     );
