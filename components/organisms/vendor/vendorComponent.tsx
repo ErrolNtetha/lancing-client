@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import React, { useState } from 'react';
 import { FiSend, FiUser } from 'react-icons/fi';
+import { Avatar } from '../../molecules/image';
 import { StarRating } from '../../molecules/star-rating';
 import { Modal } from '../modal';
 import { EnquiryModal } from './enquiryModal';
@@ -28,23 +28,20 @@ export const VendorComponent = ({
     const [viewPortfolio, setViewPortfolio] = useState(false);
 
     const handleModal = () => setModal(!modal);
+
     return (
         <section className='text-black text-[.8rem] md:text-sm my-3 border border-gray bg-white shadow-md w-full md:w-[35rem] max-h-max p-2'>
             <section>
                 <section className='flex items-center justify-between mb-4'>
                     <span className='flex gap-2'>
-                        <span className='relative w-[60px] h-[60px]'>
-                            <Image
-                                src={avatar}
-                                alt={`${recipient.firstName}&apos;s avatar`}
-                                fill={true}
-                                className='rounded-full ring-1 ring-gray object-cover'  
-                            />
-                        </span>
+                        <Avatar
+                            src={avatar}
+                            alt={`${recipient.firstName}&apos;s avatar`}
+                            size={12}
+                        />
                         <span>
                             <h2 className='text-md md:text-lg font-semibold'>{recipient.firstName} {recipient.lastName} </h2>
                             <p className='flex items-center gap-1'> {service} </p>
-                            <p className='flex items-center gap-1'></p>
                         </span>
                     </span>
                     { /* <span className='self-start'> <FiMoreHorizontal /> </span> */ }
@@ -54,13 +51,13 @@ export const VendorComponent = ({
                 <hr className='opacity-10 mb-2' />
                 <section className='flex justify-between items-center text-sm'>
                     <span className='flex items-center gap-2'>
-                        <span className='flex items-center gap-1 hover:cursor-pointer'onClick={() => setViewPortfolio(!viewPortfolio)}> <FiUser /> View </span>|
+                        <button className='flex items-center gap-1 hover:cursor-pointer'onClick={() => setViewPortfolio(!viewPortfolio)}> <FiUser /> View </button>|
                         <span className='py-2 text-[.7rem]'> From: R2,000 </span>
                     </span>
 
-                    <span className='flex items-center gap-2 border-2 border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>
+                    <button className='flex items-center gap-2 border-2 border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>
                         <FiSend /> Enquire
-                    </span>
+                    </button>
                     {viewPortfolio && (
                         <Modal>
                             <PortfolioModal 

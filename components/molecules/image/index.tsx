@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 
-type ImageProps = {
+export type ImageProps = {
     size: number;
     src: string;
     alt: string;
@@ -18,5 +18,13 @@ export const ImageSrc = ({ src, alt, isRounded = true, size }: ImageProps) => {
                 alt={alt}
             />
         </span>
+    );
+};
+
+export const Avatar = ({ src, size, alt }: ImageProps) => {
+    return (
+        src 
+        ? <ImageSrc size={size} src={src} alt={alt} /> 
+        : <ImageSrc size={size} src='/assets/images/defaultAvatar.png' alt={alt} />
     );
 };

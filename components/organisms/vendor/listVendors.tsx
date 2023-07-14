@@ -20,6 +20,18 @@ export const ListVendors = () => {
         },
         {
             recipient: {
+                firstName: 'Dave',
+                lastName: 'Johnson',
+            },
+            service: '3D Artist',
+            reviews: 3,
+            rating: 5,
+            pitchText: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati fugiat est hic. Voluptatem quam consequatur hic harum qui earum ipsa omnis quaerat animi. Ipsam facere impedit laborum delectus nostrum magnam!',
+            avatar: '',
+            banned: false,
+        },
+        {
+            recipient: {
                 firstName: 'John',
                 lastName: 'Smith',
             },
@@ -32,8 +44,8 @@ export const ListVendors = () => {
         }
     ]
     return (
-        <section>
+        <React.Fragment>
             {vendors.map((v) => <VendorComponent key={uuidv4()} {...v} />)}
-        </section>
+        </React.Fragment>
     );
 };
