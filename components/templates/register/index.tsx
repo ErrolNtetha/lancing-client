@@ -13,7 +13,7 @@ export const Registration = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [firstPage, setFirstPage] = useState<boolean | null>(true);
     const [lastPage, setLastPage] = useState(false);
-    const { register, watch, handleSubmit, getValues } = useForm();
+    const { register, watch, handleSubmit } = useForm();
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<null | string>(null);
     const router = useRouter();
@@ -46,7 +46,8 @@ export const Registration = () => {
             email,
             password,
             firstName,
-            lastName
+            lastName,
+            accountType
         } = data; 
 
         setLoading(true);
@@ -54,14 +55,15 @@ export const Registration = () => {
 
         try {
             const { user } = await createUserWithEmailAndPassword(auth, email, password);
-            const clientsRef = doc(db, 'clients', user.uid);
+            const userRef = doc(db, 'users', user.uid);
 
             if (user && auth.currentUser) {
                 await updateProfile(auth.currentUser, { displayName: `${firstName} ${lastName}`});
-                await setDoc(clientsRef, {
+                await setDoc(userRef, {
                     email: user.email,
                     emailVerified: user.emailVerified,
-                    photoURL: user.photoURL,
+                    avatar: user.photoURL,
+                    isClient: accountType === 'client',
                     name: {
                         firstName,
                         lastName
