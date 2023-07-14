@@ -5,9 +5,11 @@ import { FormLabel } from '../../molecules/formLabel';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../firebaseConfig';
+import { auth, db } from '../../../firebaseConfig';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
+import { useProfileStore } from '../../../hooks/useGlobalStore';
+import { doc, getDoc } from 'firebase/firestore';
 
 const loginSchema = z.object({
     username: z.string().email({ message: 'Your email is invalid.' }),
@@ -23,6 +25,7 @@ export const LoginForm = () => {
     });
     const showIcon = watch('password');
     const router = useRouter();
+    const addUser = useProfileStore((state: any) => state.addProfile);
 
     const handleLogin = async (data: any) => {
         const { username, password } = data;
@@ -32,11 +35,20 @@ export const LoginForm = () => {
         }
 
         setLoading(true);
+        setErrorMessage(null);
 
         try {
-            const user = await signInWithEmailAndPassword(auth, username, password);
+            const { user } = await signInWithEmailAndPassword(auth, username, password);
+            const docRef = doc(db, 'clients', user.uid);
+
             if (user) {
-                // logic to save user profile in the Zustand state
+                const snapShot = await getDoc(docRef);
+                if (snapShot.exists()) {
+                    addUser(snapShot.data())
+                } else {
+                    setErrorMessage('Something went wrong logging you in.');
+                    return;
+                }
 
                 // redirect user to the /feed page
                 router.push('/feed');
