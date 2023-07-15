@@ -11,7 +11,7 @@ type MenuProps = {
         firstName: string;
         lastName: string;
     },
-    avatar: string | null;
+    avatar: string;
 };
 
 export const MobileMenu = ({ handleMenuToggle, isLoggedIn, name, avatar }: MenuProps) => {
@@ -29,7 +29,7 @@ export const MobileMenu = ({ handleMenuToggle, isLoggedIn, name, avatar }: MenuP
                 <section className='flex p-2 items-center mb-3 divide divide-gray gap-2'>
                     <Avatar
                         src={avatar}
-                        size={16}
+                        size={20}
                         alt={`${firstName} avatar`}
                     />
                     <span className='self-start'>
