@@ -12,22 +12,29 @@ import { LoginButton } from '../login/loginButton';
 import { MobileMenu } from './mobileMenu';
 import { UserHead } from './userHead';
 import { useAuth } from '../../../hooks/useAuth';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../../firebaseConfig';
 
 export const Header = () => {
     const [nav, setNav] = useState(false);
     const { avatar, name, isLoggedIn } = useProfileStore().profile;
     const [loggedIn, setLoggedIn] = useState(isLoggedIn);
     const router = useRouter();
-    const auth = useAuth();
+    const userAuth = useAuth();
 
     const handleLogIn = () => {
         setLoggedIn(!loggedIn);
         router.push('/feed')
     };
 
-    const handleLogout = () => {
-        setNav(!nav);
-        router.push('/login')
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            setNav(!nav);
+            router.push('/login');
+        } catch(error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -56,15 +63,15 @@ export const Header = () => {
                         </li>
                     </ul>
                 </section>
-                <span className='hidden md:block ml-4'> {auth ? <UserHead /> : <LoginButton />} </span>
+                <span className='hidden md:block ml-4'> {userAuth ? <UserHead /> : <LoginButton />} </span>
                 {nav && (
                     <section className='fixed bg-slate top-0 left-0 bottom-0 w-full'>
-                        <MobileMenu isLoggedIn={auth} avatar={avatar} name={name} handleMenuToggle={() => setNav(!nav)} />
+                        <MobileMenu isLoggedIn={userAuth} avatar={avatar} name={name} handleMenuToggle={() => setNav(!nav)} />
                         <section className='flex items-center justify-center absolute w-full left-0 bottom-4'>
                             <Button
                                 className='border-2 border-white font-extrabold w-full p-2 my-1 mx-4'
-                                buttonText={`${auth ? 'Logout' : 'Login'}`}
-                                handleClick={() => `${auth ? handleLogout() : handleLogIn()}`}
+                                buttonText={`${userAuth ? 'Logout' : 'Login'}`}
+                                handleClick={() => `${userAuth ? handleLogout() : handleLogIn()}`}
                             />
                         </section>
                     </section>
