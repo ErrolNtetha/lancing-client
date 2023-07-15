@@ -1,7 +1,7 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { FiX } from 'react-icons/fi';
+import { Avatar } from '../../molecules/image';
 import { Nav } from '../../molecules/nav';
 
 type MenuProps = {
@@ -11,7 +11,7 @@ type MenuProps = {
         firstName: string;
         lastName: string;
     },
-    avatar: string;
+    avatar: string | null;
 };
 
 export const MobileMenu = ({ handleMenuToggle, isLoggedIn, name, avatar }: MenuProps) => {
@@ -27,12 +27,10 @@ export const MobileMenu = ({ handleMenuToggle, isLoggedIn, name, avatar }: MenuP
             </button>
             {isLoggedIn && (
                 <section className='flex p-2 items-center mb-3 divide divide-gray gap-2'>
-                    <Image 
+                    <Avatar
                         src={avatar}
-                        width={60}
-                        height={60}
+                        size={16}
                         alt={`${firstName} avatar`}
-                        className='rounded-full ring-gray object-cover'
                     />
                     <span className='self-start'>
                         <h3 className='font-semibold'> {firstName} {lastName} </h3>
