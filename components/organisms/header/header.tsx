@@ -11,13 +11,14 @@ import { Button } from '../../atoms/button';
 import { LoginButton } from '../login/loginButton';
 import { MobileMenu } from './mobileMenu';
 import { UserHead } from './userHead';
+import { useAuth } from '../../../hooks/useAuth';
 
 export const Header = () => {
     const [nav, setNav] = useState(false);
-    const [loggedIn, setLoggedIn] = useState(false);
-    const p = useProfileStore();
-    const { profile } = p;
+    const { avatar, name, isLoggedIn } = useProfileStore().profile;
+    const [loggedIn, setLoggedIn] = useState(isLoggedIn);
     const router = useRouter();
+    const auth = useAuth();
 
     const handleLogIn = () => {
         setLoggedIn(!loggedIn);
@@ -55,15 +56,15 @@ export const Header = () => {
                         </li>
                     </ul>
                 </section>
-                <span className='hidden md:block ml-4'> {loggedIn ? <UserHead /> : <LoginButton />} </span>
+                <span className='hidden md:block ml-4'> {auth ? <UserHead /> : <LoginButton />} </span>
                 {nav && (
                     <section className='fixed bg-slate top-0 left-0 bottom-0 w-full'>
-                        <MobileMenu isLoggedIn={loggedIn} avatar={profile.avatar} name={profile.name} handleMenuToggle={() => setNav(!nav)} />
+                        <MobileMenu isLoggedIn={auth} avatar={avatar} name={name} handleMenuToggle={() => setNav(!nav)} />
                         <section className='flex items-center justify-center absolute w-full left-0 bottom-4'>
                             <Button
                                 className='border-2 border-white font-extrabold w-full p-2 my-1 mx-4'
-                                buttonText={`${loggedIn ? 'Logout' : 'Login'}`}
-                                handleClick={() => `${loggedIn ? handleLogout() : handleLogIn()}`}
+                                buttonText={`${auth ? 'Logout' : 'Login'}`}
+                                handleClick={() => `${auth ? handleLogout() : handleLogIn()}`}
                             />
                         </section>
                     </section>
