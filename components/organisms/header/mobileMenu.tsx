@@ -6,7 +6,7 @@ import { Nav } from '../../molecules/nav';
 
 type MenuProps = {
     handleMenuToggle: React.MouseEventHandler<HTMLSpanElement>;
-    isLoggedIn: boolean;
+    isLoggedIn: boolean | null;
     name: {
         firstName: string;
         lastName: string;
@@ -19,7 +19,12 @@ export const MobileMenu = ({ handleMenuToggle, isLoggedIn, name, avatar }: MenuP
 
     return (
         <section className='relative p-3'>
-            <button className='absolute right-0 p-2 hover:cursor-pointer text-[1.8rem]' onClick={handleMenuToggle}> <FiX /> </button>
+            <button
+                className='absolute right-0 p-2 hover:cursor-pointer text-[1.8rem]'
+                onClick={handleMenuToggle}
+            >
+                <FiX />
+            </button>
             {isLoggedIn && (
                 <section className='flex p-2 items-center mb-3 divide divide-gray gap-2'>
                     <Image 
@@ -31,7 +36,9 @@ export const MobileMenu = ({ handleMenuToggle, isLoggedIn, name, avatar }: MenuP
                     />
                     <span className='self-start'>
                         <h3 className='font-semibold'> {firstName} {lastName} </h3>
-                        <Link href='https://github.com/ErrolNtetha' className=''> mphumi@outlook.com </Link>
+                        <Link href='https://github.com/ErrolNtetha'>
+                            mphumi@outlook.com
+                        </Link>
                     </span>
                 </section>
             )}
