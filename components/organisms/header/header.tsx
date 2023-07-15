@@ -17,14 +17,12 @@ import { auth } from '../../../firebaseConfig';
 
 export const Header = () => {
     const [nav, setNav] = useState(false);
-    const { avatar, name, isLoggedIn } = useProfileStore().profile;
-    const [loggedIn, setLoggedIn] = useState(isLoggedIn);
+    const { avatar, name } = useProfileStore().profile;
     const router = useRouter();
     const userAuth = useAuth();
 
     const handleLogIn = () => {
-        setLoggedIn(!loggedIn);
-        router.push('/feed')
+        router.push('/login')
     };
 
     const handleLogout = async () => {
