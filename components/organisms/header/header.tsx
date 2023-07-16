@@ -66,7 +66,7 @@ export const Header = () => {
                     <section className='fixed bg-slate top-0 left-0 bottom-0 w-full'>
                         <MobileMenu
                             auth={userAuth}
-                            email={userAuth?.user?.email}
+                            email={userAuth?.email}
                             avatar={avatar}
                             name={name}
                             handleMenuToggle={() => setNav(!nav)}
