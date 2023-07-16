@@ -64,7 +64,7 @@ export const Header = () => {
                 <span className='hidden md:block ml-4'> {userAuth ? <UserHead /> : <LoginButton />} </span>
                 {nav && (
                     <section className='fixed bg-slate top-0 left-0 bottom-0 w-full'>
-                        <MobileMenu isLoggedIn={userAuth} avatar={avatar} name={name} handleMenuToggle={() => setNav(!nav)} />
+                        <MobileMenu auth={userAuth} email={userAuth?.user?.email} avatar={avatar} name={name} handleMenuToggle={() => setNav(!nav)} />
                         <section className='flex items-center justify-center absolute w-full left-0 bottom-4'>
                             <Button
                                 className='border-2 border-white font-extrabold w-full p-2 my-1 mx-4'
