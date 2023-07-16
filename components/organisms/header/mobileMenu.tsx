@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import React from 'react';
 import { FiX } from 'react-icons/fi';
 import { Avatar } from '../../molecules/image';
@@ -6,15 +5,16 @@ import { Nav } from '../../molecules/nav';
 
 type MenuProps = {
     handleMenuToggle: React.MouseEventHandler<HTMLSpanElement>;
-    isLoggedIn: boolean | null;
+    auth: object | null;
     name: {
         firstName: string;
         lastName: string;
     },
+    email: string;
     avatar: string;
 };
 
-export const MobileMenu = ({ handleMenuToggle, isLoggedIn, name, avatar }: MenuProps) => {
+export const MobileMenu = ({ handleMenuToggle, auth, name, email, avatar }: MenuProps) => {
     const { firstName, lastName } = name;
 
     return (
@@ -25,7 +25,7 @@ export const MobileMenu = ({ handleMenuToggle, isLoggedIn, name, avatar }: MenuP
             >
                 <FiX />
             </button>
-            {isLoggedIn && (
+            {auth && (
                 <section className='flex p-2 items-center mb-3 divide divide-gray gap-2'>
                     <Avatar
                         src={avatar}
@@ -34,9 +34,7 @@ export const MobileMenu = ({ handleMenuToggle, isLoggedIn, name, avatar }: MenuP
                     />
                     <span className='self-start'>
                         <h3 className='font-semibold'> {firstName} {lastName} </h3>
-                        <Link href='https://github.com/ErrolNtetha'>
-                            mphumi@outlook.com
-                        </Link>
+                        <p className='text-sm'> {email} </p>
                     </span>
                 </section>
             )}
