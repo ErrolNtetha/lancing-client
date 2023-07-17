@@ -41,7 +41,7 @@ export const Subscribe = () => {
                     name='lastName'
                     type='text'
                     placeholder='Enter your last name'
-                    labelName='First Name'
+                    labelName='Last Name'
                     required={true}
                     register={register}
                 />
