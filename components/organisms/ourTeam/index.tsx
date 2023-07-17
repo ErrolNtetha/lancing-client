@@ -7,16 +7,16 @@ export const OurTeam = () => {
             <section className='flex items-center justify-center flex-col text-white'>
                 <ImageSrc
                     src='/assets/images/errol.png'
-                    size={20}
+                    size={24}
                     alt='Smiling picture of the creator of Duello'
                 />
                 <section className='flex justify-center items-center mt-4 flex-col'>
-                    <h1 className='font-extrabold'> Mphumeleli Errol Ntetha </h1>
-                    <p> Creator of Duello </p>
+                    <h1 className='font-extrabold text-xl'> Mphumeleli Errol Ntetha </h1>
+                    <p className='text-md'> Creator of Duello </p>
                 </section>
             </section>
             <span className='flex gap-y-6'>
-                <p className='m-6 text-white text-sm md:text-lg max-w-md'> 
+                <p className='m-6 text-white text-md md:text-lg max-w-md'> 
                     <span className='text-white font-extrabold text-lg'>&lsquo;&lsquo;</span>
                      I have been falling short of people who will do my
                     tedious tasks that I have no idea about, and not knowing where to find them. That is why I have
