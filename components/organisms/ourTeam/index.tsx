@@ -7,7 +7,7 @@ export const OurTeam = () => {
             <section className='flex items-center justify-center flex-col text-white'>
                 <ImageSrc
                     src='/assets/images/errol.png'
-                    size='w-16 h-16'
+                    size='w-28 h-28'
                     alt='Smiling picture of the creator of Duello'
                 />
                 <section className='flex justify-center items-center mt-4 flex-col'>
