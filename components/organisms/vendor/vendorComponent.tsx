@@ -37,7 +37,7 @@ export const VendorComponent = ({
                         <Avatar
                             src={avatar}
                             alt={`${recipient.firstName}&apos;s avatar`}
-                            size={12}
+                            size='w-12 h-12'
                         />
                         <span>
                             <h2 className='text-md md:text-lg font-semibold'>{recipient.firstName} {recipient.lastName} </h2>

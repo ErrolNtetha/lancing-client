@@ -29,7 +29,7 @@ export const MobileMenu = ({ handleMenuToggle, auth, name, email, avatar }: Menu
                 <section className='flex p-2 items-center mb-3 divide divide-gray gap-2'>
                     <Avatar
                         src={avatar}
-                        size={20}
+                        size='w-12 h-12'
                         alt={`${firstName} avatar`}
                     />
                     <span className='self-start'>
