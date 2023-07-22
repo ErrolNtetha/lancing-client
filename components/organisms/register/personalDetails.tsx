@@ -1,14 +1,16 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { FieldErrors, FieldValues } from 'react-hook-form';
 import { FormLabel } from '../../molecules/formLabel';
 
 interface IProps {
     register: Function;
     component: React.ReactNode;
     watch: Function;
+    errorMessage: FieldErrors<FieldValues>;
 }
 
-export const PersonalDetails = ({ component, register, watch }: IProps) => {
+export const PersonalDetails = ({ component, errorMessage, register, watch }: IProps) => {
     const [hidden, setHidden] = useState(true);
 
     return (
@@ -21,6 +23,7 @@ export const PersonalDetails = ({ component, register, watch }: IProps) => {
                     name='firstName'
                     register={register}
                     required={true}
+                    errorMessage={errorMessage?.firstName?.message?.toString()}
                 />
                 <FormLabel
                     type='text'
@@ -29,6 +32,7 @@ export const PersonalDetails = ({ component, register, watch }: IProps) => {
                     name='lastName'
                     register={register}
                     required={true}
+                    errorMessage={errorMessage?.lastName?.message?.toString()}
                 />
                 <FormLabel
                     type='email'
@@ -37,6 +41,7 @@ export const PersonalDetails = ({ component, register, watch }: IProps) => {
                     name='email'
                     register={register}
                     required={true}
+                    errorMessage={errorMessage?.email?.message?.toString()}
                 />
                 <FormLabel
                     type={hidden ? 'password' : 'text'}
@@ -49,6 +54,7 @@ export const PersonalDetails = ({ component, register, watch }: IProps) => {
                     hasHideIcon={false}
                     isHidden={hidden}
                     inputHasValue={watch ? true : false}
+                    errorMessage={errorMessage?.password?.message?.toString()}
                 />
                 <section className='mt-4 block'>
                     {component}

@@ -8,12 +8,24 @@ import { PersonalDetails, AccountType } from '../../organisms/register';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../../firebaseConfig';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const registrationSchema = z.object({
+    accountType: z.string(),
+    firstName: z.string().min(2, { message: 'First name must be at least 2 characters long.' }),
+    lastName: z.string().min(3, { message: 'Last name must be at least 3 characters long.' }),
+    email: z.string().email({ message: 'Email is invalid.' }),
+    password: z.string().min(6, { message: 'Password must be at least 6 characters long.' }),
+});
 
 export const Registration = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [firstPage, setFirstPage] = useState<boolean | null>(true);
     const [lastPage, setLastPage] = useState(false);
-    const { register, watch, handleSubmit } = useForm();
+    const { register, watch, handleSubmit, formState: { errors } } = useForm({
+        resolver: zodResolver(registrationSchema)
+    });
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<null | string>(null);
     const router = useRouter();
@@ -42,6 +54,10 @@ export const Registration = () => {
     };
 
     const onSubmit = async (data: any) => {
+        if (!data) {
+            return;
+        }
+
         const { 
             email,
             password,
@@ -73,9 +89,14 @@ export const Registration = () => {
             router.push('/feed');
 
         } catch (error: any) {
+            console.log(error);
             switch(error.code) {
                 case 'auth/email-already-in-use':
                     setErrorMessage('This email has already been used. Try a different email.');
+                    break;
+
+                case 'auth/network-request-failed':
+                    setErrorMessage('Thre was a problem with your network. Check if you have internet connection.');
                     break;
 
                 default:
@@ -105,8 +126,10 @@ export const Registration = () => {
                     />
                 )}
                 <Button
+                    type={lastPage ? 'submit' : 'button' }
                     buttonText={buttonText}
-                    handleClick={() => handleClick}
+                    // @ts-ignore
+                    handleClick={() => lastPage ? onSubmit() : handleNext()}
                     disabled= {loading ? true : false}
                     className={`hover:opacity-80 px-4 py-2 text-white ${loading ? 'bg-gray hover:cursor-not-allowed' : 'bg-slate hover:cursor-pointer'}`}
                 />
@@ -121,11 +144,12 @@ export const Registration = () => {
             register={register}
             account={watch('accountType')}
         />,
-        <PersonalDetails 
+        <PersonalDetails
             key={0} 
             register={register} 
             component={navButton} 
             watch={showIcon}
+            errorMessage={errors}
         />,
     ];
 
@@ -148,7 +172,7 @@ export const Registration = () => {
             <section className='flex justify-around gap-8 px-6 pt-2 bg-cover bg-hero-bg'>
                 <Navigation handleSwitch={() => setCurrentPage(1)} />
                 <section className='py-4'>
-                    <form onSubmit={handleSubmit(handleClick)} className='shadow-2xl text-xs sm:text-sm bg-white h-max w-[20] md:w-[25rem] px-6 py-6'>
+                    <form onSubmit={handleSubmit(onSubmit)} className='shadow-2xl text-xs sm:text-sm bg-white h-max w-[20] md:w-[25rem] px-6 py-6'>
                         {forms[currentPage]}
                         {errorMessage && <section className=' text-center text-[red] py-4 flex justify-center mt-4'>
                             <p> {errorMessage} </p>
