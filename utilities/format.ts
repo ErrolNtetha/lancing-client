@@ -1,4 +1,6 @@
 import { format } from 'd3-format';
+// import SA from 'd3-format/locale/ar-SA.json';
+
 
 export const formatNumber = (number: number) => {
     const f = format(',.2r')(number);
@@ -6,6 +8,6 @@ export const formatNumber = (number: number) => {
 }
 
 export const formatAmount = (amount: number) => {
-    const f = format('$.2f')(amount);
+    const f = format(',.2f')(amount);
     return f;
 }

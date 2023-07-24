@@ -11,7 +11,7 @@ export const CreatePost = ({ handlePost }: CreatePostProps) => {
             onClick={handlePost}
         >
             <section className='bg-slate p-2 m-2 text-white font-semibold text-center'> 
-                Create New Post
+                Create New Project
             </section>
         </button>
     );

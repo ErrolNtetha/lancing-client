@@ -1,21 +1,36 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { addDoc, collection } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { db } from '../../../firebaseConfig';
 import { Button } from '../../atoms/button';
 import { FormLabel } from '../formLabel';
+
+const subscribeSchema = z.object({
+    firstName: z.string().min(3, { message: 'First name is too short.' }),
+    email: z.string().email({ message: 'Email is invalid.' }),
+});
 
 export const Subscribe = () => {
     const [response, setResponse] = useState('');
     const [error, setError] = useState(false);
     const className = 'bg-slate hover:bg-gray hover:text-black hover:border-black text-white py-2 px-3 mt-8 shadow-lg block';
-    const { register, handleSubmit, formState } = useForm();
+    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+        resolver: zodResolver(subscribeSchema),
+    });
 
     const handleSubscribe = async (data: any) => {
+        if (!data.email) {
+            return;
+        }
+
+        const subscribersCollection = collection(db, 'subscribers');
+
         try {
-            const response = await fetch('http://localhost:3000', {
-                method: 'POST',
-            });
+            await addDoc(subscribersCollection, data);
             setResponse('You have subscribed successfully!')
             
         } catch (error) {
@@ -36,12 +51,13 @@ export const Subscribe = () => {
                     labelName='First Name'
                     required={true}
                     register={register}
+                    errorMessage={errors?.firstName?.message?.toString()}
                 />
                 <FormLabel
                     name='lastName'
                     type='text'
                     placeholder='Enter your last name'
-                    labelName='First Name'
+                    labelName='Last Name'
                     required={true}
                     register={register}
                 />
@@ -52,8 +68,9 @@ export const Subscribe = () => {
                     labelName='Email Address'
                     required={true}
                     register={register}
+                    errorMessage={errors?.email?.message?.toString()}
                 />
-                <Button buttonText={`${formState.isSubmitting ? 'Subscribing...' : 'Subscribe'}`} className={className} handleClick={handleSubscribe} />
+                <Button buttonText={`${isSubmitting ? 'Subscribing...' : 'Subscribe'}`} className={className} handleClick={handleSubscribe} />
             </form>
             {response ? <p className='pt-5 text-[green] block'> {response} </p> : error ? <p className='pt-5 text-[red] block'> There was an error subscribing. </p> : null}
         </section>

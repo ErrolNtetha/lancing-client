@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 
 export type ImageProps = {
-    size: number;
+    size: string;
     src: string;
     alt: string;
     isRounded?: boolean;
@@ -10,7 +10,7 @@ export type ImageProps = {
 
 export const ImageSrc = ({ src, alt, isRounded = true, size }: ImageProps) => {
     return (
-        <span className={`relative w-${size} h-${size}`}>
+        <span className={`relative ${size}`}>
             <Image
                 src={src}
                 fill={true}

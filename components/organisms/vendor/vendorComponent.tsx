@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import React, { useState } from 'react';
 import { FiSend, FiUser } from 'react-icons/fi';
+import { formatAmount } from '../../../utilities/format';
 import { Avatar } from '../../molecules/image';
 import { StarRating } from '../../molecules/star-rating';
 import { Modal } from '../modal';
@@ -15,6 +17,8 @@ type VendorProps = {
     service: string;
     rating: number;
     pitchText: string;
+    amount: number;
+    reviews: number;
 };
 
 export const VendorComponent = ({
@@ -22,7 +26,9 @@ export const VendorComponent = ({
     recipient,
     service,
     rating,
-    pitchText
+    pitchText,
+    amount,
+    reviews
 }: VendorProps) => {
     const [modal, setModal] = useState(false);
     const [viewPortfolio, setViewPortfolio] = useState(false);
@@ -37,22 +43,22 @@ export const VendorComponent = ({
                         <Avatar
                             src={avatar}
                             alt={`${recipient.firstName}&apos;s avatar`}
-                            size={12}
+                            size='w-14 h-14'
                         />
                         <span>
                             <h2 className='text-md md:text-lg font-semibold'>{recipient.firstName} {recipient.lastName} </h2>
-                            <p className='flex items-center gap-1'> {service} </p>
+                            <p className='flex items-center gap-1'> {service} - <Link className='text-[blue]' href='/postId/reviews'> {reviews} reviews </Link> </p>
+                            <p className='flex items-center gap-1'> <StarRating value={rating} /> ({rating}/5) </p>
                         </span>
                     </span>
                     { /* <span className='self-start'> <FiMoreHorizontal /> </span> */ }
                 </section>
                 <p className='mb-4'> {pitchText} </p>
-                <span className='flex items-center gap-2'> <StarRating value={rating} /> ({rating}/5) </span>
                 <hr className='opacity-10 mb-2' />
                 <section className='flex justify-between items-center text-sm'>
                     <span className='flex items-center gap-2'>
                         <button className='flex items-center gap-1 hover:cursor-pointer'onClick={() => setViewPortfolio(!viewPortfolio)}> <FiUser /> View </button>|
-                        <span className='py-2 text-[.7rem]'> From: R2,000 </span>
+                        <span className='py-2 text-[.7rem]'> From: R{formatAmount(amount)} </span>
                     </span>
 
                     <button className='flex items-center gap-2 border-2 border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>

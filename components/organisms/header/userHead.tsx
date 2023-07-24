@@ -6,7 +6,7 @@ export const UserHead = () => {
         <section className='hidden md:flex p-2 align-center justify-center gap-2 hover:cursor-pointer'>
             <ImageSrc
                 src='/assets/images/errol.png'
-                size={10}
+                size='w-12 h-12'
                 alt='Smiling picture of the creator of Duello'
             />
             <span className='flex-col align-center justify-center gap-2'>
