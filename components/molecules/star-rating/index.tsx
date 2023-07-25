@@ -11,7 +11,7 @@ export const StarRating = ({ value, edit = false }: Props) => {
         <ReactStars 
             count={5}
             onChange={(newRating: number) => console.log(newRating)}
-            size={18}
+            size={14}
             color='lightgray'
             activeColor='#000'
             value={value}
