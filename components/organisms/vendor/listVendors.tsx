@@ -21,15 +21,15 @@ export const ListVendors = () => {
         },
         {
             recipient: {
-                firstName: 'Dave',
-                lastName: 'Johnson',
+                firstName: 'Sandile',
+                lastName: 'Dlamini',
             },
             service: 'Logo Designer',
             amount: 4200,
             reviews: 3,
             rating: 5,
             pitchText: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati fugiat est hic. Voluptatem quam consequatur hic harum qui earum ipsa omnis quaerat animi. Ipsam facere impedit laborum delectus nostrum magnam!',
-            avatar: '',
+            avatar: '/images/users/man.jpg',
             banned: false,
         },
         {
