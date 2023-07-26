@@ -6,7 +6,7 @@ import { Avatar } from '../../molecules/image';
 import { StarRating } from '../../molecules/star-rating';
 import { Modal } from '../modal';
 import { EnquiryModal } from './enquiryModal';
-import { PortfolioModal } from './portfolioModal';
+import { PortfolioModal } from './viewPortfolio/';
 
 type VendorProps = {
     recipient: {
@@ -48,7 +48,7 @@ export const VendorComponent = ({
                         <span>
                             <h2 className='text-md md:text-lg font-semibold'>{recipient.firstName} {recipient.lastName} </h2>
                             <p className='flex items-center gap-1'> {service} - <Link className='text-[blue]' href='/postId/reviews'> {reviews} reviews </Link> </p>
-                            <p className='flex items-center gap-1'> <StarRating value={rating} /> ({rating}/5) </p>
+                            <span className='flex items-center gap-1'> <StarRating value={rating} /> ({rating}/5) </span>
                         </span>
                     </span>
                     { /* <span className='self-start'> <FiMoreHorizontal /> </span> */ }
@@ -67,6 +67,8 @@ export const VendorComponent = ({
                     {viewPortfolio && (
                         <Modal>
                             <PortfolioModal 
+                                name={recipient}
+                                title={service}
                                 handleModal={() => setViewPortfolio(!viewPortfolio)}
                             />
                         </Modal> 
