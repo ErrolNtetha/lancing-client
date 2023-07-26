@@ -14,7 +14,7 @@ export const ImageSrc = ({ src, alt, isRounded = true, size }: ImageProps) => {
             <Image
                 src={src}
                 fill={true}
-                className={`${isRounded && 'rounded-full'} ring-1 ring-gray object-cover h-full`}
+                className={`${isRounded && 'rounded-full'} ring-1 ring-black ring-opacity-70 object-cover h-full`}
                 alt={alt}
             />
         </span>
