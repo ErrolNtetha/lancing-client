@@ -18,7 +18,11 @@ type VendorProps = {
     rating: number;
     pitchText: string;
     amount: number;
-    reviews: number;
+    reviews: {
+        firstName: string;
+        lastName: string;
+        comment: string;
+    }[];
 };
 
 export const VendorComponent = ({
@@ -34,6 +38,7 @@ export const VendorComponent = ({
     const [viewPortfolio, setViewPortfolio] = useState(false);
 
     const handleModal = () => setModal(!modal);
+    const clientReviews = !reviews.length ? 'No reviews' : `${reviews.length} reviews`;
 
     return (
         <section className='text-black text-[.8rem] md:text-sm my-3 border border-gray bg-white shadow-md w-full md:w-[35rem] max-h-max p-2'>
@@ -47,7 +52,7 @@ export const VendorComponent = ({
                         />
                         <span>
                             <h2 className='text-md md:text-lg font-semibold'>{recipient.firstName} {recipient.lastName} </h2>
-                            <p className='flex items-center gap-1'> {service} - <Link className='text-[blue]' href='/postId/reviews'> {reviews} reviews </Link> </p>
+                            <p className='flex items-center gap-1'> {service} - <Link className='text-[blue]' href='/postId/reviews'> {clientReviews} </Link> </p>
                             <span className='flex items-center gap-1'> <StarRating value={rating} /> ({rating}/5) </span>
                         </span>
                     </span>
