@@ -24,6 +24,10 @@ export type VendorProps = {
     rating: number;
     description: string;
     amount: number;
+    approved: {
+        isApproved: boolean;
+        approvedDate: null | Date;
+    },
     banned: {
         isBanned: boolean;
         startDate: null | Date;

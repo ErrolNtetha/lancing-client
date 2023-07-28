@@ -9,6 +9,10 @@ export const vendors = [
         rating: 4,
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati fugiat est hic. Voluptatem quam consequatur hic harum qui earum ipsa omnis quaerat animi. Ipsam facere impedit laborum delectus nostrum magnam!',
         avatar: '/images/users/woman.jpg',
+        approved: {
+            isApproved: true,
+            approvedDate: null,
+        },
         banned: {
             isBanned: false,
             startDate: null,
@@ -59,6 +63,10 @@ export const vendors = [
         rating: 5,
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati fugiat est hic. Voluptatem quam consequatur hic harum qui earum ipsa omnis quaerat animi. Ipsam facere impedit laborum delectus nostrum magnam!',
         avatar: '/images/users/man.jpg',
+        approved: {
+            isApproved: false,
+            approvedDate: null,
+        },
         banned: {
             isBanned: false,
             startDate: null,
@@ -78,6 +86,10 @@ export const vendors = [
         rating: 3,
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati fugiat est hic. Voluptatem quam consequatur hic harum qui earum ipsa omnis quaerat animi. Ipsam facere impedit laborum delectus nostrum magnam!',
         avatar: '/images/users/guy.jpg',
+        approved: {
+            isApproved: false,
+            approvedDate: null,
+        },
         banned: {
             isBanned: false,
             startDate: null,
