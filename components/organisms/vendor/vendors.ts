@@ -1,13 +1,13 @@
 export const vendors = [
     {
-        recipient: {
+        names: {
             firstName: 'Snenhlanhla',
             lastName: 'Radebe',
         },
         service: 'Copywriter',
         amount: 5800,
         rating: 4,
-        pitchText: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati fugiat est hic. Voluptatem quam consequatur hic harum qui earum ipsa omnis quaerat animi. Ipsam facere impedit laborum delectus nostrum magnam!',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati fugiat est hic. Voluptatem quam consequatur hic harum qui earum ipsa omnis quaerat animi. Ipsam facere impedit laborum delectus nostrum magnam!',
         avatar: '/images/users/woman.jpg',
         banned: {
             isBanned: false,
@@ -22,16 +22,42 @@ export const vendors = [
                 comment: 'I am happy with the work i was provided. I really recommend Snenhlanhla!',
             },
         ],
+        packages: [
+            {
+                price: 6000,
+                contract: 'flat',
+                type: 'basic',
+                description: 'This is a basic package',
+                discount: {
+                    isActive: true,
+                    startDate: null,
+                    endDate: null,
+                    percentOff: 30
+                }
+            },
+            {
+                price: 9400,
+                contract: 'flat',
+                type: 'standard',
+                description: 'This is a standard package',
+                discount: {
+                    isActive: true,
+                    startDate: null,
+                    endDate: null,
+                    percentOff: 30
+                }
+            },
+        ]
     },
     {
-        recipient: {
+        names: {
             firstName: 'Sandile',
             lastName: 'Dlamini',
         },
         service: 'Logo Designer',
         amount: 4200,
         rating: 5,
-        pitchText: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati fugiat est hic. Voluptatem quam consequatur hic harum qui earum ipsa omnis quaerat animi. Ipsam facere impedit laborum delectus nostrum magnam!',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati fugiat est hic. Voluptatem quam consequatur hic harum qui earum ipsa omnis quaerat animi. Ipsam facere impedit laborum delectus nostrum magnam!',
         avatar: '/images/users/man.jpg',
         banned: {
             isBanned: false,
@@ -40,16 +66,17 @@ export const vendors = [
             reason: null,
         },
         reviews: [],
+        packages: []
     },
     {
-        recipient: {
+        names: {
             firstName: 'John',
             lastName: 'Smith',
         },
         service: 'Video Editor',
         amount: 6500,
         rating: 3,
-        pitchText: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati fugiat est hic. Voluptatem quam consequatur hic harum qui earum ipsa omnis quaerat animi. Ipsam facere impedit laborum delectus nostrum magnam!',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati fugiat est hic. Voluptatem quam consequatur hic harum qui earum ipsa omnis quaerat animi. Ipsam facere impedit laborum delectus nostrum magnam!',
         avatar: '/images/users/guy.jpg',
         banned: {
             isBanned: false,
@@ -59,10 +86,16 @@ export const vendors = [
         },
         reviews: [
             {
-                firstName: 'Mphumeleli',
-                lastName: 'Ntetha',
+                firstName: 'Njabulo',
+                lastName: 'Ndlovu',
+                comment: 'I am happy with the work i was provided. I really recommend Snenhlanhla!',
+            },
+            {
+                firstName: 'Sandile',
+                lastName: 'Dlamini',
                 comment: 'I am happy with the work i was provided. I really recommend Snenhlanhla!',
             },
         ],
+        packages: []
     }
 ];
