@@ -10,6 +10,15 @@ export interface InputProps {
     inputHasValue?: boolean | undefined;
     register: Function;
     disabled?: boolean;
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
+}
+
+export type DateProps = {
+    id?: string;
+    name: string;
+    required: boolean;
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
+    disabled?: boolean;
 }
 
 /* Vendor properties */
@@ -52,3 +61,4 @@ export type VendorProps = {
         }
     }[];
 };
+
