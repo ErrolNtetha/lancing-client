@@ -17,11 +17,13 @@ import { auth } from '../../../firebaseConfig';
 
 export const Header = () => {
     const [nav, setNav] = useState(false);
-    const { avatar, name } = useProfileStore().profile;
+    const { avatar, names } = useProfileStore().profile;
+    const { addProfile } = useProfileStore();
     const router = useRouter();
     const userAuth = useAuth();
 
     const handleLogIn = () => {
+        addProfile();
         router.push('/login')
     };
 
@@ -68,7 +70,7 @@ export const Header = () => {
                             auth={userAuth}
                             email={userAuth?.email}
                             avatar={avatar}
-                            name={name}
+                            names={names}
                             handleMenuToggle={() => setNav(!nav)}
                         />
                         <section className='flex items-center justify-center absolute w-full left-0 bottom-4'>
