@@ -6,7 +6,7 @@ import { Nav } from '../../molecules/nav';
 type MenuProps = {
     handleMenuToggle: React.MouseEventHandler<HTMLSpanElement>;
     auth: object | null;
-    name: {
+    names: {
         firstName: string;
         lastName: string;
     },
@@ -14,8 +14,8 @@ type MenuProps = {
     avatar: string;
 };
 
-export const MobileMenu = ({ handleMenuToggle, auth, name, email, avatar }: MenuProps) => {
-    const { firstName, lastName } = name;
+export const MobileMenu = ({ handleMenuToggle, auth, names, email, avatar }: MenuProps) => {
+    const { firstName, lastName } = names;
 
     return (
         <section className='relative p-3'>
