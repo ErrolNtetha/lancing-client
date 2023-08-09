@@ -1,10 +1,10 @@
-import Image from 'next/image';
 import React, { useState } from 'react';
 import { formatNumber } from '../../../utilities/format';
 import { Modal } from '../modal';
 import { Proposal } from './proposal';
 import { MdVerifiedUser } from 'react-icons/md';
-import { FiImage } from 'react-icons/fi';
+import { FiActivity, FiBriefcase, FiCalendar, FiClock, FiDollarSign } from 'react-icons/fi';
+import { formatDistance } from 'date-fns';
 
 type ClientProps = {
     name: {
@@ -12,12 +12,19 @@ type ClientProps = {
         lastName: string;
     },
     occupation: string;
-    projectDescription: string;
-    projectDuration: string;
     createdAt: string;
     photos: number;
     budget: number;
     avatar: string;
+    project: {
+        title: string;
+        description: string;
+        deadline: Date | string | null;
+        contract: string;
+        budget: number;
+        skillLevel: string;
+        files: number | null;
+    };
     verifiedPayment: boolean;
 }
 
@@ -34,42 +41,45 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
             lastName
         },
         occupation,
-        projectDuration,
         createdAt,
-        projectDescription,
-        photos,
-        budget,
-        avatar,
+        project,
         verifiedPayment
     } = props;
 
+    const isDeadlineOn = project.deadline ? formatDistance(new Date(project.deadline), new Date(), { addSuffix: true }) : 'Not Applicable';
+
     return (
-        <section className='text-black text-[.8rem] md:text-sm my-3 border border-gray bg-white shadow-md w-full md:w-[35rem] max-h-max p-2'>
+        <section className='text-black text-[.8rem] md:text-sm my-3 border-2 border-gray bg-white shadow-md w-full md:w-[35rem] max-h-max p-2'>
             <section>
                 <section className='flex items-center justify-between mb-4'>
                     <span className='flex gap-3'>
-                        <span className='relative w-[60px] h-[60px]'>
-                            <Image
-                                src={avatar}
-                                alt={`${firstName}&apos;s avatar`}
-                                fill={true}
-                                className='rounded-full ring-1 ring-gray object-cover'
-                            />
-                        </span>
                         <span>
                             <h2 className='text-sm md:text-lg font-semibold'>{firstName} {lastName} </h2>
-                            <p className='flex items-center gap-1'> {occupation} {verifiedPayment && <MdVerifiedUser />} </p>
-                            <p> {projectDuration} </p>
+                            <p className='flex items-center gap-1'> {occupation} </p>
+                            {verifiedPayment && <section className='flex items-center gap-1'> <MdVerifiedUser className='fill-[green]' /> Verified Payment </section>}
                         </span>
                     </span>
-                    <span className='self-start'> {createdAt} </span>
+                    <span className='flex items-center gap-1 self-start'> <FiClock /> {createdAt} </span>
                 </section>
-                <p className='mb-2'> {projectDescription} </p>
-                <hr className='opacity-10 my-2' />
-                <section className='flex justify-between items-center text-sm'>
+                <section className='border border-gray p-2'>
+                    <h5 className='font-semibold'>{project.title}</h5>
+                    <p className='mb-2'> {project.description} </p>
+                    <hr className='opacity-10' />
+                    <section className='py-1 flex justify-between'>
+                        <span className=''>
+                            <p className='flex items-center gap-2'> <FiActivity /> {project.contract} </p>
+                            <p className='flex items-center gap-2'> <FiCalendar /> {isDeadlineOn} </p>
+                        </span>
+                        <span className=''>
+                            <p className='flex items-center gap-2'> <FiDollarSign /> R{formatNumber(project.budget)} </p>
+                            <p className='flex items-center gap-2'> <FiBriefcase /> {project.skillLevel} </p>
+                        </span>
+                    </section>
+                </section>
+                <section className='flex justify-between items-center mt-2 text-sm'>
                     <span className='flex items-center gap-2'>
-                        <span className='flex items-center gap-1 hover:cursor-pointer'> <FiImage /> {photos} photos </span>|
-                        <span className='py-2 text-[.7rem]'> Budget: R{formatNumber(budget)} </span>
+                        {/* <span className='flex items-center gap-1 hover:cursor-pointer'> <FiFolder /> {project.files} files </span> */}
+                        {/* <span className='py-2 text-sm'> Budget: R{formatNumber(project.budget)} </span> */}
                     </span>
                     <button className='border-2 border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>
                         Send Proposal
@@ -79,7 +89,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                         <Proposal
                             handleModal={handleModal}
                             recipient={props.name}
-                            budget={budget}
+                            budget={project.budget}
                         />
                     </Modal> 
                     }
