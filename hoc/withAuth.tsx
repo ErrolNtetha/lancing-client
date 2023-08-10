@@ -1,13 +1,11 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-// import { useAuth } from '../hooks/useAuth';
-import { useProfileStore } from '../hooks/useGlobalStore';
+import { useAuth } from '../hooks/useAuth';
 
 export default function withAuth(Component: any) {
     return function ProtectedRoute({ ...props }) {
         const router = useRouter();
-        // const authenticatedUser = useAuth();
-        const authenticatedUser = useProfileStore((state: any) => state?.profile?.approved?.isApproved);
+        const authenticatedUser = useAuth();
         console.log(authenticatedUser);
 
         useEffect(() => {
