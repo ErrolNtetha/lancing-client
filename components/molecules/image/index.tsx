@@ -24,7 +24,7 @@ export const ImageSrc = ({ src, alt, isRounded = true, size }: ImageProps) => {
 export const Avatar = ({ src, size, alt }: ImageProps) => {
     return (
         src 
-        ? <ImageSrc size={size} src={src} alt={alt} /> 
+        ? <ImageSrc size={size} src={src || ''} alt={alt} /> 
         : <ImageSrc size={size} src='/assets/images/defaultAvatar.png' alt={alt} />
     );
 };

@@ -6,17 +6,12 @@ import { Nav } from '../../molecules/nav';
 type MenuProps = {
     handleMenuToggle: React.MouseEventHandler<HTMLSpanElement>;
     auth: object | null;
-    name: {
-        firstName: string;
-        lastName: string;
-    },
+    displayName: string;
     email: string;
     avatar: string;
 };
 
-export const MobileMenu = ({ handleMenuToggle, auth, name, email, avatar }: MenuProps) => {
-    const { firstName, lastName } = name;
-
+export const MobileMenu = ({ handleMenuToggle, auth, displayName, email, avatar }: MenuProps) => {
     return (
         <section className='relative p-3'>
             <button
@@ -30,10 +25,10 @@ export const MobileMenu = ({ handleMenuToggle, auth, name, email, avatar }: Menu
                     <Avatar
                         src={avatar}
                         size='w-12 h-12'
-                        alt={`${firstName} avatar`}
+                        alt={`${displayName} avatar`}
                     />
                     <span className='self-start'>
-                        <h3 className='font-semibold'> {firstName} {lastName} </h3>
+                        <h3 className='font-semibold'>{displayName}</h3>
                         <p className='text-sm'> {email} </p>
                     </span>
                 </section>

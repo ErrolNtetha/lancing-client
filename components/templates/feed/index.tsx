@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import React, { useState } from 'react';
 import { useProfileStore } from '../../../hooks/useGlobalStore';
 import { Sidebar } from '../../molecules/sidebar';
@@ -15,10 +14,6 @@ export const ClientUI = () => {
 
     return (
         <>
-            <Head>
-                <title> Feed | Duello </title>
-            </Head>
-
             <section className='md:flex w-full justify-around'>
                 <Sidebar />
                 {renderUI}

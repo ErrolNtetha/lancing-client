@@ -17,17 +17,19 @@ import { auth } from '../../../firebaseConfig';
 
 export const Header = () => {
     const [nav, setNav] = useState(false);
-    const { avatar, name } = useProfileStore().profile;
+    const { addProfile, clearProfile } = useProfileStore();
     const router = useRouter();
     const userAuth = useAuth();
 
     const handleLogIn = () => {
+        addProfile();
         router.push('/login')
     };
 
     const handleLogout = async () => {
         try {
             await signOut(auth);
+            clearProfile();
             setNav(!nav);
             router.push('/login');
         } catch(error) {
@@ -61,14 +63,22 @@ export const Header = () => {
                         </li>
                     </ul>
                 </section>
-                <span className='hidden md:block ml-4'> {userAuth ? <UserHead /> : <LoginButton />} </span>
+                <span className='hidden md:block ml-4'> 
+                    {userAuth
+                        ? <UserHead 
+                            avatar={userAuth?.avatar} 
+                            displayName={userAuth?.displayName} 
+                            email={userAuth?.email} 
+                            /> 
+                        : <LoginButton />} 
+                </span>
                 {nav && (
                     <section className='fixed bg-slate top-0 left-0 bottom-0 w-full'>
                         <MobileMenu
                             auth={userAuth}
                             email={userAuth?.email}
-                            avatar={avatar}
-                            name={name}
+                            avatar={userAuth?.avatar}
+                            displayName={userAuth?.displayName}
                             handleMenuToggle={() => setNav(!nav)}
                         />
                         <section className='flex items-center justify-center absolute w-full left-0 bottom-4'>

@@ -6,7 +6,8 @@ import { FormLabel } from '../../../molecules/formLabel';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Select } from '../../../atoms/select';
-import { useProfileStore } from '../../../../hooks/useGlobalStore';
+// import { useProfileStore } from '../../../../hooks/useGlobalStore';
+import { useAuth } from '../../../../hooks/useAuth';
 
 const bankingSchema = z.object({
     accountHolder: z.string(),
@@ -15,10 +16,10 @@ const bankingSchema = z.object({
 });
 
 export const EditBanking = () => {
-    const { name: { firstName, lastName } } = useProfileStore().profile;
+    const userAuth = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
-            accountHolder: `${firstName} ${lastName}`,
+            accountHolder: `${userAuth?.dislayName}`,
             accountNumber: '10128807421',
             branchCode: '051001',
             bankName: 'Nedbank'.toLowerCase().trim()

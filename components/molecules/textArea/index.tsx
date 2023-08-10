@@ -7,9 +7,10 @@ interface IProps extends TextareaProps {
     placeholder: string;
     labelName: string;
     name: string;
+    errorMessage?: string | undefined;
 }
 
-export const TextareaLabel = ({ register, required, name, placeholder, labelName  }: IProps) => {
+export const TextareaLabel = ({ register, required, name, placeholder, labelName, errorMessage }: IProps) => {
     return (
         <section className='py-2'>
             <Label htmlFor={name} labelName={labelName}
@@ -20,6 +21,7 @@ export const TextareaLabel = ({ register, required, name, placeholder, labelName
                 register={register}
                 required={required}
             />
+            {errorMessage && <p className='text-xs py-1 text-[red]'> {errorMessage} </p>}
         </section>
     );
 };
