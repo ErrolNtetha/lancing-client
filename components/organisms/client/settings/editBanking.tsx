@@ -15,7 +15,7 @@ const bankingSchema = z.object({
 });
 
 export const EditBanking = () => {
-    const { name: { firstName, lastName } } = useProfileStore().profile;
+    const { names: { firstName, lastName } } = useProfileStore().profile;
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             accountHolder: `${firstName} ${lastName}`,
