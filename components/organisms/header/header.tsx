@@ -17,7 +17,6 @@ import { auth } from '../../../firebaseConfig';
 
 export const Header = () => {
     const [nav, setNav] = useState(false);
-    const { avatar, names } = useProfileStore().profile;
     const { addProfile, clearProfile } = useProfileStore();
     const router = useRouter();
     const userAuth = useAuth();
