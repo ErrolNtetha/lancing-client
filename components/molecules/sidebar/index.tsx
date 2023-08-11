@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import { FiMessageSquare } from 'react-icons/fi';
 import { useProfileStore } from '../../../hooks/useGlobalStore';
@@ -16,9 +17,11 @@ export const Sidebar = ({ messages }: SidebarProps) => {
     return (
         <aside className='hidden p-2 max-h-max flex-[.4] md:block'>
             <ul className='divide-gray p-2'>
-                <li className='flex items-center justify-between divide-gray hover:cursor-pointer hover:bg-gray p-2'>
-                    <span className='flex items-center gap-3'> <FiMessageSquare /> Messages </span>
-                    <DigitCounter count={messages} />
+                <li className='hover:cursor-pointer hover:bg-gray p-2'>
+                    <Link href='/messages' className='flex items-center justify-between'>
+                        <span className='flex items-center gap-3'> <FiMessageSquare /> Messages </span>
+                        <DigitCounter count={messages} />
+                    </Link>
                 </li>
                 {isClient && (
                     <li className='bg-slate text-black p-2 hover:cursor-pointer'>
