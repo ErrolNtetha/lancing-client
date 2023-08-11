@@ -32,7 +32,6 @@ export const CreateApplication = () => {
     const router = useRouter();
     const showIcon = watch('password');
     const userAuth = useAuth();
-    console.log(userAuth);
  
     const handleNext = () => {
         if (currentPage !== (forms.length - 1)) {
@@ -57,60 +56,42 @@ export const CreateApplication = () => {
     };
 
     const onSubmit = async (data: any) => {
-        /*
-         * 1. Add the doc in the portfolio collection
-         * 2. Update the client doc with more fields like service, school...
-         * 3. 
-         *
-         */
-
-        if (!data) {
+        if (!data || !userAuth) {
+            console.log('no data to submit!');
             return;
         }
 
-        console.log('Form data: ', data);
-
         const { 
             about,
-            avatar,
             portfolioTitle,
-            portfolioDescription
+            portfolioDescription,
         } = data; 
 
         setLoading(true);
         setErrorMessage(null);
 
-        try {
-            const userRef = doc(db, 'users', userAuth.uid);
-
-            if (auth.currentUser) {
+        const submitPersonalDetails = async function() {
+            try {
+                const userRef = doc(db, 'users', userAuth?.uid);
                 await setDoc(userRef, {
                     about,
-                    avatar,
                     portfolioTitle,
-                    portfolioDescription
-                });
+                    portfolioDescription,
+                }, { merge: true });
+            } catch (error) {
+                console.log('Personal: ', error);
             }
-            router.push('/feed');
+        };
 
-        } catch (error: any) {
-            console.log(error);
-            switch(error.code) {
-                case 'auth/email-already-in-use':
-                    setErrorMessage('This email has already been used. Try a different email.');
-                    break;
+        const handleSubmitApplication = async function() {
+            const response = await Promise.all([
+                submitPersonalDetails(),
+            ]);
+            console.log('Server reponse: ', response);
+            return response;
+        };
 
-                case 'auth/network-request-failed':
-                    setErrorMessage('Thre was a problem with your network. Check if you have internet connection.');
-                    break;
-
-                default:
-                    setErrorMessage('An error occured while trying to register your account.');
-            }
-
-        } finally {
-            setLoading(false);
-        }
+        handleSubmitApplication().catch((error) => console.log('Final reponse: ', error));
     };
 
     const renderLoading = loading ? 'Submitting application...' : 'Submit Application';
