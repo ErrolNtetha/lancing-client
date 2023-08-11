@@ -15,7 +15,7 @@ export const ClientUI = () => {
     return (
         <>
             <section className='md:flex w-full justify-around'>
-                <Sidebar />
+                <Sidebar messages={1} />
                 {renderUI}
                 <aside className='hidden flex-[.4] p-2 md:block' />
             </section>

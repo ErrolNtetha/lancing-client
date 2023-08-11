@@ -5,16 +5,20 @@ import { PostGig } from '../../organisms/client/post';
 import { Modal } from '../../organisms/modal';
 import { DigitCounter } from '../digitCounter';
 
-export const Sidebar = () => {
+type SidebarProps = {
+    messages: number;
+}
+
+export const Sidebar = ({ messages }: SidebarProps) => {
     const [modal, setIsModal] = React.useState(false);
     const { isClient } = useProfileStore().profile;
 
     return (
         <aside className='hidden p-2 max-h-max flex-[.4] md:block'>
-            <ul className='divide-gray'>
+            <ul className='divide-gray p-2'>
                 <li className='flex items-center justify-between divide-gray hover:cursor-pointer hover:bg-gray p-2'>
                     <span className='flex items-center gap-3'> <FiMessageSquare /> Messages </span>
-                    <DigitCounter count={4} />
+                    <DigitCounter count={messages} />
                 </li>
                 {isClient && (
                     <li className='bg-slate text-black p-2 hover:cursor-pointer'>
