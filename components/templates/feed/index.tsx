@@ -12,6 +12,32 @@ export const ClientUI = () => {
     const isClient = useProfileStore((state: any) => state.profile?.isClient);
     const renderUI = isClient ? <Vendor /> : <Client />;
 
+    /*
+     * ***** Messages Collection ******
+     *
+     * messages ===> dlxseiYdabaNa3a ===> [{...}]
+     * {
+     *   conversation_id: 12345,
+     *   time: 453425645231,
+     *   users: [user1, user2],
+     *   messages: [
+     *      {
+     *          sender: 'user1',
+     *          subject: 'Looking for Graphic Designer',
+     *          message: 'Can you complete it by month end?',
+     *          timestamp: '2922223',
+     *      },
+     *      {
+     *          sender: 'user2',
+     *          subject: 'Re: Looking for Graphic Designer',
+     *          message: 'Yes i can do it. Why?',
+     *          timestamp: '93232134',
+     *      }],
+     *      total_messages: 2,
+     * }
+     *
+     */
+
     return (
         <>
             <section className='md:flex w-full justify-around'>

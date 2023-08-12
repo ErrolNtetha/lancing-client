@@ -1,5 +1,8 @@
+import { addDoc, collection, doc, setDoc, Timestamp } from 'firebase/firestore';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { db } from '../../../firebaseConfig';
+import { useAuth } from '../../../hooks/useAuth';
 // import { formatNumber } from '../../../utilities/format';
 import { Button } from '../../atoms/button';
 // import { FormLabel } from '../../molecules/formLabel';
@@ -15,9 +18,27 @@ type EnquiryProps = {
 
 export const EnquiryModal = ({ handleModal, recipient }: EnquiryProps) => {
     const { register, handleSubmit } = useForm();
+    const userAuth = useAuth();
 
-    const handleEnquirySubmit = (data: any) => {
-        console.log('Form data: ', data);
+    const handleEnquirySubmit = async (data: any) => {
+        if (!data) {
+            console.log('No data to send.');
+            return;
+        }
+
+        const { subject, description } = data;
+
+        try {
+            const messagesRef = collection(db, 'messages', userAuth.uid /* use the id of the user */);
+            await addDoc(messagesRef, {
+                sender: userAuth.uid,
+                subject,
+                description,
+                createAt: Timestamp.now()
+            });
+        } catch (error) {
+            console.log('Error: ', error);
+        }
     };
 
     return (
