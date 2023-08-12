@@ -7,13 +7,12 @@ import { FiActivity, FiBriefcase, FiCalendar, FiClock, FiDollarSign } from 'reac
 import { formatDistance } from 'date-fns';
 
 type ClientProps = {
-    name: {
+    names: {
         firstName: string;
         lastName: string;
     },
     occupation: string;
     createdAt: string;
-    photos: number;
     budget: number;
     avatar: string;
     project: {
@@ -36,7 +35,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
     }
 
     const {
-        name: {
+        names: {
             firstName,
             lastName
         },
@@ -88,7 +87,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                     <Modal>
                         <Proposal
                             handleModal={handleModal}
-                            recipient={props.name}
+                            recipient={props.names}
                             budget={project.budget}
                         />
                     </Modal> 
