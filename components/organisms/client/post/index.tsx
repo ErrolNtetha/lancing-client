@@ -1,7 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useState } from 'react';
+import { addDoc, collection } from 'firebase/firestore';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { db } from '../../../../firebaseConfig';
+import { useAuth } from '../../../../hooks/useAuth';
 // import { formatNumber } from '../../../../utilities/format';
 import { Button } from '../../../atoms/button';
 import { DatePicker } from '../../../molecules/datePicker';
@@ -53,17 +56,40 @@ const projectSchema = z.object({
 });
 
 export const PostGig = ({ handleModalToggle }: GigProps) => {
+    const userAuth = useAuth();
+
     const { register, handleSubmit, setValue, formState: { errors } } = useForm({ 
         resolver: zodResolver(projectSchema) 
     });
 
-    const handleGig = (data: any) => {
-        if (data) {
-            console.log(data);
+    const handlePostProject = async (data: any) => {
+        if (!data) {
+            return;
+        }
+
+        console.log({ ...data });
+        try {
+            const projectRef = collection(db, 'projects');
+            await addDoc(projectRef, {
+                names: {
+                    firstName: 'Mphumeleli Errol',
+                    lastName: 'Ntetha'
+                },
+                occupation: 'Marketing Manager',
+                verifiedPayment: true,
+                createdAt: '1 minutes ago',
+                avatar: null,
+                project: {
+                    ...data,
+                    contract: 'Ongoing',
+                    skillLevel: 'Beginner',
+                    files: 4
+                }   
+            })
+        } catch (error) {
+            console.log(error);
         }
     }
-
-    console.log(errors);
 
     return (
         <section className='p-2 overflow-hidden'>
@@ -71,7 +97,7 @@ export const PostGig = ({ handleModalToggle }: GigProps) => {
                 <p className='text-center text-lg font-semibold'> New Project </p>
             </section>
 
-            <form onSubmit={handleSubmit(handleGig)} className='relative py-4'>
+            <form onSubmit={handleSubmit(handlePostProject)} className='relative py-4'>
                 <section className='max-h mb-8 overflow-y-auto'>
                     <FormLabel
                         type='text'
@@ -125,7 +151,7 @@ export const PostGig = ({ handleModalToggle }: GigProps) => {
                     />
                     <Button
                         buttonText='Post'
-                        handleClick={handleGig}
+                        handleClick={handlePostProject}
                         className='flex-1 bg-slate p-2 text-white'
                     />
                 </section>
