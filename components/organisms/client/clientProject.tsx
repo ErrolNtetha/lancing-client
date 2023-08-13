@@ -18,13 +18,16 @@ type ClientProps = {
     project: {
         title: string;
         description: string;
-        deadline: Date | string | null;
+        deadline: {
+            seconds: Date | string | null;
+        };
         contract: string;
         budget: number;
         skillLevel: string;
         files: number | null;
     };
     verifiedPayment: boolean;
+    loading: boolean;
 }
 
 export const ClientProject: React.FC<ClientProps> = (props) => {
@@ -42,10 +45,12 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
         occupation,
         createdAt,
         project,
-        verifiedPayment
+        verifiedPayment,
     } = props;
 
-    const isDeadlineOn = project.deadline ? formatDistance(new Date(project.deadline), new Date(), { addSuffix: true }) : 'Not Applicable';
+    const isDeadlineOn = project?.deadline?.seconds
+        ? formatDistance(new Date(project.deadline.seconds), new Date(), { addSuffix: true }) 
+        : 'Not Applicable';
 
     return (
         <section className='text-black text-[.8rem] md:text-sm my-3 border-2 border-gray bg-white shadow-md w-full md:w-[35rem] max-h-max p-2'>
