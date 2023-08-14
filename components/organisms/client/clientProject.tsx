@@ -11,6 +11,7 @@ type ClientProps = {
         firstName: string;
         lastName: string;
     },
+    projectId: string;
     occupation: string;
     createdAt: string;
     budget: number;
@@ -46,6 +47,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
         createdAt,
         project,
         verifiedPayment,
+        projectId
     } = props;
 
     const isDeadlineOn = project?.deadline?.seconds
@@ -94,6 +96,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                             handleModal={handleModal}
                             recipient={props.names}
                             budget={project.budget}
+                            projectId={projectId}
                         />
                     </Modal> 
                     }

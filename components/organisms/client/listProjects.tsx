@@ -6,9 +6,9 @@ import { useFetchProjects } from '../../../hooks/useFetchProjects';
 import { ClientProject } from './clientProject';
 
 export const ListProjects = () => {
-    const { projects, loading } = useFetchProjects();
+    const { docs, loading } = useFetchProjects();
 
-    const docs = !projects.length
+    const projects = !docs.length
         ? (
             <section className='flex justify-center items-center h-full'> 
                 <span className='text-center w-[80%]'>
@@ -17,12 +17,12 @@ export const ListProjects = () => {
                 </span>
             </section>)
             //@ts-ignore
-        : projects.map((doc) => <ClientProject loading={loading} {...doc} />)
+        : docs.map((doc) => <ClientProject loading={loading} projectId={doc.id} key={doc.id} {...doc.project} />)
 
     return (
         <React.Fragment>
             <section className='h-[92vh]'>
-                {docs}
+                {projects}
             </section>
         </React.Fragment>
     );

@@ -17,7 +17,7 @@ import { auth } from '../../../firebaseConfig';
 
 export const Header = () => {
     const [nav, setNav] = useState(false);
-    const { addProfile, clearProfile } = useProfileStore();
+    const { addProfile, profile: { isClient }, clearProfile } = useProfileStore();
     const router = useRouter();
     const userAuth = useAuth();
 
@@ -68,7 +68,7 @@ export const Header = () => {
                         ? <UserHead 
                             avatar={userAuth?.avatar} 
                             displayName={userAuth?.displayName} 
-                            email={userAuth?.email} 
+                            isClient={isClient}
                             /> 
                         : <LoginButton />} 
                 </span>
@@ -77,6 +77,7 @@ export const Header = () => {
                         <MobileMenu
                             auth={userAuth}
                             email={userAuth?.email}
+                            isClient={isClient}
                             avatar={userAuth?.avatar}
                             displayName={userAuth?.displayName}
                             handleMenuToggle={() => setNav(!nav)}

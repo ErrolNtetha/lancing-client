@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { db } from '../firebaseConfig';
 
 export const useFetchProjects = () => {
-    const [projects, setProjects] = useState([]);
+    const [docs, setDocs] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -13,9 +13,9 @@ export const useFetchProjects = () => {
             try {
                 const querySnapshot = await getDocs(projectsRef);
                 querySnapshot.forEach((doc) => {
-                    p.push(doc.data());
+                    p.push({ id: doc.id, project: doc.data() });
                 })
-                setProjects(p);
+                setDocs(p);
             } catch (error) {
                 console.log(error);
             } finally {
@@ -26,7 +26,7 @@ export const useFetchProjects = () => {
         getProjects();
     }, []);
 
-    console.log('Projects: ', projects);
+    console.log('Projects: ', docs);
 
-    return { loading, projects };
+    return { loading, docs };
 }

@@ -1,5 +1,8 @@
-import React from 'react';
+import { doc, setDoc, Timestamp } from 'firebase/firestore';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { db } from '../../../firebaseConfig';
+import { useAuth } from '../../../hooks/useAuth';
 import { formatNumber } from '../../../utilities/format';
 import { Button } from '../../atoms/button';
 import { FormLabel } from '../../molecules/formLabel';
@@ -7,6 +10,7 @@ import { TextareaLabel } from '../../molecules/textArea';
 
 type ProposalProps = {
     handleModal: React.MouseEventHandler<HTMLElement>;
+    projectId: string;
     budget: number;
     recipient: {
         firstName: string;
@@ -14,11 +18,30 @@ type ProposalProps = {
     };
 }
 
-export const Proposal = ({ handleModal, recipient, budget }: ProposalProps) => {
+export const Proposal = ({ handleModal, projectId, recipient, budget }: ProposalProps) => {
+    const [loading, setLoading] = useState<boolean | null>(null);
     const { register, handleSubmit } = useForm();
+    const userAuth = useAuth();
 
-    const handleProposalSubmit = (data: any) => {
-        console.log('Form data: ', data);
+    const handleProposalSubmit = async (data: any) => {
+        if (!data) {
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const projectRef = doc(db, 'projects', projectId, 'proposals', userAuth.uid);
+
+            await setDoc(projectRef, {
+                ...data,
+                createdAt: Timestamp.now(),
+            });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -52,7 +75,7 @@ export const Proposal = ({ handleModal, recipient, budget }: ProposalProps) => {
                     handleClick={handleModal}
                 />
                 <Button
-                    buttonText='Submit'
+                    buttonText={loading ? 'Submittting' : 'Submit'}
                     className='bg-slate text-white py-2 px-4 w-[50%] hover:cursor-pointer'
                     handleClick={handleProposalSubmit}
                 />

@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, setDoc, Timestamp } from 'firebase/firestore';
+import { addDoc, collection, Timestamp } from 'firebase/firestore';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { db } from '../../../firebaseConfig';
