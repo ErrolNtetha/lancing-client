@@ -4,7 +4,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiAlignRight, FiBell, FiSend } from 'react-icons/fi';
 import { useProfileStore } from '../../../hooks/useGlobalStore';
 import { Button } from '../../atoms/button';
@@ -13,16 +13,17 @@ import { MobileMenu } from './mobileMenu';
 import { UserHead } from './userHead';
 import { useAuth } from '../../../hooks/useAuth';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../../firebaseConfig';
+import { auth, db } from '../../../firebaseConfig';
 import { DigitCounter } from '../../molecules/digitCounter';
-import { useFetchProposals } from '../../../hooks/useFetchProposals';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 
 export const Header = () => {
     const [nav, setNav] = useState(false);
+    const [proposals, setProposals] = useState([]);
+    const p: any = [];
     const { addProfile, profile: { isClient }, clearProfile } = useProfileStore();
     const router = useRouter();
     const userAuth = useAuth();
-    const messages = useFetchProposals();
 
     const handleLogIn = () => {
         addProfile();
@@ -39,6 +40,31 @@ export const Header = () => {
             console.log(error);
         }
     };
+
+    /* async function fetch(userId: string) {
+        const userRef = doc(db, 'users', userId);
+        const user = await getDoc(userRef);
+        return user.data();
+    } */
+
+    useEffect(() => {
+        async function getMessages() {
+            try {
+                const messagesRef = collection(db, 'proposals');
+
+                const querySnapshot = await getDocs(messagesRef);
+                querySnapshot.forEach(async (doc) => {
+                    console.log(doc.data());
+                    p.push({ id: doc.id, proposal: doc.data()});
+                })
+                setProposals(p);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        getMessages();
+    }, []);
 
     return (
         <header className='flex z-10 justify-between items-center text-white w-full bg-slate h-[8vh]'>
@@ -65,20 +91,9 @@ export const Header = () => {
                         </li>
                     </ul>
                 </section>
-                <section className='flex items-center gap-2'>
-                    {auth.currentUser && (
-                        <>
-                            <Link href='/notifications' className='relative p-4 hover:cursor-pointer text-[1.2rem]'>
-                                <FiBell />
-                                <DigitCounter count={0} className='bg-[red] top-0 right-0' absolute={true} />
-                            </Link>
-                            <Link href='/messages' className='relative p-4 hover:cursor-pointer text-[1.2rem]'>
-                                <FiSend />
-                                <DigitCounter count={messages.length} className='bg-[red] top-0 right-0' absolute={true} />
-                            </Link>
-                        </>
-                    )}
-                    <FiAlignRight onClick={() => setNav(!nav)} className='hover:cursor-pointer text-[1.8rem] block md:hidden' />
+                <section className='relative p-2 hover:cursor-pointer gap-2'>
+                    <DigitCounter count={proposals.length} className='bg-[red] pointer-events-none top-0 right-0' absolute={true} />
+                    <FiAlignRight onClick={() => setNav(!nav)} className='text-[1.8rem] block md:hidden' />
                 </section>
                 <span className='hidden md:block ml-4'> 
                     {userAuth
@@ -98,6 +113,7 @@ export const Header = () => {
                             avatar={userAuth?.avatar}
                             displayName={userAuth?.displayName}
                             handleMenuToggle={() => setNav(!nav)}
+                            totalMessages={proposals.length}
                         />
                         <section className='flex items-center justify-center absolute w-full left-0 bottom-4'>
                             <Button
