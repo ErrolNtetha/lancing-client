@@ -16,6 +16,7 @@ import { auth, db } from '../../../firebaseConfig';
 import { DigitCounter } from '../../molecules/digitCounter';
 import { collection, getDocs } from 'firebase/firestore';
 import { useProfileStore } from '../../../hooks/useGlobalStore';
+import { FiAlignRight } from 'react-icons/fi';
 
 export const Header = () => {
     const [nav, setNav] = useState(false);
