@@ -2,14 +2,16 @@ import React from 'react'
 
 type CounterProps = {
     count: number;
+    absolute?: boolean;
+    className?: string;
 }
 
-export const DigitCounter = ({ count }: CounterProps) => {
+export const DigitCounter = ({ count, className, absolute = false }: CounterProps) => {
     const isMany = count > 9 ? '9+' : count;
     return (
         <React.Fragment>
             {count > 0 && (
-                <span className='flex justify-center items-center bg-slate rounded-full w-6 h-6 text-white text-sm'>
+                <span className={`${absolute && 'absolute'} ${className || 'bg-slate'} flex justify-center items-center rounded-full w-6 h-6 text-white text-sm`}>
                     {isMany}
                 </span>
             )}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FiX } from 'react-icons/fi';
+// import { DigitCounter } from '../../molecules/digitCounter';
 import { Avatar } from '../../molecules/image';
 import { Nav } from '../../molecules/nav';
 
@@ -35,6 +36,13 @@ export const MobileMenu = ({ handleMenuToggle, isClient, auth, displayName, avat
                     </span>
                 </section>
             )}
+        {/* <section className='bg-gray p-2 mb-4 rounded-lg'>
+                <ul className='text-black font-bold divide-y divide-slate divide-opacity-10'>
+                    <li className='flex items-center justify-between p-1 hover:bg-opacity-10 hover:cursor-pointer'> My Projects <DigitCounter count={2} /> </li>
+                    <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Replies </li>
+                    <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Reviews <DigitCounter count={4} /> </li>
+                </ul>
+            </section> */}
             <Nav />
         </section>
     );
