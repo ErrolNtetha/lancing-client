@@ -1,12 +1,11 @@
 'use client'
 /* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { FiAlignRight, FiBell, FiSend } from 'react-icons/fi';
-import { useProfileStore } from '../../../hooks/useGlobalStore';
 import { Button } from '../../atoms/button';
 import { LoginButton } from '../login/loginButton';
 import { MobileMenu } from './mobileMenu';
@@ -15,7 +14,8 @@ import { useAuth } from '../../../hooks/useAuth';
 import { signOut } from 'firebase/auth';
 import { auth, db } from '../../../firebaseConfig';
 import { DigitCounter } from '../../molecules/digitCounter';
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
+import { useProfileStore } from '../../../hooks/useGlobalStore';
 
 export const Header = () => {
     const [nav, setNav] = useState(false);
