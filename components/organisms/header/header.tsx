@@ -42,12 +42,6 @@ export const Header = () => {
         }
     };
 
-    /* async function fetch(userId: string) {
-        const userRef = doc(db, 'users', userId);
-        const user = await getDoc(userRef);
-        return user.data();
-    } */
-
     useEffect(() => {
         async function getMessages() {
             try {
@@ -92,7 +86,7 @@ export const Header = () => {
                     </ul>
                 </section>
                 <section className='relative p-2 hover:cursor-pointer gap-2'>
-                    <DigitCounter count={proposals.length} className='bg-[red] pointer-events-none top-0 right-0' absolute={true} />
+                    {isClient && <DigitCounter count={proposals.length} className='bg-[red] pointer-events-none top-0 right-0' absolute={true} />}
                     <FiAlignRight onClick={() => setNav(!nav)} className='text-[1.8rem] block md:hidden transition duration-200 ease-in-out' />
                 </section>
                 <span className='hidden md:block ml-4'> 
