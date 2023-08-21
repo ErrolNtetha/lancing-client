@@ -35,8 +35,8 @@ export const Proposal = ({ handleModal, projectId, recipient, budget }: Proposal
 
             await addDoc(proposalRef, {
                 ...data,
-                project: projectId,
-                postedBy: doc(db, `users/${userAuth.uid}`),
+                project: doc(db, `projects/${projectId}`),
+                sentBy: doc(db, `users/${userAuth.uid}`),
                 createdAt: serverTimestamp(),
             });
         } catch (error) {
