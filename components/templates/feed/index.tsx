@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { db } from '../../../firebaseConfig';
 import { useProfileStore } from '../../../hooks/useGlobalStore';
 import { Sidebar } from '../../molecules/sidebar';
 import { Client } from '../../organisms/client/';
@@ -12,37 +14,33 @@ export const ClientUI = () => {
     const isClient = useProfileStore((state: any) => state.profile?.isClient);
     const renderUI = isClient ? <Vendor /> : <Client />;
 
-    /*
-     * ***** Messages Collection ******
-     *
-     * messages ===> dlxseiYdabaNa3a ===> [{...}]
-     * {
-     *   conversation_id: 12345,
-     *   time: 453425645231,
-     *   users: [user1, user2],
-     *   messages: [
-     *      {
-     *          sender: 'user1',
-     *          subject: 'Looking for Graphic Designer',
-     *          message: 'Can you complete it by month end?',
-     *          timestamp: '2922223',
-     *      },
-     *      {
-     *          sender: 'user2',
-     *          subject: 'Re: Looking for Graphic Designer',
-     *          message: 'Yes i can do it. Why?',
-     *          timestamp: '93232134',
-     *      }],
-     *      total_messages: 2,
-     * }
-     *
-     */
+    useEffect(() => {
+        const proposalsRef = collection(db, 'proposals');
+
+        async function getProposals() {
+            try {
+                const querySnapshot = await getDocs(proposalsRef);
+                const documents = querySnapshot.docs;
+                for (let doc of documents) {
+                    console.log(doc.data());
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        getProposals();
+    }, []);
 
     return (
         <>
             <section className='md:flex w-full justify-around'>
-                <Sidebar messages={1} />
-                {renderUI}
+                <Sidebar 
+                    messages={1} 
+                    proposals={3}
+                />
+                    {renderUI}
                 <aside className='hidden flex-[.4] p-2 md:block' />
             </section>
             {isClient && <CreatePost handlePost={() => setModal(!modal)} />}
