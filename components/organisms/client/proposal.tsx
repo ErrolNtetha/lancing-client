@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, setDoc, Timestamp } from 'firebase/firestore';
+import { addDoc, collection, doc, serverTimestamp, setDoc, Timestamp } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { db } from '../../../firebaseConfig';
@@ -36,8 +36,8 @@ export const Proposal = ({ handleModal, projectId, recipient, budget }: Proposal
             await addDoc(proposalRef, {
                 ...data,
                 project: projectId,
-                user: userAuth.uid,
-                createdAt: Timestamp.now(),
+                postedBy: doc(db, `users/${userAuth.uid}`),
+                createdAt: serverTimestamp(),
             });
         } catch (error) {
             console.log(error);
