@@ -33,7 +33,7 @@ export const MobileMenu = ({ handleMenuToggle, isClient, auth, displayName, avat
                     />
                     <span className='self-start'>
                         <h3 className='font-semibold'>{displayName}</h3>
-                        <p className='text-sm font-semibold text-[green]'> {accountType} </p>
+                        <p className='text-sm font-semibold text-[blue]'> {accountType} </p>
                     </span>
                 </section>
             )}
