@@ -1,32 +1,47 @@
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, DocumentReference, getDoc, getDocs } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from '../firebaseConfig';
 
 export const useFetchProjects = () => {
-    const [docs, setDocs] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [docs, setDocs] = useState<any[]>([]);
+
+    async function getAuthor(authorRef: DocumentReference<unknown>) {
+        if (authorRef) {
+            try {
+                const author = await getDoc(authorRef);
+                if (author.exists()) {
+                    return author.data();
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
 
     useEffect(() => {
         async function getProjects() {
             const projectsRef = collection(db, 'projects');
             const p: any = [];
-            try {
-                const querySnapshot = await getDocs(projectsRef);
-                querySnapshot.forEach((doc) => {
-                    p.push({ id: doc.id, project: doc.data() });
-                })
-                setDocs(p);
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setLoading(false);
+
+            const querySnapshot = await getDocs(projectsRef); // DocumentData
+            const documents = querySnapshot.docs;
+            for (let doc of documents) {
+                const { postedBy } = doc.data(); // DocumentRef or String???
+                if (postedBy) {
+                    try {
+                        const author = await getAuthor(postedBy);
+                        p.push({ id: doc.id, project: { ...doc.data(), postedBy: author } });
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
             }
-        };
+
+            setDocs(p);
+        }
 
         getProjects();
     }, []);
 
-    console.log('Projects: ', docs);
-
-    return { loading, docs };
-}
+    return { docs };
+};
