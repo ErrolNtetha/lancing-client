@@ -60,11 +60,11 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
     } = postedBy;
 
     const deadlineTime = deadline?.seconds
-        ? formatDistance(new Date(deadline.seconds), new Date(), { addSuffix: true }) 
+        ? formatDistance(new Date(Number(deadline.seconds) * 1000), new Date(), { addSuffix: true }) 
         : 'Not Applicable';
 
     const createdAtTime = createdAt?.seconds
-        ? formatDistance(new Date(createdAt.seconds), new Date(), { addSuffix: true }) 
+        ? formatDistance(new Date(Number(createdAt.seconds) * 1000), new Date(), { addSuffix: true }) 
         : 'Not Applicable';
 
     return (
