@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, doc, serverTimestamp } from 'firebase/firestore';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -67,24 +67,14 @@ export const PostGig = ({ handleModalToggle }: GigProps) => {
             return;
         }
 
-        console.log({ ...data });
         try {
             const projectRef = collection(db, 'projects');
             await addDoc(projectRef, {
-                names: {
-                    firstName: 'Mphumeleli Errol',
-                    lastName: 'Ntetha'
-                },
-                occupation: 'Marketing Manager',
-                verifiedPayment: true,
-                createdAt: '1 minutes ago',
-                avatar: null,
-                project: {
-                    ...data,
-                    contract: 'Ongoing',
-                    skillLevel: 'Beginner',
-                    files: 4
-                }   
+                ...data,
+                postedBy: doc(db, `users/${userAuth.uid}`),
+                createdAt: serverTimestamp(),
+                contract: 'Ongoing',
+                skillLevel: 'Expert',
             })
         } catch (error) {
             console.log(error);
