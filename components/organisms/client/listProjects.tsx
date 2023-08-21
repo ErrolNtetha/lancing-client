@@ -7,11 +7,13 @@ import { ClientProject } from './clientProject';
 export const ListProjects = () => {
     const { docs } = useFetchProjects();
 
+    // const sortByDate = (a: any, b: any) => Number(new Date(b.project.createdAt.seconds)) - Number(new Date(a.project.createdAt.seconds));
+
     return (
         <React.Fragment>
             <section className='h-[92vh]'>
                 {
-                    !docs.length 
+                    !docs.length
                     ? (
                         <section className='flex justify-center items-center h-full'> 
                             <span className='text-center w-[80%]'>
@@ -22,7 +24,7 @@ export const ListProjects = () => {
                             </span>
                         </section>)
                     //@ts-ignore
-                    : docs.map((doc: any) => {
+                    : docs.sort((a, b) => Number(new Date(b.project.createdAt.seconds)) - Number(new Date(a.project.createdAt.seconds))).map((doc: any) => {
                         const { id, project } = doc;
                         if (project.postedBy) {
                             return (
