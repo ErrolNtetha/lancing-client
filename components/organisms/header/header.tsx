@@ -55,7 +55,6 @@ export const Header = () => {
 
                 const querySnapshot = await getDocs(messagesRef);
                 querySnapshot.forEach(async (doc) => {
-                    console.log(doc.data());
                     p.push({ id: doc.id, proposal: doc.data()});
                 })
                 setProposals(p);
@@ -94,12 +93,12 @@ export const Header = () => {
                 </section>
                 <section className='relative p-2 hover:cursor-pointer gap-2'>
                     <DigitCounter count={proposals.length} className='bg-[red] pointer-events-none top-0 right-0' absolute={true} />
-                    <FiAlignRight onClick={() => setNav(!nav)} className='text-[1.8rem] block md:hidden' />
+                    <FiAlignRight onClick={() => setNav(!nav)} className='text-[1.8rem] block md:hidden transition duration-200 ease-in-out' />
                 </section>
                 <span className='hidden md:block ml-4'> 
                     {userAuth
                         ? <UserHead 
-                            avatar={userAuth?.avatar} 
+                           avatar={userAuth?.avatar} 
                             displayName={userAuth?.displayName} 
                             isClient={isClient}
                             /> 
