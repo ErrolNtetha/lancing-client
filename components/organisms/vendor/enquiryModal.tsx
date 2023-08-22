@@ -1,4 +1,4 @@
-import { addDoc, collection, Timestamp } from 'firebase/firestore';
+import { addDoc, collection, doc, serverTimestamp, Timestamp } from 'firebase/firestore';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { db } from '../../../firebaseConfig';
@@ -29,12 +29,13 @@ export const EnquiryModal = ({ handleModal, recipient }: EnquiryProps) => {
         const { subject, description } = data;
 
         try {
-            const messagesRef = collection(db, 'messages', userAuth.uid /* use the id of the user */);
+            const messagesRef = collection(db, 'messages');
             await addDoc(messagesRef, {
-                sender: userAuth.uid,
+                sender: doc(db, `users/${userAuth.uid}`),
+                receiver: doc(db, 'users/fdsaljf'),
                 subject,
                 description,
-                createAt: Timestamp.now()
+                sentAt: serverTimestamp() 
             });
         } catch (error) {
             console.log('Error: ', error);
