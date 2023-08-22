@@ -12,7 +12,7 @@ export const OurTeam = () => {
                 />
                 <section className='flex justify-center items-center mt-4 flex-col'>
                     <h1 className='font-extrabold text-xl'> Mphumeleli Ntetha </h1>
-                    <p className='text-md'> Creator of Duello </p>
+                    <p className='text-md'> Founder & CEO, Duello </p>
                 </section>
             </section>
             <span className='flex gap-y-6'>
