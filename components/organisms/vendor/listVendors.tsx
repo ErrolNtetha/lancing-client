@@ -13,7 +13,7 @@ export const ListVendors = () => {
 		<React.Fragment>
             {!v.length
                 ? <NoContent main='No freelancers found yet.' body='Once freelancers are available, they will appear here.' />
-                : v.map((v: any) => <VendorComponent key={uuidv4()} {...v.vendor} />)}
+                : v.map((v: any) => <VendorComponent key={uuidv4()} {...v} {...v.vendor} />)}
 		</React.Fragment>
 	);
 };

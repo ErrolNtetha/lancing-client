@@ -16,6 +16,7 @@ export const VendorComponent = ({
     rating,
     description,
     reviews,
+    id,
 }: VendorProps) => {
     const [modal, setModal] = useState(false);
     const [viewPortfolio, setViewPortfolio] = useState(false);
@@ -67,6 +68,7 @@ export const VendorComponent = ({
                             <EnquiryModal
                                 handleModal={handleModal}
                                 recipient={names}
+                                uid={id}
                             />
                         </Modal> 
                     }
