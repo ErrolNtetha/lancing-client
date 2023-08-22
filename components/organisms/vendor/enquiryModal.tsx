@@ -14,9 +14,10 @@ type EnquiryProps = {
         firstName: string;
         lastName: string;
     };
+    uid: string;
 }
 
-export const EnquiryModal = ({ handleModal, recipient }: EnquiryProps) => {
+export const EnquiryModal = ({ handleModal, recipient, uid }: EnquiryProps) => {
     const { register, handleSubmit } = useForm();
     const userAuth = useAuth();
 
@@ -26,15 +27,14 @@ export const EnquiryModal = ({ handleModal, recipient }: EnquiryProps) => {
             return;
         }
 
-        const { subject, description } = data;
+        const { message } = data;
 
         try {
             const messagesRef = collection(db, 'messages');
             await addDoc(messagesRef, {
                 sender: doc(db, `users/${userAuth.uid}`),
-                receiver: doc(db, 'users/fdsaljf'),
-                subject,
-                description,
+                receiver: doc(db, `users/${uid}`),
+                message,
                 sentAt: serverTimestamp() 
             });
         } catch (error) {
@@ -52,7 +52,7 @@ export const EnquiryModal = ({ handleModal, recipient }: EnquiryProps) => {
                 <TextareaLabel
                     placeholder='Type your enquiry message'
                     labelName='Message'
-                    name='enquiryMessage'
+                    name='message'
                     required={true}
                     register={register}
                 />
