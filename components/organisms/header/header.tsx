@@ -17,6 +17,7 @@ import { DigitCounter } from '../../molecules/digitCounter';
 import { collection, getDocs } from 'firebase/firestore';
 import { useProfileStore } from '../../../hooks/useGlobalStore';
 import { FiAlignRight } from 'react-icons/fi';
+import { useFetchMessages } from '../../../hooks/useFetchMessages';
 
 export const Header = () => {
     const [nav, setNav] = useState(false);
@@ -25,6 +26,8 @@ export const Header = () => {
     const { addProfile, profile: { isClient }, clearProfile } = useProfileStore();
     const router = useRouter();
     const userAuth = useAuth();
+    const messages = useFetchMessages();
+    console.log(messages);
 
     const handleLogIn = () => {
         addProfile();
@@ -43,7 +46,7 @@ export const Header = () => {
     };
 
     useEffect(() => {
-        async function getMessages() {
+        async function getProposals() {
             try {
                 const messagesRef = collection(db, 'proposals');
 
@@ -57,7 +60,7 @@ export const Header = () => {
             }
         }
 
-        getMessages();
+        getProposals();
     }, []);
 
     return (
