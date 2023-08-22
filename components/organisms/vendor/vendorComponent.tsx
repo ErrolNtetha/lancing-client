@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { FiSend, FiUser } from 'react-icons/fi';
 import { VendorProps } from '../../../types';
-import { formatAmount } from '../../../utilities/format';
+// import { formatAmount } from '../../../utilities/format';
 import { Avatar } from '../../molecules/image';
 import { StarRating } from '../../molecules/star-rating';
 import { Modal } from '../modal';
@@ -15,7 +15,6 @@ export const VendorComponent = ({
     service,
     rating,
     description,
-    amount,
     reviews,
 }: VendorProps) => {
     const [modal, setModal] = useState(false);
@@ -47,11 +46,11 @@ export const VendorComponent = ({
                 <hr className='opacity-10 mb-2' />
                 <section className='flex justify-between items-center text-sm'>
                     <span className='flex items-center gap-2'>
-                        <button className='flex items-center gap-1 hover:cursor-pointer'onClick={() => setViewPortfolio(!viewPortfolio)}> <FiUser /> View </button>|
-                        <span className='py-2 text-[.7rem]'> From: R{formatAmount(amount)} {/* { percent && ` | ${percent}%`} */} </span>
+                        <button className='flex items-center gap-1 hover:cursor-pointer'onClick={() => setViewPortfolio(!viewPortfolio)}> <FiUser /> View </button>
+                        {/* | <span className='py-2 text-[.7rem]'> From: R{formatAmount(amount)} { percent && ` | ${percent}%`}  </span> */}
                     </span>
 
-                    <button className='flex items-center gap-2 border-2 border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>
+                    <button className='flex items-center gap-2 border border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>
                         <FiSend /> Enquire
                     </button>
                     {viewPortfolio && (
