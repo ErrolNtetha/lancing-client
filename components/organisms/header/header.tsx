@@ -22,9 +22,10 @@ export const Header = () => {
     const [nav, setNav] = useState(false);
     const [proposals, setProposals] = useState([]);
     const p: any = [];
-    const { addProfile, profile: { isClient }, clearProfile } = useProfileStore();
+    const { addProfile, vision, profile: { isClient }, clearProfile } = useProfileStore();
     const router = useRouter();
     const userAuth = useAuth();
+    // const  header = useProfileStore((state) => state.header);
 
     const handleLogIn = () => {
         addProfile();
@@ -61,10 +62,10 @@ export const Header = () => {
     }, []);
 
     return (
-        <header className='flex z-10 justify-between items-center text-white w-full bg-slate h-[8vh]'>
+        <header className={`flex sticky top-0 z-10 justify-between transition-all duration-200 items-center ${vision ? 'text-black' : 'text-white'} w-full ${vision ? 'bg-white' : 'bg-slate'} h-[8vh]`}>
             <section className='container mx-auto px-4 w-full h-full flex z-10 justify-between items-center'>
                 <Link href='/'>
-                    <Image src='/images/logo.svg' alt='company logo' className='' width={80} height={20} />
+                    <Image src='/images/logo.svg' alt='company logo' className='fill-current text-black' width={80} height={20} />
                 </Link>
                 <section className='hidden md:flex ml-auto'>
                     <ul className='p-0 md:flex'>

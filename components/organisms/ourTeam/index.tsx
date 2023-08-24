@@ -16,7 +16,7 @@ export const OurTeam = () => {
                 </section>
             </section>
             <span className='flex gap-y-6'>
-                <p className='m-6 text-white text-md md:text-md max-w-md'> 
+                <p className='m-6 text-white text-sm md:text-md max-w-md'> 
                     As a passionate advocate for freelancers and businesses alike, I embarked on a journey to redefine the freelancing 
                     experience in South Africa. Duello isn&apos;t just a platform; it&apos;s a manifestation of my commitment to empowering talent, fostering 
                     collaboration, and propelling projects to new heights.
