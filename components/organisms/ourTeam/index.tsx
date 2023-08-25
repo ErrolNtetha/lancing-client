@@ -3,7 +3,7 @@ import { ImageSrc } from '../../molecules/image';
 
 export const OurTeam = () => {
     return (
-        <section className='flex items-center justify-center flex-col md:flex-row gap-8 bg-pattern-bg bg-cover h-screen '>
+        <section className='flex items-center justify-center flex-col md:flex-row gap-8 bg-pattern-bg bg-cover h-full py-10'>
             <section className='flex items-center justify-center flex-col text-white'>
                 <ImageSrc
                     src='/assets/images/errol.png'

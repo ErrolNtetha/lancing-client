@@ -8,13 +8,13 @@ export const Features = () => {
                 <aside className='text-black max-w-30 m-8'>
                     <h4 className='text-md md:text-lg font-bold opacity-30'> What Sets Us Apart </h4>
                     <h1 className='max-w-md font-extrabold text-black text-2xl mb-2'>
-                        Our platform stands out for a several reasons
+                        Our platform stands out for several reasons
                     </h1>
-                    <section className='w-full text-sm mb-8 md:text-md'> 
+                    <section className='w-full text-md mb-8'> 
                         <p className='md:max-w-md'>At Duello, we are not just another freelancing platform; we are a community of dreamers and doers.</p>
                         <br />
                         <br />
-                        <ul className='flex flex-col md:flex md:flex-row gap-4'>
+                        <ul className='flex flex-col md:flex md:flex-row gap-6'>
                             <li className='flex flex-col items-center border border-gray p-3'>
                                 <section className='w-[200px] h-[200px]'>
                                     <Image src='/assets/images/svg/collab.svg' alt='Screenshots of clients looking for freelancers' width={200} height={400} />

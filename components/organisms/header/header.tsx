@@ -61,7 +61,7 @@ export const Header = () => {
     }, []);
 
     return (
-        <header className={`flex sticky top-0 z-10 justify-between transition-all duration-200 items-center ${vision ? 'text-black' : 'text-white'} w-full ${vision ? 'bg-white' : 'bg-slate'} h-[8vh]`}>
+        <header className={`flex divide-solid divide-gray sticky top-0 z-10 justify-between transition-all duration-200 items-center ${vision ? 'text-black' : 'text-white'} w-full ${vision ? 'bg-white' : 'bg-slate'} h-[8vh]`}>
             <section className='container mx-auto px-4 w-full h-full flex z-10 justify-between items-center'>
                 <Link href='/'>
                     <Image src='/images/logo.svg' alt='company logo' className='fill-current text-black' width={80} height={20} />
