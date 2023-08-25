@@ -103,7 +103,7 @@ export const useProfileStore: any = create(
             profile: {...myProfile},
             addProfile: (user: Profile) => set(() => ({ profile: user })),
             clearProfile: () => set({ profile: {} }),
-            vision: true,
+            vision: false,
             toggleHeader: (value: boolean) => set(() => ({ vision: value }))
         }),
         {
