@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { Button } from '../../components/atoms/button';
-import { Navigation } from '../../components/organisms/navigation';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebaseConfig';
 import { z } from 'zod';
@@ -95,19 +94,18 @@ export const CreateApplication = () => {
     };
 
     const renderLoading = loading ? 'Submitting application...' : 'Submit Application';
-    const buttonText = `${lastPage ? renderLoading : 'Proceed'}`;
+    const buttonText = `${lastPage ? renderLoading : 'Next Step'}`;
 
     const navButton = (
-        <section className='flex items-center justify-between'> 
-            <section />
-            <section className='flex items-center gap-2'>
+        <section className='fixed bottom-0 left-0 w-full p-2 mt-4 flex items-center justify-between'> 
+            <section className='flex items-center gap-2 w-full md:w-md'>
                 {firstPage && (currentPage === 0)
                     ? null 
                     : (
                     <Button
                         buttonText='Back'
                         handleClick={() => handlePrev()}
-                        className='border border-gray hover:opacity-80 px-4 py-2 text-black'
+                        className='border border-gray flex-1 hover:opacity-80 px-4 py-2 text-black'
                     />
                 )}
                 <Button
@@ -116,7 +114,7 @@ export const CreateApplication = () => {
                     // @ts-ignore
                     handleClick={() => lastPage ? onSubmit() : handleNext()}
                     disabled= {loading ? true : false}
-                    className={`hover:opacity-80 px-4 py-2 text-white ${loading ? 'bg-gray hover:cursor-not-allowed' : 'bg-slate hover:cursor-pointer'}`}
+                    className={`hover:opacity-80 px-4 py-2 flex-1 text-white ${loading ? 'bg-gray hover:cursor-not-allowed' : 'bg-slate hover:cursor-pointer'}`}
                 />
             </section>
         </section>
@@ -155,10 +153,9 @@ export const CreateApplication = () => {
 
     
     return (
-            <section className='flex-1 md:flex-[0.4]'>
-                <Navigation handleSwitch={() => setCurrentPage(1)} />
-                <section className='py-4'>
-                    <form onSubmit={handleSubmit(onSubmit)} className='flex-[0.3] text-xs sm:text-sm h-max'>
+            <section className='divide-y-0 divide-gray md:flex-[0.4]'>
+                <section className='mt-3 md:p-4'>
+                    <form onSubmit={handleSubmit(onSubmit)} className='text-xs sm:text-sm h-max'>
                         {forms[currentPage]}
                         {errorMessage && (
                             <section className=' text-center text-[red] py-4 flex justify-center mt-4'>
@@ -167,7 +164,6 @@ export const CreateApplication = () => {
                         )}
                     </form>
                 </section>
-                <section className='hidden' />
             </section>
     );
 };

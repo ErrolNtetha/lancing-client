@@ -17,13 +17,18 @@ export const Personal = ({
 }: PersonalProps) => {
     return (
         <React.Fragment>
-            <h3 className='font-semibold text-lg'> Personal Information </h3>
-            <p className='text-sm mb-4'>  </p>
-            <AddPicture />
+            <h3 className='font-semibold text-md text-gray'> Personal Information </h3>
+            <h3 className='font-semibold text-2xl'>
+                Tell us about yourself.
+                What makes you different?
+            </h3>
+            <p className='text-md mb-4'> 
+                It is important that you check your grammar, punctuations and spellings.
+            </p>
             <TextareaLabel 
                 name='about'
                 labelName='About Me'
-                placeholder='Tell us about yourself...'
+                placeholder='What are you good at? What are your skills?'
                 register={register}
                 required={true}
             />

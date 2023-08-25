@@ -9,8 +9,15 @@ interface SProps {
 export const SocialMedia = ({ register, component }: SProps) => {
     return (
         <section>
-            <h3 className='font-semibold text-lg'> Social Media Profiles </h3>
-            <p className='text-sm mb-4'> Fill in your personal social media profiles. </p>
+            <h3 className='font-semibold text-md text-gray'> Social Media Profiles </h3>
+            <h3 className='font-semibold text-2xl'>
+                Great job! We are getting closer. 
+                Now paste your social media links...
+            </h3>
+            <p className='text-md'> 
+                Sometimes clients might want to see your social media profiles.
+            </p>
+            <p className='inline my-2 text-md hover:cursor-pointer border-b-2 border-dashed border-t-0 border-x-0 border-b-gray'> How can i find my links? </p>
             <FormLabel
                 type='url'
                 name='facebook'
