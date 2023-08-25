@@ -101,8 +101,10 @@ export const useProfileStore: any = create(
     persist(
         (set) => ({
             profile: {...myProfile},
-            addProfile: (user: Profile) => set(() => ({ profile: user || myProfile })),
-            clearProfile: () => set({ profile: {} })
+            addProfile: (user: Profile) => set(() => ({ profile: user })),
+            clearProfile: () => set({ profile: {} }),
+            vision: false,
+            toggleHeader: (value: boolean) => set(() => ({ vision: value }))
         }),
         {
             name: 'profile-storage'

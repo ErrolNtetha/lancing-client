@@ -37,15 +37,17 @@ export const MobileMenu = ({ handleMenuToggle, isClient, auth, displayName, avat
                     </span>
                 </section>
             )}
-            <section className='bg-gray p-2 mb-4 rounded-lg'>
-                <ul className='text-black divide-y divide-slate divide-opacity-10'>
-                    <li className={`flex items-center justify-between  ${totalMessages && 'font-bold'} p-1 hover:bg-opacity-10 hover:cursor-pointer`}> Messages <DigitCounter count={totalMessages} /> </li>
-                    <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Notifications </li>
-                    <li className='flex items-center justify-between p-1 hover:cursor-pointer'> My Projects </li>
-                    <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Offers </li>
-                </ul>
-            </section>
-            <Nav />
+            {auth && (
+                <section className='bg-gray p-2 mb-4 rounded-lg'>
+                    <ul className='text-black divide-y divide-slate divide-opacity-10'>
+                        <li className={`flex items-center justify-between  ${totalMessages && 'font-bold'} p-1 hover:bg-opacity-10 hover:cursor-pointer`}> Messages <DigitCounter count={totalMessages} /> </li>
+                        <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Notifications </li>
+                        <li className='flex items-center justify-between p-1 hover:cursor-pointer'> My Projects </li>
+                        <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Offers </li>
+                    </ul>
+                </section>
+            )}
+            {!auth && <Nav />}
         </section>
     );
 };
