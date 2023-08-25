@@ -12,6 +12,7 @@ import { Personal } from './personal';
 import { SocialMedia } from './socialMedia';
 import { Portfolio } from './portfolio';
 import { useAuth } from '../../hooks/useAuth';
+import { WorkExperience } from './workExperience';
 
 const registrationSchema = z.object({
     about: z.string().min(30, 'About is too short. It must be at least 30 characters long.'),
@@ -126,10 +127,11 @@ export const CreateApplication = () => {
             register={register} 
             component={navButton} 
         />,
-        <SocialMedia
+        <WorkExperience
             key={1}
             register={register}
             component={navButton}
+            errors={errors}
         />,
         <Portfolio
             key={2}
