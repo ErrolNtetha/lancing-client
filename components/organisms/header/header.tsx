@@ -28,7 +28,6 @@ export const Header = () => {
     // const  header = useProfileStore((state) => state.header);
 
     const handleLogIn = () => {
-        addProfile();
         router.push('/login')
     };
 
