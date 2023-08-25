@@ -30,8 +30,8 @@ export const Portfolio = ({ register, component, errors }: PortfolioProps) => {
                 Now add projects you have done in the past.
             </h3>
             <p className='text-md mb-4'> 
-                Profiles which has previous projects get <span className='font-semibold text-[green]'>5x</span> views.
-                Clients need to know your skills by seeing portfolio sample of your previous work.
+                Profiles with projects get <span className='font-semibold text-[green]'>10x</span> views.
+                Clients need to know your skills by seeing portfolio samples of your previous work.
             </p>
 
             <section
