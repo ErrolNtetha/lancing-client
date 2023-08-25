@@ -22,7 +22,7 @@ export const Header = () => {
     const [nav, setNav] = useState(false);
     const [proposals, setProposals] = useState([]);
     const p: any = [];
-    const { addProfile, vision, profile: { isClient }, clearProfile } = useProfileStore();
+    const { vision, profile: { isClient }, clearProfile } = useProfileStore();
     const router = useRouter();
     const userAuth = useAuth();
     // const  header = useProfileStore((state) => state.header);

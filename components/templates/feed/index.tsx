@@ -1,3 +1,5 @@
+/* eslint-disable  react-hooks/exhaustive-deps */
+
 import { collection, DocumentReference, getDoc, getDocs, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { db } from '../../../firebaseConfig';
@@ -54,9 +56,6 @@ export const ClientUI = () => {
                     if (sentBy && project) {
                         const author = await getAuthor(sentBy);
                         const projectDoc = await getProject(project);
-
-                        console.log('Sent by: ', author);
-                        console.log('Project: ', projectDoc);
                     }
                 }
 

@@ -47,7 +47,7 @@ export const MobileMenu = ({ handleMenuToggle, isClient, auth, displayName, avat
                     </ul>
                 </section>
             )}
-            <Nav />
+            {!auth && <Nav />}
         </section>
     );
 };
