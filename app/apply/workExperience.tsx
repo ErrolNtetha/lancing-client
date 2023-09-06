@@ -51,7 +51,7 @@ export const WorkExperience = ({ register, component, errors }: PortfolioProps) 
                         <h3 className='font-semibold text-lg text-black text-center'> Add Experience </h3>
                         <FormLabel
                             type='text'
-                            name='portfolioTitle'
+                            name='workTitle'
                             labelName='Title'
                             placeholder='Product Package Design'
                             register={register}
@@ -59,7 +59,7 @@ export const WorkExperience = ({ register, component, errors }: PortfolioProps) 
                             errorMessage={errors?.portfolioTitle?.message?.toString()}
                         />
                         <TextareaLabel
-                            name='portfolioDescription'
+                            name='workDescription'
                             labelName='Description'
                             placeholder='Write a description explaining about this project.'
                             register={register}

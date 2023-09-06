@@ -26,7 +26,6 @@ export const Portfolio = ({ register, component, errors }: PortfolioProps) => {
             <h3 className='font-semibold text-md text-gray'> Portfolio Projects </h3>
             <h3 className='font-semibold text-2xl'>
                 You&apos;re almost there. 
-                <br />
                 Now add projects you have done in the past.
             </h3>
             <p className='text-md mb-4'> 
@@ -54,7 +53,7 @@ export const Portfolio = ({ register, component, errors }: PortfolioProps) => {
                         <h3 className='font-semibold text-lg text-black text-center'> Add Project </h3>
                         <FormLabel
                             type='text'
-                            name='portfolioTitle'
+                            name='title'
                             labelName='Title'
                             placeholder='Product Package Design'
                             register={register}
@@ -62,7 +61,7 @@ export const Portfolio = ({ register, component, errors }: PortfolioProps) => {
                             errorMessage={errors?.portfolioTitle?.message?.toString()}
                         />
                         <TextareaLabel
-                            name='portfolioDescription'
+                            name='description'
                             labelName='Description'
                             placeholder='Write a description explaining about this project.'
                             register={register}

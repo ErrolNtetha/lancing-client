@@ -9,15 +9,15 @@ import { auth, db } from '../../firebaseConfig';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Personal } from './personal';
-import { SocialMedia } from './socialMedia';
-import { Portfolio } from './portfolio';
+// import { Portfolio } from './portfolio';
 import { useAuth } from '../../hooks/useAuth';
-import { WorkExperience } from './workExperience';
+// import { WorkExperience } from './workExperience';
+import { Education } from './education';
 
 const registrationSchema = z.object({
-    about: z.string().min(30, 'About is too short. It must be at least 30 characters long.'),
-    portfolioTitle: z.string().min(5, { message: 'Title must be at least 5 characters long.' }).max(15, { message: 'Title is too long.' }),
-    portfolioDescription: z.string().min(50, { message: 'Description must be at least 50 characters long.' }),
+    bio: z.string().min(30, 'About is too short. It must be at least 30 characters long.'),
+    schoolName: z.string().min(3, { message: 'School name must be at least 3 characters long.' }),
+    qualificationName: z.string().min(5, { message: 'Qualification name must be at least 5 characters long.' }),
 });
 
 export const CreateApplication = () => {
@@ -55,17 +55,13 @@ export const CreateApplication = () => {
         } 
     };
 
-    const onSubmit = async (data: any) => {
-        if (!data || !userAuth) {
+    const onSubmit = (data: any) => {
+        console.log('Form values: ', data);
+
+        if (!data) {
             console.log('no data to submit!');
             return;
         }
-
-        const { 
-            about,
-            portfolioTitle,
-            portfolioDescription,
-        } = data; 
 
         setLoading(true);
         setErrorMessage(null);
@@ -74,9 +70,7 @@ export const CreateApplication = () => {
             try {
                 const userRef = doc(db, 'users', userAuth?.uid);
                 await setDoc(userRef, {
-                    about,
-                    portfolioTitle,
-                    portfolioDescription,
+                    ...data,
                 }, { merge: true });
             } catch (error) {
                 console.log('Personal: ', error);
@@ -126,19 +120,14 @@ export const CreateApplication = () => {
             key={0} 
             register={register} 
             component={navButton} 
+            errors={errors}
         />,
-        <WorkExperience
+        <Education
             key={1}
             register={register}
             component={navButton}
             errors={errors}
         />,
-        <Portfolio
-            key={2}
-            register={register}
-            component={navButton}
-            errors={errors}
-        />
     ];
 
     useEffect(() => {
