@@ -15,10 +15,9 @@ interface EProps {
 export const Education = ({ register, component, errors }: EProps) => {
     const [modal, setModal] = useState(false);
     const { getValues } = useForm();
-    // console.log(useForm());
 
     const handleAddEducation = () => {
-        console.log('School name value: ', getValues('schoolName'));
+        console.log('Education: ', getValues());
     };
 
     const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {

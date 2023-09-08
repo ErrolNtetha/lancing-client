@@ -18,13 +18,14 @@ const registrationSchema = z.object({
     bio: z.string().min(30, 'About is too short. It must be at least 30 characters long.'),
     schoolName: z.string().min(3, { message: 'School name must be at least 3 characters long.' }),
     qualificationName: z.string().min(5, { message: 'Qualification name must be at least 5 characters long.' }),
+    school: z.string().min(5, { message: 'Qualification name must be at least 5 characters long.' }),
 });
 
 export const CreateApplication = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [firstPage, setFirstPage] = useState<boolean | null>(true);
     const [lastPage, setLastPage] = useState(false);
-    const { register, watch, handleSubmit, formState: { errors } } = useForm({
+    const { register, watch, getValues, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(registrationSchema)
     });
     const [loading, setLoading] = useState(false);
@@ -56,7 +57,9 @@ export const CreateApplication = () => {
     };
 
     const onSubmit = (data: any) => {
-        console.log('Form values: ', data);
+        console.log('Data: ', data);
+        console.log('Values: ', getValues());
+        return;
 
         if (!data) {
             console.log('no data to submit!');
