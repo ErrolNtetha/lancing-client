@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
 type Profile = {
     avatar: string;
@@ -98,14 +97,18 @@ const myProfile: Profile = {
 }
 
 export const useProfileStore: any = create(
-    persist(
-        (set) => ({
-            profile: {...myProfile},
-            addProfile: (user: Profile) => set(() => ({ profile: user || myProfile })),
-            clearProfile: () => set({ profile: {} })
-        }),
-        {
-            name: 'profile-storage'
-        }
-    )
+    (set: any) => ({
+        profile: {...myProfile},
+        addProfile: (user: Profile) => set(() => ({ profile: user || myProfile })),
+        clearProfile: () => set({ profile: {} }),
+        education: [],
+        addEducation: (education: any) => set((state: any) => ({ education: [...state.education, { ...education }] })),
+    })
+);
+
+export const useEducationStore: any = create(
+    (set: any) => ({
+        education: [],
+        addEducation: (education: any) => set((state: any) => ({ education: [...state.education, { ...education }] })),
+    })
 );
