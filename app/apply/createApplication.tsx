@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { Button } from '../../components/atoms/button';
 import { doc, setDoc } from 'firebase/firestore';
-import { auth, db } from '../../firebaseConfig';
+import { db } from '../../firebaseConfig';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Personal } from './personal';
@@ -16,9 +16,11 @@ import { Education } from './education';
 
 const registrationSchema = z.object({
     bio: z.string().min(30, 'About is too short. It must be at least 30 characters long.'),
-    schoolName: z.string().min(3, { message: 'School name must be at least 3 characters long.' }),
-    qualificationName: z.string().min(5, { message: 'Qualification name must be at least 5 characters long.' }),
-    school: z.string().min(5, { message: 'Qualification name must be at least 5 characters long.' }),
+    name: z.string().min(3, { message: 'School name must be at least 3 characters long.' }),
+    qualification: z.string().min(5, { message: 'Qualification name must be at least 5 characters long.' }),
+}).required({
+    bio: true,
+    name: true,
 });
 
 export const CreateApplication = () => {
@@ -58,7 +60,7 @@ export const CreateApplication = () => {
 
     const onSubmit = (data: any) => {
         console.log('Data: ', data);
-        console.log('Values: ', getValues());
+        console.log('Errors: ', errors);
         return;
 
         if (!data) {
@@ -130,6 +132,7 @@ export const CreateApplication = () => {
             register={register}
             component={navButton}
             errors={errors}
+            getValues={getValues}
         />,
     ];
 

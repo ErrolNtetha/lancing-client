@@ -5,7 +5,7 @@ export const DateInput = ({
     name,
     id,
     required = false,
-    onChange,
+    register,
     disabled = false,
 }: DateProps) => {
     return (
@@ -15,8 +15,8 @@ export const DateInput = ({
             name={name}
             className={`${disabled && 'hover:cursor-not-allowed bg-gray'} border border-gray p-2 outline-none w-full`}
             disabled={disabled}
-            onChange={onChange}
             required={required}
+            {...register(name, { required, valueAsDate: true })}
         />
     );
 };

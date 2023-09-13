@@ -6,7 +6,7 @@ export interface InputProps {
     hasHideIcon?: boolean;
     isHidden?: boolean;
     handleHideIcon?: React.MouseEventHandler<HTMLSpanElement>;
-    required: boolean;
+    required: boolean | string;
     inputHasValue?: boolean | undefined;
     register: Function;
     disabled?: boolean;
@@ -17,7 +17,7 @@ export type DateProps = {
     id?: string;
     name: string;
     required: boolean;
-    onChange?: React.ChangeEventHandler<HTMLInputElement>;
+    register: Function;
     disabled?: boolean;
 }
 

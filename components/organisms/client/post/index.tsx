@@ -109,11 +109,8 @@ export const PostGig = ({ handleModalToggle }: GigProps) => {
                         name='deadline'
                         labelName='Deadline (optional)'
                         required={false}
+                        register={register}
                         errorMessage={errors?.deadline?.message?.toString()}
-                        onChange={(e) => {
-                            e.preventDefault();
-                            setValue('deadline', new Date(e.target.value));
-                        }}
                     />
                 </section>
                 <section className='flex items-center w-full bg-white gap-2 absolute bottom-0 left-0'>
