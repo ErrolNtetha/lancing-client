@@ -2,7 +2,7 @@ import { generateRanomId } from "../../../utilities/generateRandomId";
 
 export const clients = [
     {
-        name: {
+        names: {
             firstName: 'Mphumeleli',
             lastName: 'Ntetha'
         },
@@ -26,7 +26,7 @@ export const clients = [
         projectDescription: 'We are looking for a logo designer who has an experience in designing logos. We are a startup company. Our startup is a cafe. All specification are attached below for your perusal. This is an ongoing project and might need further work done should you satisfy our requirements.'
     },
     {
-        name: {
+        names: {
             firstName: 'Zama',
             lastName: 'Radebe'
         },
@@ -50,7 +50,7 @@ export const clients = [
         projectDescription: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates deserunt dignissimos eius. Culpa nostrum aut non eaque, quibusdam qui sit rem eius quasi quae tenetur vero placeat atque, molestiae illum?'
     },
     {
-        name: {
+        names: {
             firstName: 'Njabulo',
             lastName: 'Ndlovu'
         },

@@ -95,7 +95,7 @@ export const CreateApplication = () => {
     const buttonText = `${lastPage ? renderLoading : 'Next Step'}`;
 
     const navButton = (
-        <section className='fixed md:relative bottom-0 left-0 w-full p-2 md:p-0 mt-4 flex items-center justify-between'> 
+        <section className='fixed md:relative bg-white bottom-0 left-0 w-full p-2 md:p-0 mt-4 flex items-center justify-between'> 
             <section className='flex items-center gap-2 w-full md:w-md'>
                 {firstPage && (currentPage === 0)
                     ? null 

@@ -80,7 +80,7 @@ export const Registration = () => {
                     emailVerified: user.emailVerified,
                     avatar: user.photoURL,
                     isClient: accountType === 'client',
-                    name: {
+                    names: {
                         firstName,
                         lastName
                     }

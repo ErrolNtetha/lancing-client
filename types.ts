@@ -32,7 +32,7 @@ export type VendorProps = {
     service: string;
     rating: number;
     description: string;
-    amount: number;
+    id: string;
     approved: {
         isApproved: boolean;
         approvedDate: null | Date;

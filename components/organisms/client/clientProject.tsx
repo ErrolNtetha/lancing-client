@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { formatNumber } from '../../../utilities/format';
 import { Modal } from '../modal';
 import { Proposal } from './proposal';
@@ -7,25 +7,28 @@ import { FiActivity, FiBriefcase, FiCalendar, FiClock, FiDollarSign } from 'reac
 import { formatDistance } from 'date-fns';
 
 type ClientProps = {
-    name: {
-        firstName: string;
-        lastName: string;
-    },
-    occupation: string;
-    createdAt: string;
-    photos: number;
-    budget: number;
-    avatar: string;
-    project: {
-        title: string;
-        description: string;
-        deadline: Date | string | null;
-        contract: string;
-        budget: number;
-        skillLevel: string;
-        files: number | null;
+    postedBy: {
+        names: {
+            firstName: string;
+            lastName: string;
+        };
+        verifiedPayment: boolean;
+        occupation: string;
     };
-    verifiedPayment: boolean;
+    projectId: string;
+    createdAt: {
+        seconds: Date | string | null;
+    };
+    title: string;
+    description: string;
+    deadline: {
+        seconds: Date | string | null;
+    };
+    contract: string;
+    budget: number;
+    skillLevel: string;
+    files: number | null;
+    loading: boolean;
 }
 
 export const ClientProject: React.FC<ClientProps> = (props) => {
@@ -36,17 +39,33 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
     }
 
     const {
-        name: {
+        postedBy,
+        createdAt,
+        title,
+        projectId,
+        deadline,
+        description,
+        budget,
+        skillLevel,
+        contract,
+    } = props;
+
+    const { 
+        names: {
             firstName,
             lastName
         },
+        verifiedPayment,
         occupation,
-        createdAt,
-        project,
-        verifiedPayment
-    } = props;
+    } = postedBy;
 
-    const isDeadlineOn = project.deadline ? formatDistance(new Date(project.deadline), new Date(), { addSuffix: true }) : 'Not Applicable';
+    const deadlineTime = deadline?.seconds
+        ? formatDistance(new Date(Number(deadline.seconds) * 1000), new Date(), { addSuffix: true }) 
+        : 'Not Applicable';
+
+    const createdAtTime = createdAt?.seconds
+        ? formatDistance(new Date(Number(createdAt.seconds) * 1000), new Date(), { addSuffix: true }) 
+        : 'Not Applicable';
 
     return (
         <section className='text-black text-[.8rem] md:text-sm my-3 border-2 border-gray bg-white shadow-md w-full md:w-[35rem] max-h-max p-2'>
@@ -59,20 +78,20 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                             {verifiedPayment && <section className='flex items-center gap-1'> <MdVerifiedUser className='fill-[green]' /> Verified Payment </section>}
                         </span>
                     </span>
-                    <span className='flex items-center gap-1 self-start'> <FiClock /> {createdAt} </span>
+                    <span className='flex items-center gap-1 self-start'> <FiClock /> {createdAtTime} </span>
                 </section>
                 <section className='border border-gray p-2'>
-                    <h5 className='font-semibold'>{project.title}</h5>
-                    <p className='mb-2'> {project.description} </p>
+                    <h5 className='font-semibold'>{title}</h5>
+                    <p className='mb-2'> {description} </p>
                     <hr className='opacity-10' />
                     <section className='py-1 flex justify-between'>
                         <span className=''>
-                            <p className='flex items-center gap-2'> <FiActivity /> {project.contract} </p>
-                            <p className='flex items-center gap-2'> <FiCalendar /> {isDeadlineOn} </p>
+                            <p className='flex items-center gap-2'> <FiActivity /> {contract} </p>
+                            <p className='flex items-center gap-2'> <FiCalendar /> {deadlineTime} </p>
                         </span>
                         <span className=''>
-                            <p className='flex items-center gap-2'> <FiDollarSign /> R{formatNumber(project.budget)} </p>
-                            <p className='flex items-center gap-2'> <FiBriefcase /> {project.skillLevel} </p>
+                            <p className='flex items-center gap-2'> <FiDollarSign /> R{formatNumber(budget)} </p>
+                            <p className='flex items-center gap-2'> <FiBriefcase /> {skillLevel} </p>
                         </span>
                     </section>
                 </section>
@@ -88,8 +107,9 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                     <Modal>
                         <Proposal
                             handleModal={handleModal}
-                            recipient={props.name}
-                            budget={project.budget}
+                            recipient={props.postedBy.names}
+                            budget={budget}
+                            projectId={projectId}
                         />
                     </Modal> 
                     }

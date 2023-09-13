@@ -3,14 +3,17 @@
 import React from "react";
 import { VendorComponent } from "./vendorComponent";
 import { v4 as uuidv4 } from "uuid";
-import { vendors } from "./vendors";
+import { useFetchVendors } from "../../../hooks/useFetchVendors";
+import { NoContent } from "../../molecules/noContent";
 
 export const ListVendors = () => {
+    const v: any = useFetchVendors();
+
 	return (
 		<React.Fragment>
-			{vendors.map((vendor) => (
-				<VendorComponent key={uuidv4()} {...vendor} />
-			))}
+            {!v.length
+                ? <NoContent main='No freelancers found yet.' body='Once freelancers are available, they will appear here.' />
+                : v.map((v: any) => <VendorComponent key={uuidv4()} {...v} {...v.vendor} />)}
 		</React.Fragment>
 	);
 };

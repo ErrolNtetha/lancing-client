@@ -101,8 +101,6 @@ export const useProfileStore: any = create(
         profile: {...myProfile},
         addProfile: (user: Profile) => set(() => ({ profile: user || myProfile })),
         clearProfile: () => set({ profile: {} }),
-        education: [],
-        addEducation: (education: any) => set((state: any) => ({ education: [...state.education, { ...education }] })),
     })
 );
 

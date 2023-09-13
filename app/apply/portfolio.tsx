@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import React, { useState } from 'react';
-import { FieldErrors, FieldValues } from 'react-hook-form';
+import { FieldErrors, FieldValues, useForm } from 'react-hook-form';
 import { FiPlus } from 'react-icons/fi';
 import { Button } from '../../components/atoms/button';
 import { FormLabel } from '../../components/molecules/formLabel';
@@ -8,6 +8,7 @@ import { TextareaLabel } from '../../components/molecules/textArea';
 import { Modal } from '../../components/organisms/modal';
 import { usePortfolioStore } from '../../hooks/useGlobalStore';
 import Resizer from 'react-image-file-resizer';
+import Image from 'next/image';
 
 interface PortfolioProps {
     register: Function;
@@ -18,32 +19,44 @@ interface PortfolioProps {
 
 export const Portfolio = ({ register, component, errors, getValues }: PortfolioProps) => {
     const [modal, setModal] = useState(false);
+    const [base, setBase] = useState('');
     const { addPortfolio, portfolio } = usePortfolioStore();
+    const { setValue } = useForm();
+    console.log('Portfolio: ', portfolio);
 
-    const resizeImage = (file: any) => {
+    const resizeImage = (file: any) =>
         new Promise((resolve) => {
             Resizer.imageFileResizer(
                 file,
-                300,
-                300,
+                1080,
+                620,
                 'JPEG',
                 100,
                 0,
                 (url) => {
-                    resolve(url)
+                    resolve(url);
                 },
-                'base64'
+                'base64',
+                800, 
+                280
             );
         });
-    };
 
-    const handleImageUpload = async () => {
+    const handleImageUpload = async (e: any) => {
+        const i = e.target.files[0];
 
+        try {
+            const imageUrl: any = await resizeImage(i);
+            setValue('coverImage', imageUrl);
+            setBase(imageUrl);
+        } catch(error) {
+            console.log(error);
+        }
     };
 
     const handleAddPortolio = () => {
-        const { title, description } = getValues();
-        addPortfolio({ title, description });
+        const { title, description, coverImage } = getValues();
+        addPortfolio({ title, description, coverImage });
     };
 
     const listOfPortfolios = portfolio.map((item: any, index: number) => (
@@ -67,6 +80,17 @@ export const Portfolio = ({ register, component, errors, getValues }: PortfolioP
                 Clients need to know your skills by seeing portfolio samples of your previous work.
             </p>
 
+            {base && (
+                <section>
+                    image:
+                    <Image 
+                        src={base}
+                        alt='random image'
+                        width={1080}
+                        height={620}
+                    />
+                </section>
+            )}
 
             {portfolio.length === 0
                 ? (
@@ -100,6 +124,7 @@ export const Portfolio = ({ register, component, errors, getValues }: PortfolioP
                 <Modal>
                     <section className='p-3'>
                         <h3 className='font-semibold text-lg text-black text-center'> Add Project </h3>
+                        <input {...register('coverImage', { onChange: {handleAddPortolio} }) } type='file' />
                         <FormLabel
                             type='text'
                             name='title'

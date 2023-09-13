@@ -1,5 +1,8 @@
+import { addDoc, collection, doc, serverTimestamp, Timestamp } from 'firebase/firestore';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { db } from '../../../firebaseConfig';
+import { useAuth } from '../../../hooks/useAuth';
 // import { formatNumber } from '../../../utilities/format';
 import { Button } from '../../atoms/button';
 // import { FormLabel } from '../../molecules/formLabel';
@@ -11,13 +14,32 @@ type EnquiryProps = {
         firstName: string;
         lastName: string;
     };
+    uid: string;
 }
 
-export const EnquiryModal = ({ handleModal, recipient }: EnquiryProps) => {
+export const EnquiryModal = ({ handleModal, recipient, uid }: EnquiryProps) => {
     const { register, handleSubmit } = useForm();
+    const userAuth = useAuth();
 
-    const handleEnquirySubmit = (data: any) => {
-        console.log('Form data: ', data);
+    const handleEnquirySubmit = async (data: any) => {
+        if (!data) {
+            console.log('No data to send.');
+            return;
+        }
+
+        const { message } = data;
+
+        try {
+            const messagesRef = collection(db, 'messages');
+            await addDoc(messagesRef, {
+                sender: doc(db, `users/${userAuth.uid}`),
+                receiver: doc(db, `users/${uid}`),
+                message,
+                sentAt: serverTimestamp() 
+            });
+        } catch (error) {
+            console.log('Error: ', error);
+        }
     };
 
     return (
@@ -30,7 +52,7 @@ export const EnquiryModal = ({ handleModal, recipient }: EnquiryProps) => {
                 <TextareaLabel
                     placeholder='Type your enquiry message'
                     labelName='Message'
-                    name='enquiryMessage'
+                    name='message'
                     required={true}
                     register={register}
                 />
