@@ -6,20 +6,54 @@ import { Button } from '../../components/atoms/button';
 import { FormLabel } from '../../components/molecules/formLabel';
 import { TextareaLabel } from '../../components/molecules/textArea';
 import { Modal } from '../../components/organisms/modal';
+import { usePortfolioStore } from '../../hooks/useGlobalStore';
+import Resizer from 'react-image-file-resizer';
 
 interface PortfolioProps {
     register: Function;
     component: React.ReactNode;
     errors: FieldErrors<FieldValues>;
+    getValues: any;
 }
 
-export const Portfolio = ({ register, component, errors }: PortfolioProps) => {
+export const Portfolio = ({ register, component, errors, getValues }: PortfolioProps) => {
     const [modal, setModal] = useState(false);
+    const { addPortfolio, portfolio } = usePortfolioStore();
 
-    const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        console.log(format(new Date(e.target.value), 'd MMM yyy'));
+    const resizeImage = (file: any) => {
+        new Promise((resolve) => {
+            Resizer.imageFileResizer(
+                file,
+                300,
+                300,
+                'JPEG',
+                100,
+                0,
+                (url) => {
+                    resolve(url)
+                },
+                'base64'
+            );
+        });
     };
+
+    const handleImageUpload = async () => {
+
+    };
+
+    const handleAddPortolio = () => {
+        const { title, description } = getValues();
+        addPortfolio({ title, description });
+    };
+
+    const listOfPortfolios = portfolio.map((item: any, index: number) => (
+        <section key={index} className='my-3'>
+            <section className='border border-dashed border-gray p-2'>
+                <p> <span className='font-semibold'> {item.title} </span> </p>
+                <p> <span className='font-semibold'> {item.description} </span> </p>
+            </section>
+        </section>
+    ));
 
     return (
         <section>
@@ -33,19 +67,34 @@ export const Portfolio = ({ register, component, errors }: PortfolioProps) => {
                 Clients need to know your skills by seeing portfolio samples of your previous work.
             </p>
 
-            <section
-                onClick={() => setModal(true)}
-                role='button'
-                tabIndex={0}
-                onKeyPress={() => setModal(true)}
-                className='flex justify-center border-2 border-dashed border-gray hover:bg-gray hover:cursor-pointer py-10 px-5'
-            >
-                <section className='flex flex-col justify-center items-center'>
-                    <FiPlus className='text-4xl font-extrabold' />
-                    <h2 className='font-extrabold mt-3 text-md'> Add Project </h2>
-                    <p className='text-center'> Showcase your work by adding a project to your profile. </p>
-                </section>
-            </section>
+
+            {portfolio.length === 0
+                ? (
+                    <section
+                        onClick={() => setModal(true)}
+                        role='button'
+                        tabIndex={0}
+                        onKeyPress={() => setModal(true)}
+                        className='flex justify-center border-2 border-dashed border-gray hover:bg-gray hover:cursor-pointer py-10 px-5'
+                    >
+                        <section className='flex flex-col justify-center items-center'>
+                            <FiPlus className='text-4xl font-extrabold' />
+                            <h2 className='font-extrabold mt-3 text-md'> Add Project </h2>
+                            <p className='text-center'> Showcase your work by adding a project to your profile. </p>
+                        </section>
+                    </section>
+            )
+                : listOfPortfolios}
+
+                {portfolio.length && (
+                    <button
+                        type='button' 
+                        onClick={() => setModal(true)}
+                        className='w-full my-2 hover:opacity-80 px-4 py-2 text-white bg-slate hover:cursor-pointer'
+                    > 
+                    Add More
+                </button>
+                )}
 
             {modal && (
                 <Modal>
@@ -75,10 +124,6 @@ export const Portfolio = ({ register, component, errors }: PortfolioProps) => {
                             register={register}
                             required={false}
                         />
-                        <section>
-                            <p> From: </p>
-                            <input type="date" className='mb-4 w-full border border-gray outline-none p-2' onChange={handleDateChange} />
-                        </section>
                         <section className='flex gap-2'>
                             <Button
                                 type='button'
@@ -90,6 +135,7 @@ export const Portfolio = ({ register, component, errors }: PortfolioProps) => {
                                 type='button'
                                 buttonText='Add'
                                 className='flex-1 hover:opacity-80 px-4 py-2 text-white bg-slate hover:cursor-pointer'
+                                handleClick={handleAddPortolio}
                             />
                         </section>
                     </section>

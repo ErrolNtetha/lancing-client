@@ -112,3 +112,17 @@ export const useEducationStore: any = create(
         addEducation: (education: any) => set((state: any) => ({ education: [...state.education, { ...education }] })),
     })
 );
+
+export const useExperienceStore: any = create(
+    (set: any) => ({
+        experience: [],
+        addExperience: (experience: any) => set((state: any) => ({ experience: [...state.experience, { ...experience }] })),
+    })
+);
+
+export const usePortfolioStore: any = create(
+    (set: any) => ({
+        portfolio: [],
+        addPortfolio: (portfolio: any) => set((state: any) => ({ portfolio: [...state.portfolio, { ...portfolio }] })),
+    })
+);

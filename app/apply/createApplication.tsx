@@ -9,18 +9,16 @@ import { db } from '../../firebaseConfig';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Personal } from './personal';
-// import { Portfolio } from './portfolio';
+import { Portfolio } from './portfolio';
 import { useAuth } from '../../hooks/useAuth';
-// import { WorkExperience } from './workExperience';
+import { WorkExperience } from './workExperience';
 import { Education } from './education';
 
 const registrationSchema = z.object({
     bio: z.string().min(30, 'About is too short. It must be at least 30 characters long.'),
-    name: z.string().min(3, { message: 'School name must be at least 3 characters long.' }),
-    qualification: z.string().min(5, { message: 'Qualification name must be at least 5 characters long.' }),
+    title: z.string().min(2, 'Title is too short. It must be at least 30 characters long.'),
 }).required({
     bio: true,
-    name: true,
 });
 
 export const CreateApplication = () => {
@@ -129,6 +127,20 @@ export const CreateApplication = () => {
         />,
         <Education
             key={1}
+            register={register}
+            component={navButton}
+            errors={errors}
+            getValues={getValues}
+        />,
+        <WorkExperience
+            key={2}
+            register={register}
+            component={navButton}
+            errors={errors}
+            getValues={getValues}
+        />,
+        <Portfolio
+            key={3}
             register={register}
             component={navButton}
             errors={errors}
