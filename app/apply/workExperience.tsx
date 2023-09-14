@@ -12,16 +12,20 @@ import { useExperienceStore } from '../../hooks/useGlobalStore';
 interface PortfolioProps {
     register: Function;
     component: React.ReactNode;
-    errors: FieldErrors<FieldValues>;
+    errors: any;
     getValues: any;
+    watch: any;
 }
 
-export const WorkExperience = ({ register, component, errors, getValues }: PortfolioProps) => {
+export const WorkExperience = ({ register, watch, component, errors, getValues }: PortfolioProps) => {
     const [modal, setModal] = useState(false);
     const { addExperience, experience } = useExperienceStore();
+    const isWorking = watch('work.isWorking');
+    console.log(watch('work.isWorking'));
 
     const handleAddExperience = () => {
         const { work } = getValues();
+        console.log(work);
         addExperience(work);
         setModal(false);
     };
@@ -32,12 +36,12 @@ export const WorkExperience = ({ register, component, errors, getValues }: Portf
                 <p className='font-semibold text-md'> {item.companyName} </p>
                 <p className='text-[darkgray]'> {item.position} </p>
                 <p className='text-[darkgray]'> 
-                    {format(item.from, 'MMM y')} - {format(item.to, 'MMM y')} - {formatDistance(item.from, item.to)}
+                    {format(item.from, 'MMM y')} - {item.to ? format(item.to, 'MMM y') : 'Present'} - {formatDistance(item.from, item.to || new Date())}
                 </p>
                 <br />
                 {item.description && (
                     <section>
-                        <h3 className='font-semibold text-md'> Duties </h3> 
+                        <h3 className='font-semibold text-md'> Responsibilities </h3> 
                         <p> {item.description} </p>
                     </section>
                 )}
@@ -94,7 +98,7 @@ export const WorkExperience = ({ register, component, errors, getValues }: Portf
                             placeholder='Company name you worked for'
                             register={register}
                             required={true}
-                            errorMessage={errors?.companyName?.message?.toString()}
+                            errorMessage={errors?.work?.companyName?.message?.toString()}
                         />
                         <FormLabel
                             type='text'
@@ -103,7 +107,7 @@ export const WorkExperience = ({ register, component, errors, getValues }: Portf
                             placeholder='Senior Software Engineer'
                             register={register}
                             required={false}
-                            errorMessage={errors?.position?.message?.toString()}
+                            errorMessage={errors?.work?.position?.message?.toString()}
                         />
                         <TextareaLabel
                             name='work.description'
@@ -111,21 +115,27 @@ export const WorkExperience = ({ register, component, errors, getValues }: Portf
                             placeholder='Write a description explaining about this project.'
                             register={register}
                             required={true}
+                            errorMessage={errors?.work?.description?.message?.toString()}
                         />
                         <DatePicker 
                             name='work.from'
                             labelName='From'
                             required={true}
                             register={register}
-                            errorMessage={errors?.position?.message?.toString()}
+                            errorMessage={errors?.work?.from?.message?.toString()}
                         />
                         <DatePicker 
                             name='work.to'
                             labelName='To'
+                            disabled={isWorking}
                             required={true}
                             register={register}
-                            errorMessage={errors?.position?.message?.toString()}
+                            errorMessage={errors?.work?.to?.message?.toString()}
                         />
+                        <section className='flex items-center gap-3 my-3'>
+                            <input type='checkbox' id='isWorking' {...register('work.isWorking')} />
+                            <label htmlFor='isWorking'> I am currently working here </label>
+                        </section>
 
                         <section className='flex gap-2'>
                             <Button

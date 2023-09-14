@@ -22,6 +22,10 @@ const registrationSchema = z.object({
             .min(1, 'Bio is required.')
             .min(3, 'About is too short. It must be at least 30 characters long.'),
     }),
+    work: z.object({
+        isWorking: z
+            .boolean()
+    }),
     portfolio: z.object({
         title: z
             .string()
@@ -39,7 +43,12 @@ export const CreateApplication = () => {
     const [firstPage, setFirstPage] = useState<boolean | null>(true);
     const [lastPage, setLastPage] = useState(false);
     const { register, watch, getValues, handleSubmit, formState: { errors } } = useForm({
-        resolver: zodResolver(registrationSchema)
+        resolver: zodResolver(registrationSchema),
+        defaultValues: { 
+            work : {
+                to: null 
+            },
+        }
     });
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<null | string>(null);
@@ -156,6 +165,7 @@ export const CreateApplication = () => {
             component={navButton}
             errors={errors}
             getValues={getValues}
+            watch={watch}
         />,
         <Portfolio
             key={3}
