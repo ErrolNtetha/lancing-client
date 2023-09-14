@@ -10,7 +10,7 @@ import { TextareaLabel } from '../../components/molecules/textArea';
 interface PersonalProps {
     register: Function;
     component: React.ReactNode;
-    errors: FieldErrors<FieldValues>;
+    errors: any;
 }
 
 export const Personal = ({
@@ -22,18 +22,18 @@ export const Personal = ({
         <React.Fragment>
             <h3 className='font-semibold text-md text-gray'> Personal Information </h3>
             <h3 className='font-semibold text-2xl'>
-                Tell us about yourself. What makes you different?
+                To start off, tell us a bit about yourself.
             </h3>
             <p className='text-md mb-4'> 
                 It is important that you check your grammar, punctuations and spellings.
             </p>
             <TextareaLabel
-                name='bio'
+                name='personal.bio'
                 labelName='Bio'
                 placeholder='What are you good at? What are your skills?'
                 register={register}
                 required={true}
-                errorMessage={errors?.bio?.message?.toString()}
+                errorMessage={errors.personal?.bio?.message?.toString()}
             />
             <section> {component} </section>
         </React.Fragment>

@@ -7,7 +7,7 @@ export const Input = ({
     type,
     id,
     disabled = false,
-    required,
+    required = false,
     register,
     handleHideIcon,
     placeholder,

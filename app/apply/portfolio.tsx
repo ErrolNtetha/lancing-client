@@ -13,7 +13,7 @@ import Image from 'next/image';
 interface PortfolioProps {
     register: Function;
     component: React.ReactNode;
-    errors: FieldErrors<FieldValues>;
+    errors: any;
     getValues: any;
 }
 
@@ -22,7 +22,6 @@ export const Portfolio = ({ register, component, errors, getValues }: PortfolioP
     const [base, setBase] = useState('');
     const { addPortfolio, portfolio } = usePortfolioStore();
     const { setValue } = useForm();
-    console.log('Portfolio: ', portfolio);
 
     const resizeImage = (file: any) =>
         new Promise((resolve) => {
@@ -127,19 +126,20 @@ export const Portfolio = ({ register, component, errors, getValues }: PortfolioP
                         <input {...register('coverImage', { onChange: {handleAddPortolio} }) } type='file' />
                         <FormLabel
                             type='text'
-                            name='title'
+                            name='portfolio.title'
                             labelName='Title'
                             placeholder='Product Package Design'
                             register={register}
-                            required={true}
-                            errorMessage={errors?.portfolioTitle?.message?.toString()}
+                            required={false}
+                            errorMessage={errors.portfolio?.title?.message?.toString()}
                         />
                         <TextareaLabel
-                            name='description'
+                            name='portfolio.description'
                             labelName='Description'
                             placeholder='Write a description explaining about this project.'
                             register={register}
-                            required={true}
+                            required={false}
+                            errorMessage={errors.portfolio?.description?.message?.toString()}
                         />
                         <FormLabel
                             type='url'

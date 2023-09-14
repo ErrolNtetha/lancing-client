@@ -16,10 +16,22 @@ import { Education } from './education';
 import { Welcome } from './welcome';
 
 const registrationSchema = z.object({
-    bio: z.string().min(30, 'About is too short. It must be at least 30 characters long.'),
-    title: z.string().min(2, 'Title is too short. It must be at least 30 characters long.'),
-}).required({
-    bio: true,
+    personal: z.object({
+        bio: z
+            .string()
+            .min(1, 'Bio is required.')
+            .min(3, 'About is too short. It must be at least 30 characters long.'),
+    }),
+    portfolio: z.object({
+        title: z
+            .string()
+            .min(1, 'Title is required.')
+            .min(3, 'Title is too short. It must be at least 30 characters long.'),
+        description: z
+            .string()
+            .min(1, 'Description is required.')
+            .min(3, 'Description is too short. It must be at least 30 characters long.'),
+    })
 });
 
 export const CreateApplication = () => {
@@ -31,8 +43,8 @@ export const CreateApplication = () => {
     });
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<null | string>(null);
-    const router = useRouter();
-    const showIcon = watch('password');
+    // const router = useRouter();
+    // const showIcon = watch('password');
     const userAuth = useAuth();
  
     const handleNext = () => {
