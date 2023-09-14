@@ -13,6 +13,7 @@ import { Portfolio } from './portfolio';
 import { useAuth } from '../../hooks/useAuth';
 import { WorkExperience } from './workExperience';
 import { Education } from './education';
+import { Welcome } from './welcome';
 
 const registrationSchema = z.object({
     bio: z.string().min(30, 'About is too short. It must be at least 30 characters long.'),
@@ -92,7 +93,8 @@ export const CreateApplication = () => {
     };
 
     const renderLoading = loading ? 'Submitting application...' : 'Submit Application';
-    const buttonText = `${lastPage ? renderLoading : 'Next Step'}`;
+    const isFirstPage = (currentPage === 0) ? 'Get Started' : 'Next Step';
+    const buttonText = `${lastPage ? renderLoading : isFirstPage}`;
 
     const navButton = (
         <section className='fixed md:relative bg-white bottom-0 left-0 w-full p-2 md:p-0 mt-4 flex items-center justify-between'> 
@@ -119,6 +121,10 @@ export const CreateApplication = () => {
     );
 
     const forms = [
+        <Welcome
+            key={9} 
+            component={navButton} 
+        />,
         <Personal
             key={0} 
             register={register} 
