@@ -1,6 +1,5 @@
 import { format, formatDistance, isPast } from 'date-fns';
 import React, { useState } from 'react';
-import { FieldErrors, FieldValues } from 'react-hook-form';
 import { FiPlus } from 'react-icons/fi';
 import { Button } from '../../components/atoms/button';
 import { DatePicker } from '../../components/molecules/datePicker';
@@ -21,11 +20,9 @@ export const WorkExperience = ({ register, watch, component, errors, getValues }
     const [modal, setModal] = useState(false);
     const { addExperience, experience } = useExperienceStore();
     const isWorking = watch('work.isWorking');
-    console.log(watch('work.isWorking'));
 
     const handleAddExperience = () => {
         const { work } = getValues();
-        console.log(work);
         addExperience(work);
         setModal(false);
     };

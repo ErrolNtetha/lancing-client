@@ -14,6 +14,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { WorkExperience } from './workExperience';
 import { Education } from './education';
 import { Welcome } from './welcome';
+import { PreviewProfile } from './previewProfile';
 
 const registrationSchema = z.object({
     personal: z.object({
@@ -174,6 +175,11 @@ export const CreateApplication = () => {
             errors={errors}
             getValues={getValues}
         />,
+        <PreviewProfile
+            key={4}
+            component={navButton}
+            getValues={getValues}
+        />
     ];
 
     useEffect(() => {
