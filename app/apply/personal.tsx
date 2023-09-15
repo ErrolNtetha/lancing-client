@@ -3,7 +3,7 @@
 import React from 'react';
 import { AmountLabel } from '../../components/molecules/amountLabel';
 // import { FieldErrors, FieldValues } from 'react-hook-form';
-// import { FormLabel } from '../../components/molecules/formLabel';
+import { FormLabel } from '../../components/molecules/formLabel';
 import { TextareaLabel } from '../../components/molecules/textArea';
 // import { AddPicture } from './addPicture';
 
@@ -27,16 +27,12 @@ export const Personal = ({
             <p className='text-md mb-4'> 
                 It is important that you check your grammar, punctuations and spellings.
             </p>
-            <AmountLabel
-                placeholder='0.00'
-                label='Rate'
-                name='personal.rate'
-                register={register}
-            />
-            <AmountLabel
-                placeholder='0.00'
-                label='Rate'
-                name='personal.rate2'
+            <FormLabel
+                type='text'
+                placeholder='Ex. Logo Designer'
+                name='personal.title'
+                labelName='Title'
+                required={false}
                 register={register}
             />
             <TextareaLabel

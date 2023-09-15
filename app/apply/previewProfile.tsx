@@ -41,6 +41,7 @@ export const PreviewProfile = ({ component, getValues }: PProps) => {
                 <p className='text-md mb-4'> </p>
             </section>
             <section className='mb-4 border-1 border border-gray p-2 rounded-md'>
+                <p className=''> {personal.title || 'No title...'} </p>
                 <h3 className='font-semibold'> Overview </h3>
                 <section>
                     <p> {personal.bio || 'No bio...'} </p>
