@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import { FieldErrors, FieldValues } from 'react-hook-form';
+import { AmountLabel } from '../../components/molecules/amountLabel';
 // import { FieldErrors, FieldValues } from 'react-hook-form';
 // import { FormLabel } from '../../components/molecules/formLabel';
 import { TextareaLabel } from '../../components/molecules/textArea';
@@ -27,6 +27,18 @@ export const Personal = ({
             <p className='text-md mb-4'> 
                 It is important that you check your grammar, punctuations and spellings.
             </p>
+            <AmountLabel
+                placeholder='0.00'
+                label='Rate'
+                name='personal.rate'
+                register={register}
+            />
+            <AmountLabel
+                placeholder='0.00'
+                label='Rate'
+                name='personal.rate2'
+                register={register}
+            />
             <TextareaLabel
                 name='personal.bio'
                 labelName='Bio'

@@ -22,6 +22,7 @@ const registrationSchema = z.object({
             .string()
             .min(1, 'Bio is required.')
             .min(3, 'About is too short. It must be at least 30 characters long.'),
+        rate: z.number().min(200, 'Amount should be at a minimum of R300.')
     }),
     work: z.object({
         isWorking: z
