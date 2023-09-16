@@ -1,23 +1,73 @@
 'use client'
 
-import React from 'react';
-import { AmountLabel } from '../../components/molecules/amountLabel';
-// import { FieldErrors, FieldValues } from 'react-hook-form';
+import Image from 'next/image';
+import React, { useRef } from 'react';
 import { FormLabel } from '../../components/molecules/formLabel';
 import { TextareaLabel } from '../../components/molecules/textArea';
-// import { AddPicture } from './addPicture';
 
 interface PersonalProps {
     register: Function;
     component: React.ReactNode;
     errors: any;
+    setValue: Function;
+    watch: Function;
 }
 
 export const Personal = ({
     register,
     component,
-    errors
+    errors,
+    setValue,
+    watch
 }: PersonalProps) => {
+    const { personal } = watch();
+    const imageRef = useRef<HTMLInputElement | null>(null);
+
+    const handleAvatarChange = (e: any) => {
+        const imageUrl = e.target.files[0];
+
+        if (imageUrl) {
+            const reader = new FileReader();
+
+            reader.readAsDataURL(imageUrl);
+            reader.onload = () => {
+                if (reader.result) {
+                    setValue('personal.avatar', reader.result);
+                }
+            };
+        }
+    }
+
+    const avatar = (<section className='flex flex-col gap-3'>
+        <section className='relative border border-gray rounded-full w-[100px] h-[100px]'>
+            {!personal.avatar ? (
+                <Image
+                    src='/assets/images/defaultAvatar.png'
+                    alt='random image'
+                    width={200}
+                    height={200}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }}
+                />
+                )
+                : (
+                    <Image
+                        src={personal.avatar}
+                        alt='random image'
+                        width={200}
+                        height={200}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }}
+                    />
+                )}
+            </section>
+            <button
+                type='button'
+                onClick={() => imageRef.current?.click()}
+                className='bg-slate p-2 text-white'
+            > 
+            Set avatar 
+        </button>
+    </section>);
+
     return (
         <React.Fragment>
             <h3 className='font-semibold text-md text-gray'> Personal Information </h3>
@@ -27,6 +77,15 @@ export const Personal = ({
             <p className='text-md mb-4'> 
                 It is important that you check your grammar, punctuations and spellings.
             </p>
+            <input
+                type='file'
+                onChange={handleAvatarChange}
+                ref={imageRef}
+                hidden
+            />
+            <section className='flex justify-center m-4'> 
+                {avatar} 
+            </section>
             <FormLabel
                 type='text'
                 placeholder='Ex. Logo Designer'

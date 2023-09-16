@@ -18,6 +18,8 @@ import { PreviewProfile } from './previewProfile';
 
 const registrationSchema = z.object({
     personal: z.object({
+        avatar: z 
+            .string(),
         title: z
             .string()
             .min(1, 'Title is required.')
@@ -47,9 +49,12 @@ export const CreateApplication = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [firstPage, setFirstPage] = useState<boolean | null>(true);
     const [lastPage, setLastPage] = useState(false);
-    const { register, watch, getValues, handleSubmit, formState: { errors } } = useForm({
+    const { register, watch, setValue, getValues, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(registrationSchema),
         defaultValues: { 
+            personal: {
+                avatar: null
+            },
             work : {
                 to: null 
             },
@@ -156,6 +161,8 @@ export const CreateApplication = () => {
             register={register} 
             component={navButton} 
             errors={errors}
+            setValue={setValue}
+            watch={watch}
         />,
         <Education
             key={1}
