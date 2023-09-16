@@ -11,7 +11,10 @@ type ARProps = {
 export const AuthorizedRoute = (props: ARProps) => {
     const { children, isApproved, authenticated, isClient } = props;
     const router = useRouter();
-    const Component = (authenticated && !isApproved && !isClient) ? children : router.push('login');
+
+    const Component = (authenticated && !isApproved && !isClient) 
+        ? children 
+        : router.push('login');
 
     return (
         <>
