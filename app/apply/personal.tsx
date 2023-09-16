@@ -83,25 +83,27 @@ export const Personal = ({
                 ref={imageRef}
                 hidden
             />
-            <section className='flex justify-center m-4'> 
+            <section className='border border-gray rounded-md p-3 flex justify-center my-4'> 
                 {avatar} 
             </section>
-            <FormLabel
-                type='text'
-                placeholder='Ex. Logo Designer'
-                name='personal.title'
-                labelName='Title'
-                required={false}
-                register={register}
-            />
-            <TextareaLabel
-                name='personal.bio'
-                labelName='Bio'
-                placeholder='What are you good at? What are your skills?'
-                register={register}
-                required={true}
-                errorMessage={errors.personal?.bio?.message?.toString()}
-            />
+            <section className='border border-gray rounded-md p-3'>
+                <FormLabel
+                    type='text'
+                    placeholder='Ex. Logo Designer'
+                    name='personal.title'
+                    labelName='Title'
+                    required={false}
+                    register={register}
+                />
+                <TextareaLabel
+                    name='personal.bio'
+                    labelName='Bio'
+                    placeholder='What are you good at? What are your skills?'
+                    register={register}
+                    required={true}
+                    errorMessage={errors.personal?.bio?.message?.toString()}
+                />
+            </section>
             <section> {component} </section>
         </React.Fragment>
     );
