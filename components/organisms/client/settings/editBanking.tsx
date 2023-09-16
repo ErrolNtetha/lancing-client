@@ -16,10 +16,10 @@ const bankingSchema = z.object({
 });
 
 export const EditBanking = () => {
-    const userAuth = useAuth();
+    const { currentUser } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
-            accountHolder: `${userAuth?.dislayName}`,
+            accountHolder: `${currentUser?.dislayName}`,
             accountNumber: '10128807421',
             branchCode: '051001',
             bankName: 'Nedbank'.toLowerCase().trim()

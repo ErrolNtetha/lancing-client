@@ -21,7 +21,7 @@ type ProposalProps = {
 export const Proposal = ({ handleModal, projectId, recipient, budget }: ProposalProps) => {
     const [loading, setLoading] = useState<boolean | null>(null);
     const { register, handleSubmit } = useForm();
-    const userAuth = useAuth();
+    const { currentUser } = useAuth();
 
     const handleProposalSubmit = async (data: any) => {
         if (!data) {
@@ -36,7 +36,7 @@ export const Proposal = ({ handleModal, projectId, recipient, budget }: Proposal
             await addDoc(proposalRef, {
                 ...data,
                 project: doc(db, `projects/${projectId}`),
-                sentBy: doc(db, `users/${userAuth.uid}`),
+                sentBy: doc(db, `users/${currentUser.uid}`),
                 createdAt: serverTimestamp(),
             });
         } catch (error) {

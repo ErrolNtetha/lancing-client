@@ -16,7 +16,7 @@ export const ClientUI = () => {
     const [modal, setModal] = useState(false);
     const isClient = useProfileStore((state: any) => state.profile?.isClient);
     const renderUI = isClient ? <Vendor /> : <Client />;
-    const userAuth = useAuth();
+    const { currentUser } = useAuth();
 
     useEffect(() => {
         async function getAuthor(authorRef: DocumentReference<unknown>) {
@@ -67,7 +67,7 @@ export const ClientUI = () => {
         async function getMessages() {
             const messagesRef = collection(db, 'messages');
             try {
-                const querySnapshot = query(messagesRef, where('user', '==', `user/${userAuth.uid}`));
+                const querySnapshot = query(messagesRef, where('user', '==', `user/${currentUser.uid}`));
                 console.log('Message document: ', querySnapshot);
 
             } catch (error) {

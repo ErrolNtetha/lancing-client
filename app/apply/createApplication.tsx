@@ -59,7 +59,7 @@ export const CreateApplication = () => {
     const [errorMessage, setErrorMessage] = useState<null | string>(null);
     // const router = useRouter();
     // const showIcon = watch('password');
-    const userAuth = useAuth();
+    const { currentUser } = useAuth();
  
     const handleNext = () => {
         if (currentPage !== (forms.length - 1)) {
@@ -98,7 +98,7 @@ export const CreateApplication = () => {
 
         const submitPersonalDetails = async function() {
             try {
-                const userRef = doc(db, 'users', userAuth?.uid);
+                const userRef = doc(db, 'users', currentUser?.uid);
                 await setDoc(userRef, {
                     ...data,
                 }, { merge: true });

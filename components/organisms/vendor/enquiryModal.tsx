@@ -19,7 +19,7 @@ type EnquiryProps = {
 
 export const EnquiryModal = ({ handleModal, recipient, uid }: EnquiryProps) => {
     const { register, handleSubmit } = useForm();
-    const userAuth = useAuth();
+    const { currentUser } = useAuth();
 
     const handleEnquirySubmit = async (data: any) => {
         if (!data) {
@@ -32,7 +32,7 @@ export const EnquiryModal = ({ handleModal, recipient, uid }: EnquiryProps) => {
         try {
             const messagesRef = collection(db, 'messages');
             await addDoc(messagesRef, {
-                sender: doc(db, `users/${userAuth.uid}`),
+                sender: doc(db, `users/${currentUser.uid}`),
                 receiver: doc(db, `users/${uid}`),
                 message,
                 sentAt: serverTimestamp() 

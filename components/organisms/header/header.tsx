@@ -24,7 +24,7 @@ export const Header = () => {
     const p: any = [];
     const { vision, profile: { isClient }, clearProfile } = useProfileStore();
     const router = useRouter();
-    const userAuth = useAuth();
+    const { currentUser } = useAuth();
     // const  header = useProfileStore((state) => state.header);
 
     const handleLogIn = () => {
@@ -90,10 +90,10 @@ export const Header = () => {
                     <FiAlignRight onClick={() => setNav(!nav)} className='text-[1.8rem] block md:hidden transition duration-200 ease-in-out' />
                 </section>
                 <span className='hidden md:block ml-4'> 
-                    {userAuth
+                    {currentUser
                         ? <UserHead 
-                           avatar={userAuth?.avatar} 
-                            displayName={userAuth?.displayName} 
+                           avatar={currentUser?.avatar} 
+                            displayName={currentUser?.displayName} 
                             isClient={isClient}
                             /> 
                         : <LoginButton />} 
@@ -101,19 +101,19 @@ export const Header = () => {
                 {nav && (
                     <section className='fixed bg-slate top-0 left-0 bottom-0 w-full'>
                         <MobileMenu
-                            auth={userAuth}
-                            email={userAuth?.email}
+                            auth={currentUser}
+                            email={currentUser?.email}
                             isClient={isClient}
-                            avatar={userAuth?.avatar}
-                            displayName={userAuth?.displayName}
+                            avatar={currentUser?.avatar}
+                            displayName={currentUser?.displayName}
                             handleMenuToggle={() => setNav(!nav)}
                             totalMessages={proposals.length}
                         />
                         <section className='flex items-center justify-center absolute w-full left-0 bottom-4'>
                             <Button
                                 className='border-2 border-white font-extrabold w-full p-2 my-1 mx-4'
-                                buttonText={`${userAuth ? 'Logout' : 'Login'}`}
-                                handleClick={() => `${userAuth ? handleLogout() : handleLogIn()}`}
+                                buttonText={`${currentUser ? 'Logout' : 'Login'}`}
+                                handleClick={() => `${currentUser ? handleLogout() : handleLogIn()}`}
                             />
                         </section>
                     </section>

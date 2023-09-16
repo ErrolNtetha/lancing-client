@@ -56,7 +56,7 @@ const projectSchema = z.object({
 });
 
 export const PostGig = ({ handleModalToggle }: GigProps) => {
-    const userAuth = useAuth();
+    const { currentUser } = useAuth();
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm({ 
         resolver: zodResolver(projectSchema) 
@@ -71,7 +71,7 @@ export const PostGig = ({ handleModalToggle }: GigProps) => {
             const projectRef = collection(db, 'projects');
             await addDoc(projectRef, {
                 ...data,
-                postedBy: doc(db, `users/${userAuth.uid}`),
+                postedBy: doc(db, `users/${currentUser.uid}`),
                 createdAt: serverTimestamp(),
                 contract: 'Ongoing',
                 skillLevel: 'Expert',
