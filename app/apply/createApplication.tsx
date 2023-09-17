@@ -62,7 +62,7 @@ export const CreateApplication = () => {
     });
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<null | string>(null);
-    // const router = useRouter();
+    const router = useRouter();
     // const showIcon = watch('password');
     const { currentUser } = useAuth();
  
@@ -90,7 +90,7 @@ export const CreateApplication = () => {
 
     const onSubmit = (data: any) => {
         console.log('Data: ', data);
-        console.log('Errors: ', errors);
+        // console.log('Errors: ', errors);
         return;
 
         if (!data) {
@@ -107,6 +107,7 @@ export const CreateApplication = () => {
                 await setDoc(userRef, {
                     ...data,
                 }, { merge: true });
+                router.push('/apply/application-outcome');
             } catch (error) {
                 console.log('Personal: ', error);
             }
