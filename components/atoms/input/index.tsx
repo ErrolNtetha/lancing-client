@@ -13,7 +13,10 @@ export const Input = ({
     placeholder,
     inputHasValue,
     hasHideIcon = false,
-    isHidden
+    isHidden,
+    value,
+    onChange,
+    shouldUnregister = false
 }: InputProps) => {
     const inputContainer = `${disabled && 'hover:cursor-not-allowed'} flex items-center justify-between p-2 ${disabled && 'bg-[#eeeeee] text-gray'} border border-gray outline-black w-full block`;
 
@@ -26,7 +29,7 @@ export const Input = ({
                 autoComplete='off'
                 className={`${disabled && 'hover:cursor-not-allowed'} bg-[inherit] outline-none w-full`}
                 disabled={disabled}
-                {...register(name, { required })}
+                {...register(name, { required, value, onChange, shouldUnregister })}
             />
             {(hasHideIcon || inputHasValue) && (
                 <span

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { Button } from '../../components/atoms/button';
 import { doc, setDoc } from 'firebase/firestore';
@@ -29,11 +29,10 @@ const registrationSchema = z.object({
             .min(1, 'Bio is required.')
             .min(3, 'About is too short. It must be at least 30 characters long.'),
     }),
-    work: z.object({
-        isWorking: z
-            .boolean()
-    }),
-    portfolio: z.object({
+        work: z.object({
+            name: z.string().min(5, 'Name is too short'),
+        }).array(),
+        portfolio: z.object({
         title: z
             .string()
             .min(1, 'Title is required.')
@@ -49,17 +48,22 @@ export const CreateApplication = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [firstPage, setFirstPage] = useState<boolean | null>(true);
     const [lastPage, setLastPage] = useState(false);
-    const { register, watch, setValue, getValues, handleSubmit, formState: { errors } } = useForm({
+    const { register, watch, setValue, control, getValues, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(registrationSchema),
         defaultValues: { 
             personal: {
                 avatar: null
             },
+            education: [],
             work : {
+                from: null,
                 to: null 
             },
         }
     });
+
+    const formMethods = { control, register, errors, getValues, useFieldArray };
+
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<null | string>(null);
     const router = useRouter();
@@ -89,8 +93,8 @@ export const CreateApplication = () => {
     };
 
     const onSubmit = (data: any) => {
-        console.log('Data: ', data);
-        // console.log('Errors: ', errors);
+        // console.log('Data: ', data);
+        console.log('Errors: ', errors);
         return;
 
         if (!data) {
@@ -167,10 +171,8 @@ export const CreateApplication = () => {
         />,
         <Education
             key={1}
-            register={register}
             component={navButton}
-            errors={errors}
-            getValues={getValues}
+            methods={formMethods}
         />,
         <WorkExperience
             key={2}
@@ -191,6 +193,7 @@ export const CreateApplication = () => {
             key={4}
             component={navButton}
             getValues={getValues}
+            methods={formMethods}
         />
     ];
 
@@ -206,7 +209,6 @@ export const CreateApplication = () => {
         }
     }, [currentPage, forms.length]);
 
-    
     return (
             <section className='divide-y-0 divide-gray md:flex-[0.4]'>
                 <section className='mt-3 md:p-4'>

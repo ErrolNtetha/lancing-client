@@ -5,12 +5,17 @@ import { useExperienceStore } from '../../hooks/useGlobalStore';
 interface PProps {
     component: React.ReactNode;
     getValues: any;
+    methods: any
 }
 
-export const PreviewProfile = ({ component, getValues }: PProps) => {
+export const PreviewProfile = ({ component, getValues, methods }: PProps) => {
     const { personal, work } = getValues();
     const { experience } = useExperienceStore();
     console.log(getValues());
+    const { useFieldArray, control } = methods;
+
+    const { fields } = useFieldArray({ control, name: 'education' });
+    console.log(fields);
 
     const listOfExperience = experience.map((item: any, index: number) => (
         <section key={index} className='my-3'>

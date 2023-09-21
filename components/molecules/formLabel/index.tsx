@@ -26,7 +26,10 @@ export const FormLabel = ({
     labelName,
     errorMessage,
     disabled,
-    inputHasValue
+    inputHasValue,
+    value,
+    onChange,
+    shouldUnregister
 }: FormLabelProps) => {
 
     return (
@@ -45,6 +48,9 @@ export const FormLabel = ({
                 inputHasValue={inputHasValue}
                 required={required}
                 disabled={disabled}
+                value={value}
+                onChange={onChange}
+                shouldUnregister={shouldUnregister}
             />
             {errorMessage && <p className='text-xs py-1 text-[red]'> {errorMessage} </p>}
         </section>

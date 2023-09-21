@@ -1,37 +1,45 @@
 // import { format } from 'date-fns';
 import { format, isPast } from 'date-fns';
 import React, { useState } from 'react';
-import { FieldErrors, FieldValues } from 'react-hook-form';
 import { FiPlus } from 'react-icons/fi';
 import { Button } from '../../components/atoms/button';
 import { DatePicker } from '../../components/molecules/datePicker';
 import { FormLabel } from '../../components/molecules/formLabel';
 import { Modal } from '../../components/organisms/modal';
-import { useEducationStore } from '../../hooks/useGlobalStore';
 
 interface EProps {
-    register: Function;
     component: React.ReactNode;
-    errors: FieldErrors<FieldValues>;
-    getValues: any;
+    methods: any;
 }
 
-export const Education = ({ register, component, errors, getValues }: EProps) => {
+export const Education = ({ component, methods }: EProps) => {
     const [modal, setModal] = useState(false);
-    const  { education, addEducation } = useEducationStore();
+    const {
+        control,
+        getValues,
+        errors,
+        register,
+        useFieldArray,
+    } = methods;
+
+    const { fields, append } = useFieldArray({
+        control,
+        name: 'education',
+    });
+
+    const { qualification } = getValues();
 
     const handleEducation = () => {
-        const { school } = getValues();
-        addEducation(school);
+        append(qualification);
         setModal(false);
     };
 
-    const listOfQualifications = education.map((item: any, index: number) => (
+    const listOfQualifications = fields.map((item: any, index: number) => (
         <section key={index} className='my-3'>
             <section className='border border-dashed border-gray p-2'>
                 <p> <span className='font-semibold'> {item.name} </span> </p>
-                <p> {(item.to && isPast(item.to)) ? 'Studied' : 'Studying'} <span className='font-semibold'> {item.qualification} </span></p>
-                {isPast(item.to) && <p> Graduated on: <span className='font-semibold'> {format(item.to, 'MMM y')} </span></p>}
+                <p> {(item.endDate && isPast(item.endDate)) ? 'Studied' : 'Studying'} <span className='font-semibold'> {item.course} </span></p>
+                {isPast(item.endDate) && <p> Graduated on: <span className='font-semibold'> {format(item.endDate, 'MMM y')} </span></p>}
             </section>
         </section>
     ));
@@ -46,7 +54,7 @@ export const Education = ({ register, component, errors, getValues }: EProps) =>
                 Adding your qualifications often increase chances of you getting hired.
             </p>
 
-            {education.length === 0
+            {fields.length === 0
                 ? (
                     <section
                         onClick={() => setModal(true)}
@@ -64,7 +72,7 @@ export const Education = ({ register, component, errors, getValues }: EProps) =>
             )
                 : listOfQualifications}
 
-                {education.length && (
+        {fields.length > 0 && (
                     <button
                         type='button' 
                         onClick={() => setModal(true)}
@@ -78,41 +86,46 @@ export const Education = ({ register, component, errors, getValues }: EProps) =>
                 <Modal>
                     <section className='p-3'>
                         <h3 className='font-semibold text-md text-black text-center'> Add Qualification </h3>
-                        <FormLabel
-                            type='text'
-                            name='school.qualification'
-                            labelName='Qualification Name'
-                            placeholder='Diploma in Business Administration'
-                            register={register}
-                            required='This field is required.'
-                            errorMessage={errors?.qualification?.message?.toString()}
-                        />
-                        <FormLabel
-                            type='text'
-                            name='school.name'
-                            labelName='School Name'
-                            placeholder='Durban University of Technology'
-                            register={register}
-                            required='This field is required.'
-                            errorMessage={errors?.name?.message?.toString()}
-                        />
-                        <DatePicker
-                            labelName='Started'
-                            name='school.from'
-                            register={register}
-                            required={true}
-                        />
-                        <DatePicker
-                            labelName='Graduated'
-                            name='school.to'
-                            register={register}
-                            required={true}
-                        />
-                        <section className='flex mb-3 items-center gap-3'>
-                            <input type='checkbox' value='studying' id='stillAtSchool' name='school.studying' />
-                            <label htmlFor='stillAtSchool'> I am still studying here </label>
-                        </section>
-
+                            <span>
+                                <FormLabel
+                                    type='text'
+                                    name='qualification.course'
+                                    labelName='Qualification Name'
+                                    placeholder='Diploma in Business Administration'
+                                    register={register}
+                                    required='This field is required.'
+                                    errorMessage={errors?.qualification?.message?.toString()}
+                                    shouldUnregister={true}
+                                />
+                                <FormLabel
+                                    type='text'
+                                    name='qualification.name'
+                                    labelName='Name'
+                                    placeholder='Durban University of Technology'
+                                    register={register}
+                                    required='This field is required.'
+                                    errorMessage={errors?.name?.message?.toString()}
+                                    shouldUnregister={true}
+                                />
+                                <DatePicker
+                                    labelName='Started'
+                                    name='qualification.startDate'
+                                    register={register}
+                                    required={true}
+                                    shouldUnregister={true}
+                                />
+                                <DatePicker
+                                    labelName='Graduated'
+                                    name='qualification.endDate'
+                                    register={register}
+                                    required={true}
+                                    shouldUnregister={true}
+                                />
+                                <section className='flex mb-3 items-center gap-3'>
+                                    <input type='checkbox' value='studying' id='stillAtSchool' name='qualification.isStillStudying' />
+                                    <label htmlFor='stillAtSchool'> I am still studying here </label>
+                                </section>
+                            </span>
                         <section className='flex gap-2'>
                             <Button
                                 type='button'

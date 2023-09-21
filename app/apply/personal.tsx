@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useRef } from 'react';
 import { FormLabel } from '../../components/molecules/formLabel';
 import { TextareaLabel } from '../../components/molecules/textArea';
@@ -42,7 +43,7 @@ export const Personal = ({
         <section className='relative border border-gray rounded-full w-[100px] h-[100px]'>
             {!personal.avatar ? (
                 <Image
-                    src='/assets/images/defaultAvatar.png'
+                    src='/assets/images/svg/profileIcon.svg'
                     alt='random image'
                     width={200}
                     height={200}
@@ -59,6 +60,7 @@ export const Personal = ({
                     />
                 )}
             </section>
+            <Link href='/settings' aria-disabled>line</Link>
             <button
                 type='button'
                 onClick={() => imageRef.current?.click()}
