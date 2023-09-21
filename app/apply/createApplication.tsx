@@ -58,14 +58,11 @@ export const CreateApplication = () => {
                 avatar: null
             },
             education: [],
-            work : {
-                from: null,
-                to: null 
-            },
+            workExperience : [],
         }
     });
 
-    const formMethods = { control, register, errors, getValues, useFieldArray };
+    const formMethods = { control, register, errors, getValues, useFieldArray, watch, handleSubmit };
 
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<null | string>(null);
@@ -179,11 +176,8 @@ export const CreateApplication = () => {
         />,
         <WorkExperience
             key={2}
-            register={register}
             component={navButton}
-            errors={errors}
-            getValues={getValues}
-            watch={watch}
+            methods={formMethods}
         />,
         <Portfolio
             key={3}

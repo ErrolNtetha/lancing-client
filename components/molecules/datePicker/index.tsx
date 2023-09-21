@@ -7,7 +7,7 @@ interface DProps extends DateProps {
     errorMessage?: string | React.ReactHTMLElement<HTMLElement>;
 }
 
-export const DatePicker = ({ name, disabled, register, required, labelName, errorMessage }: DProps) => {
+export const DatePicker = ({ name, value, disabled, register, required, labelName, errorMessage }: DProps) => {
     return (
         <section className='py-2'>
             <label htmlFor={name}>{labelName}</label>
@@ -17,6 +17,7 @@ export const DatePicker = ({ name, disabled, register, required, labelName, erro
                 register={register}
                 disabled={disabled}
                 id={name}
+                value={value}
             />
             {errorMessage && <p className='text-xs py-1 text-[red]'> {errorMessage} </p>}
         </section>

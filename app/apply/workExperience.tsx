@@ -6,28 +6,38 @@ import { DatePicker } from '../../components/molecules/datePicker';
 import { FormLabel } from '../../components/molecules/formLabel';
 import { TextareaLabel } from '../../components/molecules/textArea';
 import { Modal } from '../../components/organisms/modal';
-import { useExperienceStore } from '../../hooks/useGlobalStore';
 
 interface PortfolioProps {
-    register: Function;
     component: React.ReactNode;
-    errors: any;
-    getValues: any;
-    watch: any;
+    methods: any;
 }
 
-export const WorkExperience = ({ register, watch, component, errors, getValues }: PortfolioProps) => {
+export const WorkExperience = ({ methods, component }: PortfolioProps) => {
     const [modal, setModal] = useState(false);
-    const { addExperience, experience } = useExperienceStore();
+    const {
+        control,
+        getValues,
+        errors,
+        register,
+        useFieldArray,
+        watch
+    } = methods;
     const isWorking = watch('work.isWorking');
 
+    const { fields, append } = useFieldArray({
+        control,
+        name: 'WorkExperience',
+    });
+
+    const { work, workExperience } = getValues();
+    console.log(work);
+
     const handleAddExperience = () => {
-        const { work } = getValues();
-        addExperience(work);
+        append(work);
         setModal(false);
     };
 
-    const listOfExperience = experience.map((item: any, index: number) => (
+    const listOfExperience = fields.map((item: any, index: number) => (
         <section key={index} className='my-3'>
             <section className='border border-dashed border-gray p-2'>
                 <p className='font-semibold text-md'> {item.companyName} </p>
@@ -56,7 +66,7 @@ export const WorkExperience = ({ register, watch, component, errors, getValues }
                 Profiles with relevant work experience are <span className='font-semibold text-[green]'>15x</span> more likely to get hired.
             </p>
 
-            {experience.length === 0
+            {fields.length === 0
                 ? (
                     <section
                         onClick={() => setModal(true)}
@@ -74,7 +84,7 @@ export const WorkExperience = ({ register, watch, component, errors, getValues }
                 )
                 : listOfExperience}
 
-                {experience.length && (
+        {fields.length > 0 && (
                     <button
                         type='button' 
                         onClick={() => setModal(true)}
@@ -120,6 +130,7 @@ export const WorkExperience = ({ register, watch, component, errors, getValues }
                             required={true}
                             register={register}
                             errorMessage={errors?.work?.from?.message?.toString()}
+                            value=''
                         />
                         <DatePicker 
                             name='work.to'
@@ -128,6 +139,7 @@ export const WorkExperience = ({ register, watch, component, errors, getValues }
                             required={true}
                             register={register}
                             errorMessage={errors?.work?.to?.message?.toString()}
+                            value=''
                         />
                         <section className='flex items-center gap-3 my-3'>
                             <input type='checkbox' id='isWorking' {...register('work.isWorking')} />
