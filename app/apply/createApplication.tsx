@@ -29,6 +29,9 @@ const registrationSchema = z.object({
             .min(1, 'Bio is required.')
             .min(3, 'About is too short. It must be at least 30 characters long.'),
     }),
+    education: z.array(z.object({
+            name: z.string().min(5)
+        })),
         work: z.object({
             name: z.string().min(5, 'Name is too short'),
         }).array(),
