@@ -98,8 +98,8 @@ const myProfile: Profile = {
 
 export const useProfileStore: any = create(
     (set: any) => ({
-        profile: {...myProfile},
-        addProfile: (user: Profile) => set(() => ({ profile: user || myProfile })),
+        profile: {},
+        addProfile: (user: Profile) => set(() => ({ profile: user })),
         clearProfile: () => set({ profile: {} }),
     })
 );
