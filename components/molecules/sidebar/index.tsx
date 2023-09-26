@@ -9,14 +9,15 @@ import { DigitCounter } from '../digitCounter';
 type SidebarProps = {
     messages: number;
     proposals: number;
+    className: string;
 }
 
-export const Sidebar = ({ messages, proposals }: SidebarProps) => {
+export const Sidebar = ({ className, messages, proposals }: SidebarProps) => {
     const [modal, setIsModal] = React.useState(false);
     const { isClient } = useProfileStore().profile;
 
     return (
-        <aside className='hidden p-2 max-h-max flex-[.4] md:block'>
+        <aside className={className}>
             <ul className='divide-gray p-2 space-y-2'>
                 <li className='hover:cursor-pointer hover:bg-gray p-2'>
                     <Link href='/messages' className='flex items-center justify-between'>

@@ -82,14 +82,19 @@ export const ClientUI = () => {
 
     return (
         <>
-            <section className='md:flex w-full justify-around'>
-                <Sidebar 
-                    messages={1} 
-                    proposals={3}
-                />
-                    {renderUI}
-                <aside className='hidden flex-[.4] p-2 md:block' />
+            <section className='container md:flex w-full justify-center'>
+                <section className='md:flex w-full justify-center'>
+                    <Sidebar 
+                        className='hidden p-2 max-h-max flex-[.2] md:block'
+                        messages={0}
+                        proposals={0}
+                    />
+                        <section className='flex-[.5] border border-gray'> {renderUI} </section>
+                    <aside className='hidden flex-[.2] p-2 md:block' />
+                </section>
             </section>
+
+            {/* Floating button for clients to create a new project */}
             {isClient && <CreatePost handlePost={() => setModal(!modal)} />}
             {modal && (
                 <Modal>

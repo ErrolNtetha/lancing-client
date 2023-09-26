@@ -4,6 +4,7 @@ import { db } from '../firebaseConfig';
 
 export const useFetchProjects = () => {
     const [docs, setDocs] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
 
     async function getAuthor(authorRef: DocumentReference<unknown>) {
         if (authorRef) {
@@ -36,12 +37,12 @@ export const useFetchProjects = () => {
                     }
                 }
             }
-
             setDocs(p);
+            setLoading(false);
         }
 
         getProjects();
     }, []);
 
-    return { docs };
+    return { docs, loading };
 };

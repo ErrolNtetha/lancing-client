@@ -3,17 +3,40 @@
 import React from 'react';
 import { useFetchProjects } from '../../../hooks/useFetchProjects';
 import { ClientProject } from './clientProject';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 export const ListProjects = () => {
-    const { docs } = useFetchProjects();
+    const { docs, loading } = useFetchProjects();
 
     // const sortByDate = (a: any, b: any) => Number(new Date(b.project.createdAt.seconds)) - Number(new Date(a.project.createdAt.seconds));
 
     return (
-        <React.Fragment>
+        <>
             <section className='h-[92vh]'>
                 {
-                    !docs.length
+                    loading 
+                    ? (
+                        <section className='p-3 w-full'>
+                            <section className=''> 
+                                <section className='w-32'>
+                                    <Skeleton count={1} /> 
+                                </section>
+                                <section className='w-16'>
+                                    <Skeleton count={1} /> 
+                                </section>
+                            </section>
+                            <Skeleton count={4} /> 
+                            <section className='w-12'>
+                                <Skeleton count={1} /> 
+                            </section>
+                            <section className='flex justify-end'>
+                                {/* @ts-ignore */}
+                                <Skeleton square width={100} height={30} /> 
+                            </section>
+                        </section>
+                    )
+                    : !docs.length
                     ? (
                         <section className='flex justify-center items-center h-full'> 
                             <span className='text-center w-[80%]'>
@@ -39,6 +62,6 @@ export const ListProjects = () => {
                     })
                 }
             </section>
-        </React.Fragment>
+        </>
     );
 };
