@@ -12,12 +12,14 @@ export default function RootLayout({
         <html>
             <head></head>
             <body>
+                <main>
                 <header className='container h-[5vh] p-2'> 
                     <section className='flex items-center justify-between'>
                         <Image width={90} height={50} alt='Company logo' src={logo} />
                     </section>
                 </header>
                 {children}
+                </main>
             </body>
         </html>
     )

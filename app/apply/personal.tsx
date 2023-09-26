@@ -60,7 +60,6 @@ export const Personal = ({
                     />
                 )}
             </section>
-            <Link href='/settings' aria-disabled>line</Link>
             <button
                 type='button'
                 onClick={() => imageRef.current?.click()}

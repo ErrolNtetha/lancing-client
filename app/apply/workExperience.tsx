@@ -30,7 +30,6 @@ export const WorkExperience = ({ methods, component }: PortfolioProps) => {
     });
 
     const { work, workExperience } = getValues();
-    console.log(work);
 
     const handleAddExperience = () => {
         append(work);
@@ -84,7 +83,7 @@ export const WorkExperience = ({ methods, component }: PortfolioProps) => {
                 )
                 : listOfExperience}
 
-        {fields.length > 0 && (
+                {fields.length > 0 && (
                     <button
                         type='button' 
                         onClick={() => setModal(true)}
