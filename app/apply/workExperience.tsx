@@ -26,7 +26,7 @@ export const WorkExperience = ({ methods, component }: PortfolioProps) => {
 
     const { fields, append } = useFieldArray({
         control,
-        name: 'WorkExperience',
+        name: 'workExperience',
     });
 
     const { work, workExperience } = getValues();
@@ -42,7 +42,7 @@ export const WorkExperience = ({ methods, component }: PortfolioProps) => {
                 <p className='font-semibold text-md'> {item.companyName} </p>
                 <p className='text-[darkgray]'> {item.position} </p>
                 <p className='text-[darkgray]'> 
-                    {format(item.from, 'MMM y')} - {item.to ? format(item.to, 'MMM y') : 'Present'} - {formatDistance(item.from, item.to || new Date())}
+                    {item.from && format(item.from, 'MMM y')} - {item.to ? format(item.to, 'MMM y') : 'Present'} - {formatDistance(item.from, item.to || new Date())}
                 </p>
                 <br />
                 {item.description && (
@@ -89,8 +89,8 @@ export const WorkExperience = ({ methods, component }: PortfolioProps) => {
                         onClick={() => setModal(true)}
                         className='w-full my-2 hover:opacity-80 px-4 py-2 text-white bg-slate hover:cursor-pointer'
                     > 
-                    Add More
-                </button>
+                        Add More
+                    </button>
                 )}
 
             {modal && (
@@ -100,7 +100,7 @@ export const WorkExperience = ({ methods, component }: PortfolioProps) => {
                         <FormLabel
                             type='text'
                             name='work.companyName'
-                            labelName='Company Name'
+                            labelName='Company'
                             placeholder='Company name you worked for'
                             register={register}
                             required={true}
@@ -118,12 +118,12 @@ export const WorkExperience = ({ methods, component }: PortfolioProps) => {
                         <TextareaLabel
                             name='work.description'
                             labelName='Description'
-                            placeholder='Write a description explaining about this project.'
+                            placeholder='What is/was your job responsibilies in this position?'
                             register={register}
                             required={true}
                             errorMessage={errors?.work?.description?.message?.toString()}
                         />
-                        <DatePicker 
+                        <DatePicker
                             name='work.from'
                             labelName='From'
                             required={true}
@@ -131,7 +131,7 @@ export const WorkExperience = ({ methods, component }: PortfolioProps) => {
                             errorMessage={errors?.work?.from?.message?.toString()}
                             value=''
                         />
-                        <DatePicker 
+                        <DatePicker
                             name='work.to'
                             labelName='To'
                             disabled={isWorking}

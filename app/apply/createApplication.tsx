@@ -58,7 +58,7 @@ export const CreateApplication = () => {
                 avatar: null
             },
             education: [],
-            workExperience : [],
+            workExperience : [{ from: '', to: '' }],
         }
     });
 
@@ -209,7 +209,7 @@ export const CreateApplication = () => {
     return (
             <section className='divide-y-0 divide-gray md:flex-[0.4]'>
                 <section className='mt-3 md:p-4'>
-                    <form onSubmit={handleSubmit(onSubmit)} className='text-xs sm:text-sm h-max'>
+                    <form onSubmit={handleSubmit(onSubmit)} className='text-sm h-max'>
                         {forms[currentPage]}
                         {errorMessage && (
                             <section className=' text-center text-[red] py-4 flex justify-center mt-4'>
