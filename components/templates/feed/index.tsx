@@ -4,6 +4,7 @@
 import { collection, DocumentReference, getDoc, getDocs, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { db } from '../../../firebaseConfig';
+import withAuth from '../../../hoc/withAuth';
 import { useAuth } from '../../../hooks/useAuth';
 import { useProfileStore } from '../../../hooks/useGlobalStore';
 import { Sidebar } from '../../molecules/sidebar';
@@ -13,7 +14,7 @@ import { CreatePost } from '../../organisms/createPost';
 import { Modal } from '../../organisms/modal';
 import { Vendor } from '../../organisms/vendor';
 
-export const ClientUI = () => {
+const ClientUI = () => {
     const [modal, setModal] = useState(false);
     const isClient = useProfileStore((state: any) => state.profile?.isClient);
     const renderUI = isClient ? <Vendor /> : <Client />;
@@ -106,3 +107,5 @@ export const ClientUI = () => {
         </>
     );
 };
+
+export default withAuth(ClientUI);

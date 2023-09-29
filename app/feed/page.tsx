@@ -1,5 +1,5 @@
 import React from 'react';
-import { ClientUI } from '../../components/templates/feed';
+import ClientUI from '../../components/templates/feed';
 
 const Feed = () => {
     return (
