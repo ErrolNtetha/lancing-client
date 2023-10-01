@@ -10,9 +10,7 @@ export default function withAuth(Component: any) {
         useEffect(() => {
             if (loading) {
                 console.log('loading');
-            }
-
-            if (!currentUser) {
+            } else if (!currentUser) {
                 router.push('/login');
             }
         }, [loading, currentUser, router]);

@@ -86,12 +86,12 @@ const ClientUI = () => {
             <section className='container md:flex w-full justify-center'>
                 <section className='md:flex w-full justify-center'>
                     <Sidebar 
-                        className='hidden p-2 max-h-max flex-[.2] md:block'
+                        className='hidden p-2 max-h-max flex-[.3] md:block'
                         messages={0}
                         proposals={0}
                     />
-                        <section className='flex-[.5] border border-gray'> {renderUI} </section>
-                    <aside className='hidden flex-[.2] p-2 md:block' />
+                        <section className='flex-[.5] border border-gray md:p-2 min-h-[92vh]'> {renderUI} </section>
+                    <aside className='hidden flex-[.3] p-2 md:block' />
                 </section>
             </section>
 

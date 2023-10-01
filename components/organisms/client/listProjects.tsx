@@ -13,7 +13,7 @@ export const ListProjects = () => {
 
     return (
         <>
-            <section className='h-[92vh]'>
+            <section>
                 {
                     loading 
                     ? (
@@ -38,8 +38,8 @@ export const ListProjects = () => {
                     )
                     : !docs.length
                     ? (
-                        <section className='flex justify-center items-center h-full'> 
-                            <span className='text-center w-[80%]'>
+                        <section className='flex justify-center items-center h-[92vh]'>
+                            <span className='text-center max-w-md md:w-full'>
                                 <p className='font-bold'> No projects yet. </p>
                                 <p className='py-3 text-sm md:text-md'> 
                                     Projects posted by clients will appear here. Check back later. 

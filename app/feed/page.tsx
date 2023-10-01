@@ -3,7 +3,7 @@ import ClientUI from '../../components/templates/feed';
 
 const Feed = () => {
     return (
-        <section className='bg-white-p h-[92vh]'>
+        <section className='bg-white-p w-full h-full'>
             <ClientUI />
         </section>
     );
