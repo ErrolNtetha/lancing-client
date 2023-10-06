@@ -61,7 +61,7 @@ export const CreateApplication = () => {
         mode: 'onChange',
         defaultValues: { 
             personal: {
-                avatar: 'adf'
+                avatar: ''
             },
             education: [],
             workExperience : [],
