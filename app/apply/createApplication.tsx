@@ -133,7 +133,7 @@ export const CreateApplication = () => {
     const buttonText = `${lastPage ? renderLoading : isFirstPage}`;
 
     const navButton = (
-        <section className='fixed md:relative bg-white bottom-0 left-0 w-full p-2 md:p-0 mt-4 flex items-center justify-between'> 
+        <section className='fixed md:relative bottom-0 left-0 w-full p-2 md:p-0 mt-4 flex items-center justify-between'> 
             <section className='flex items-center gap-2 w-full md:w-md'>
                 {firstPage && (currentPage === 0)
                     ? null 
@@ -141,7 +141,7 @@ export const CreateApplication = () => {
                     <Button
                         buttonText='Back'
                         handleClick={() => handlePrev()}
-                        className='border border-gray flex-1 hover:opacity-80 px-4 py-2 text-black'
+                        className='bg-white border border-gray flex-1 hover:opacity-80 px-4 py-2 text-black'
                     />
                 )}
                 <Button
@@ -150,7 +150,7 @@ export const CreateApplication = () => {
                     // @ts-ignore
                     handleClick={() => lastPage ? onSubmit() : handleNext()}
                     disabled= {loading ? true : false}
-                    className={`hover:opacity-80 px-4 py-2 flex-1 text-white ${loading ? 'bg-gray hover:cursor-not-allowed' : 'bg-slate hover:cursor-pointer'}`}
+                    className={`hover:opacity-80 px-4 py-2 flex-1 text-white ${loading ? 'bg-gray-200 hover:cursor-not-allowed' : 'bg-slate-900 hover:cursor-pointer'}`}
                 />
             </section>
         </section>
