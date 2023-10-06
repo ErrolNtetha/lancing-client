@@ -2,7 +2,7 @@ import { format, formatDistance, isPast } from 'date-fns';
 import React, { useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
 import { Button } from '../../components/atoms/button';
-import { DatePicker } from '../../components/molecules/datePicker';
+// import { DatePicker } from '../../components/molecules/datePicker';
 import { FormLabel } from '../../components/molecules/formLabel';
 import { TextareaLabel } from '../../components/molecules/textArea';
 import { Modal } from '../../components/organisms/modal';
@@ -10,9 +10,10 @@ import { Modal } from '../../components/organisms/modal';
 interface PortfolioProps {
     component: React.ReactNode;
     methods: any;
+    Controller: any;
 }
 
-export const WorkExperience = ({ methods, component }: PortfolioProps) => {
+export const WorkExperience = ({ methods, component, Controller }: PortfolioProps) => {
     const [modal, setModal] = useState(false);
     const {
         control,
@@ -20,7 +21,8 @@ export const WorkExperience = ({ methods, component }: PortfolioProps) => {
         errors,
         register,
         useFieldArray,
-        watch
+        watch,
+        handleSubmit
     } = methods;
     const isWorking = watch('work.isWorking');
 
@@ -29,9 +31,24 @@ export const WorkExperience = ({ methods, component }: PortfolioProps) => {
         name: 'workExperience',
     });
 
+    const formatTheDistance = (item: any) => {
+        if (item.from && item.to) {
+            return formatDistance(new Date(item?.from), new Date(item?.to));
+        }
+    };
+
     const { work, workExperience } = getValues();
+    console.log(errors);
 
     const handleAddExperience = () => {
+        const { from } = work;
+
+        if(!from) {
+            console.log('the from date is required... so we cant add this experence');
+            return;
+        }
+        console.log(workExperience);
+        console.log(work);
         append(work);
         setModal(false);
     };
@@ -42,7 +59,7 @@ export const WorkExperience = ({ methods, component }: PortfolioProps) => {
                 <p className='font-semibold text-md'> {item.companyName} </p>
                 <p className='text-[darkgray]'> {item.position} </p>
                 <p className='text-[darkgray]'> 
-                    {item.from && format(item.from, 'MMM y')} - {item.to ? format(item.to, 'MMM y') : 'Present'} - {formatDistance(item.from, item.to || new Date())}
+                    {item?.from && format(new Date(item?.from), 'MMM y')} - {item?.to ? format(new Date(item?.to), 'MMM y') : 'Present'} - {formatTheDistance(item)}
                 </p>
                 <br />
                 {item.description && (
@@ -104,7 +121,7 @@ export const WorkExperience = ({ methods, component }: PortfolioProps) => {
                             placeholder='Company name you worked for'
                             register={register}
                             required={true}
-                            errorMessage={errors?.work?.companyName?.message?.toString()}
+                            errorMessage={errors.workExperience?.companyName?.message?.toString()}
                         />
                         <FormLabel
                             type='text'
@@ -123,22 +140,21 @@ export const WorkExperience = ({ methods, component }: PortfolioProps) => {
                             required={true}
                             errorMessage={errors?.work?.description?.message?.toString()}
                         />
-                        <DatePicker
+                        <Controller 
                             name='work.from'
-                            labelName='From'
-                            required={true}
-                            register={register}
-                            errorMessage={errors?.work?.from?.message?.toString()}
-                            value=''
+                            control={control}
+                            defaultValue=''
+                            render={({ field }: any) => (
+                                <input type="date" {...field} />
+                            )}
                         />
-                        <DatePicker
+                        <Controller 
                             name='work.to'
-                            labelName='To'
-                            disabled={isWorking}
-                            required={true}
-                            register={register}
-                            errorMessage={errors?.work?.to?.message?.toString()}
-                            value=''
+                            control={control}
+                            defaultValue=''
+                            render={({ field }: any) => (
+                                <input type="date" {...field} />
+                            )}
                         />
                         <section className='flex items-center gap-3 my-3'>
                             <input type='checkbox' id='isWorking' {...register('work.isWorking')} />
@@ -156,7 +172,7 @@ export const WorkExperience = ({ methods, component }: PortfolioProps) => {
                                 type='button'
                                 buttonText='Add'
                                 className='flex-1 hover:opacity-80 px-4 py-2 text-white bg-slate hover:cursor-pointer'
-                                handleClick={handleAddExperience}
+                                handleClick={handleSubmit(handleAddExperience)}
                             />
                         </section>
                     </section>

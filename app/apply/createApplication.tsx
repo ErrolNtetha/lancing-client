@@ -28,23 +28,28 @@ const registrationSchema = z.object({
             .string()
             .min(1, 'Bio is required.')
             .min(3, 'About is too short. It must be at least 30 characters long.'),
-    }),
-    education: z.array(z.object({
-            name: z.string().min(5)
+        }),
+    workExperience: z.array(z.object({
+            companyName: z.string().min(10, 'Company name is too short'),
+            position: z.string().min(10, 'Too short'),
+            description: z.string().min(10, 'Too short'),
+            from: z.string().min(10, 'Too short'),
+            to: z.string().min(10, 'Too short'),
+            isWorking: z.boolean(),
         })),
-        work: z.object({
-            name: z.string().min(5, 'Name is too short'),
-        }).array(),
-        portfolio: z.object({
-        title: z
-            .string()
-            .min(1, 'Title is required.')
-            .min(3, 'Title is too short. It must be at least 30 characters long.'),
-        description: z
-            .string()
-            .min(1, 'Description is required.')
-            .min(3, 'Description is too short. It must be at least 30 characters long.'),
-    })
+    education: z.array(z.object({
+                name: z.string().min(5)
+            })),
+    portfolio: z.object({
+            title: z
+                .string()
+                .min(1, 'Title is required.')
+                .min(3, 'Title is too short. It must be at least 30 characters long.'),
+            description: z
+                .string()
+                .min(1, 'Description is required.')
+                .min(3, 'Description is too short. It must be at least 30 characters long.'),
+        })
 });
 
 export const CreateApplication = () => {
@@ -53,12 +58,13 @@ export const CreateApplication = () => {
     const [lastPage, setLastPage] = useState(false);
     const { register, watch, setValue, control, getValues, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(registrationSchema),
+        mode: 'onChange',
         defaultValues: { 
             personal: {
-                avatar: null
+                avatar: 'adf'
             },
             education: [],
-            workExperience : [{ from: '', to: '' }],
+            workExperience : [],
         }
     });
 
@@ -178,6 +184,7 @@ export const CreateApplication = () => {
             key={2}
             component={navButton}
             methods={formMethods}
+            Controller={Controller}
         />,
         <Portfolio
             key={3}
