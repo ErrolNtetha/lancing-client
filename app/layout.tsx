@@ -1,5 +1,5 @@
 import { Header } from '../components/organisms/header/header';
-import '../styles/globals.css';
+import '../app/globals.css';
 
 export default function RootLayout({
     children,

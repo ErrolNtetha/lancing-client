@@ -12,7 +12,6 @@ import { Personal } from './personal';
 import { Portfolio } from './portfolio';
 import { useAuth } from '../../hooks/useAuth';
 import { WorkExperience } from './workExperience';
-import { Education } from './education';
 import { Welcome } from './welcome';
 import { PreviewProfile } from './previewProfile';
 
@@ -174,11 +173,6 @@ export const CreateApplication = () => {
             errors={errors}
             setValue={setValue}
             watch={watch}
-        />,
-        <Education
-            key={1}
-            component={navButton}
-            methods={formMethods}
         />,
         <WorkExperience
             key={2}
