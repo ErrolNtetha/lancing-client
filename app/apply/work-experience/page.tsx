@@ -21,28 +21,30 @@ import { Switch } from '../../../@/components/ui/switch';
 import { cn } from '../../../@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useEducationStore } from '../../../hooks/useGlobalStore';
+import { useExperienceStore } from '../../../hooks/useGlobalStore';
 import { useRouter } from 'next/navigation';
 import { Checkbox } from '../../../@/components/ui/checkbox';
+import { Textarea } from '../../../@/components/ui/textarea';
 
-const educationSchema = z.object({
-    education: z.object({
-        fieldOfStudy: z.string().min(5, 'Field of study is too short.'),
-        school: z.string().min(5, 'School name is too short.'),
+const experienceSchema = z.object({
+    experience: z.object({
+        position: z.string({ required_error: 'This field is required.' }).min(2, 'Position must be at least 2 characters long.'),
+        company: z.string().min(2, 'Company name must be at least 2 characters long.'),
+        responsibilities: z.string().min(5, 'Responsibilities must be at least 5 characters long.').optional(),
         startDate: z.date(),
         endDate: z.date().optional(),
-        isStillStudying: z.boolean().optional(),
+        isStillWorking: z.boolean().optional(),
     }),
-})
+}).required()
 
-const Education = () => {
-    const { education, addEducation } = useEducationStore();
+const WorkExperience = () => {
+    const { experience, addExperience } = useExperienceStore();
     const [checked, setChecked] = React.useState(false);
     const form = useForm({
         mode: 'onSubmit',
-        resolver: zodResolver(educationSchema),
+        resolver: zodResolver(experienceSchema),
         defaultValues: {
-            qualification: education,
+            work: experience,
         }
     });
     const { control } = form;
@@ -50,39 +52,52 @@ const Education = () => {
 
     const { fields, append } = useFieldArray({
         control,
-        name: 'qualification',
+        name: 'workExperience',
     });
 
-    const handleEducationSubmit = (data: any) => {
-        const { education } = data;
+    const handleExperience = (data: any) => {
+        const { experience } = data;
 
-        append(education);
-        addEducation(education);
+        append(experience);
+        addExperience(experience);
     };
 
     const handleNextStep = () => {
         /* Save data to database before moving to the next step */
-        router.push('/apply/work-experience');
+        router.push('/apply/preview');
+    };
+
+    const formatTheDistance = (item: any) => {
+        if (item.from && item.to) {
+            return formatDistance(new Date(item?.from), new Date(item?.to));
+        }
     };
  
-    const listOfQualifications = education.map((item: any, index: number) => (
-        <section key={index} className='my-3'>
-            <section className='border border-dashed border-gray p-2'>
-                <p> <span className='font-semibold'> {item.school} </span> </p>
-                <p> {(item.endDate && isPast(item.endDate)) ? 'Studied' : 'Studying'} <span className='font-semibold'> {item.fieldOfStudy} </span></p>
-                {isPast(item.endDate) && <p> Graduated on: <span className='font-semibold'> {format(item.endDate, 'MMM y')} </span></p>}
+    const listOfWorkExperience = experience.map((item: any, index: number) => (
+            <section className='border border-dashed border-gray p-2' key={index}>
+                <p className='font-semibold text-md'> {item.company} </p>
+                <p className='text-[darkgray]'> {item.position} </p>
+                <p className='text-[darkgray]'> 
+                    {item?.startDate && format(new Date(item?.startDate), 'MMM y')} - {item?.endDate ? format(new Date(item?.endDate), 'MMM y') : 'Present'} - {formatTheDistance(item)}
+                </p>
+                <br />
+                {item.responsibilities && (
+                    <section>
+                        <h3 className='font-semibold text-md'> Responsibilities </h3> 
+                        <p> {item.responsibilities} </p>
+                    </section>
+                )}
             </section>
-        </section>
     ));
 
     return (
         <section className='w-lg'>
-            <h3 className='font-semibold text-md text-gray'> Education </h3>
+            <h3 className='font-semibold text-md text-gray'> Work Experience </h3>
             <h3 className='font-semibold text-2xl'>
-                Add courses or certifications you have acquired previously.
+                Okay. If applicable, please add your work experience.
             </h3>
             <p className='text-md mb-4'> 
-                Adding your qualifications often increase chances of you getting hired.
+                Profiles with relevant work experience are <span className='font-semibold text-[green]'>15x</span> more likely to get hired.
             </p>
 
                 <Dialog>
@@ -96,13 +111,13 @@ const Education = () => {
                                 <DialogTrigger className='h-full' disabled={checked}>
                                     <section className='flex flex-col py-10 justify-center items-center'>
                                         <FiPlus className='text-4xl font-extrabold' />
-                                        <h2 className='font-extrabold mt-3 text-md'> Add school or course </h2>
-                                        <p className='text-center'> Show clients the courses or certifications you have under your belt. </p>
+                                        <h2 className='font-extrabold mt-3 text-md'> Add work experience </h2>
+                                        <p className='text-center'> Show clients your work experience to boost your chances. </p>
                                     </section>
                                 </DialogTrigger>
                             </Button>
                         )
-                        : listOfQualifications}
+                        : listOfWorkExperience}
 
                     {fields.length > 0 && (
                         <DialogTrigger
@@ -118,15 +133,29 @@ const Education = () => {
                         </DialogHeader>
                         <section className='py-4'>
                             <Form {...form}>
-                            <form onSubmit={form.handleSubmit(handleEducationSubmit)} className='flex flex-col gap-3'>
+                            <form onSubmit={form.handleSubmit(handleExperience)} className='flex flex-col gap-3'>
                                 <FormField
                                     control={form.control}
-                                    name='education.fieldOfStudy'
+                                    name='experience.company'
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor='fieldOfStudy'> Field of Study </FormLabel>
+                                            <FormLabel htmlFor='experience.company'> Company </FormLabel>
                                             <FormControl>
-                                                <Input {...field} placeholder='Eg. Business Administration' />
+                                                <Input {...field} placeholder='Eg. Amazon' />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
+                                <FormField
+                                    control={form.control}
+                                    name='experience.position'
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel htmlFor='experience.position'> Position </FormLabel>
+                                            <FormControl>
+                                                <Input {...field} placeholder='Eg. Software Engineer' />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -134,12 +163,12 @@ const Education = () => {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name='education.school'
+                                    name='experience.responsibilities'
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor='qualification.school'> School </FormLabel>
+                                            <FormLabel htmlFor='experience.position'> Responsibilities </FormLabel>
                                             <FormControl>
-                                                <Input {...field} placeholder='Eg. Durban University of Technology' />
+                                                <Textarea {...field} placeholder='What are/were your job responsibilities?' />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -147,10 +176,10 @@ const Education = () => {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name='education.startDate'
+                                    name='experience.startDate'
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor='qualification.from'> From </FormLabel>
+                                            <FormLabel htmlFor='experience.startDate'> From </FormLabel>
                                                 <Popover>
                                                     <PopoverTrigger asChild>
                                                         <FormControl>
@@ -189,10 +218,10 @@ const Education = () => {
 
                                 <FormField
                                     control={form.control}
-                                    name='education.endDate'
+                                    name='experience.endDate'
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor='to'> To </FormLabel>
+                                            <FormLabel htmlFor='experience.endDate'> To </FormLabel>
                                             <FormControl>
                                                 <Popover>
                                                     <PopoverTrigger asChild>
@@ -233,7 +262,7 @@ const Education = () => {
 
                                 <FormField 
                                     control={form.control}
-                                    name='education.isStillStudying'
+                                    name='experience.isStillWorking'
                                     defaultValue={false}
                                     render={({ field }) => (
                                         <FormItem className='flex items-center justify-between'>
@@ -264,9 +293,9 @@ const Education = () => {
                 </Dialog>
 
                 <section className='flex gap-3 my-3'>
-                    <input type='checkbox' id='checked' onChange={(e) => setChecked(e.target.checked)} disabled={education.length > 0} className='self-start' />
+                    <input type='checkbox' id='checked' onChange={(e) => setChecked(e.target.checked)} disabled={experience.length > 0} className='self-start' />
                     <section className='self-start'>
-                        <label htmlFor="checked" className='text-base font-bold'> I don&apos;t have a qualification. </label>
+                        <label htmlFor="checked" className='text-base font-bold'> I don&apos;t have a work experience. </label>
                         <p className='text-sm'> Check this if you don&apos;t have a qualification as of yet. You will edit later. </p>
                     </section>
                 </section>
@@ -279,11 +308,11 @@ const Education = () => {
                         className='bg-primary flex-1' 
                         disabled={!form.formState.isValid && !checked}
                     > 
-                    Next Step 
+                        Next Step 
                     </Button>
                 </section>
         </section>
     );
 };
 
-export default Education;
+export default WorkExperience;

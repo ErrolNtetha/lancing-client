@@ -125,7 +125,7 @@ export const useEducationStore: any = create(
 export const useExperienceStore: any = create(
     (set: any) => ({
         experience: [],
-        addExperience: (experience: any) => set((state: any) => ({ experience: [...state.experience, { ...experience }] })),
+        addExperience: (experience: any) => set((state: any) => ({ experience: [...state.experience, experience ] })),
     })
 );
 
