@@ -61,7 +61,7 @@ export const Header = () => {
     }, []);
 
     return (
-        <header className='flex divide-solid divide-gray sticky top-0 z-10 justify-between transition-all duration-200 items-center w-full h-[8vh]'>
+        <header className='flex divide-solid divide-gray bg-background sticky top-0 z-10 justify-between transition-all duration-200 items-center w-full h-[8vh]'>
             <section className='container mx-auto px-4 w-full h-full flex z-10 justify-between items-center'>
                 <Link href='/'>
                     <Image src='/assets/images/svg/blackLogo.svg' alt='Company logo' className='fill-current text-black' width={80} height={20} />
@@ -99,7 +99,7 @@ export const Header = () => {
                         : <LoginButton />} 
                 </span>
                 {nav && (
-                    <section className='fixed bg-slate top-0 left-0 bottom-0 w-full'>
+                    <section className='fixed bg-primary top-0 left-0 bottom-0 w-full'>
                         <MobileMenu
                             auth={currentUser}
                             email={currentUser?.email}
@@ -111,7 +111,7 @@ export const Header = () => {
                         />
                         <section className='flex items-center justify-center absolute w-full left-0 bottom-4'>
                             <Button
-                                className='border-2 border-white font-extrabold w-full p-2 my-1 mx-4'
+                                className='text-white border-2 border-white font-extrabold w-full p-2 my-1 mx-4'
                                 buttonText={`${currentUser ? 'Logout' : 'Login'}`}
                                 handleClick={() => `${currentUser ? handleLogout() : handleLogIn()}`}
                             />

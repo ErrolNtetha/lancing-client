@@ -104,10 +104,21 @@ export const useProfileStore: any = create(
     })
 );
 
+export const usePersonalStore: any = create(
+    (set: any) => ({
+        personal: {
+            avatar: null,
+            title: '',
+            bio: '',
+        },
+        addPersonalData: (personalData: any) => set(() => ({ personal: personalData })),
+    })
+);
+
 export const useEducationStore: any = create(
     (set: any) => ({
         education: [],
-        addEducation: (education: any) => set((state: any) => ({ education: [...state.education, { ...education }] })),
+        addEducation: (education: any) => set((state: any) => ({ education: [...state.education, education ] })),
     })
 );
 

@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client'
 
 // import { format } from 'date-fns';
@@ -8,7 +9,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { FiPlus } from 'react-icons/fi';
 import { Button } from '../../../@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../../../@/components/ui/dialog';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../../@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../../../@/components/ui/form';
 import { Input } from '../../../@/components/ui/input';
 import { Calendar } from '../../../@/components/ui/calendar';
 import {
@@ -20,6 +21,9 @@ import { Switch } from '../../../@/components/ui/switch';
 import { cn } from '../../../@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useEducationStore } from '../../../hooks/useGlobalStore';
+import { useRouter } from 'next/navigation';
+import { Checkbox } from '../../../@/components/ui/checkbox';
 
 const educationSchema = z.object({
     education: z.object({
@@ -32,28 +36,38 @@ const educationSchema = z.object({
 })
 
 const Education = () => {
+    const { education, addEducation } = useEducationStore();
+    const [checked, setChecked] = React.useState(false);
     const form = useForm({
-        mode: 'onChange',
+        mode: 'onSubmit',
         resolver: zodResolver(educationSchema),
+        defaultValues: {
+            qualification: education,
+        }
     });
     const { control } = form;
+    const router = useRouter();
 
     const { fields, append } = useFieldArray({
         control,
         name: 'qualification',
     });
 
-    const { qualification } = form.getValues();
-    console.log('qualification: ', qualification);
-
     const handleEducationSubmit = (data: any) => {
         const { education } = data;
+        console.log(education);
 
-        append({ ...education });
+        append(education);
+        addEducation(education);
+    };
+
+    const handleNextStep = () => {
+        /* Save data to database before moving to the next step */
+        router.push('/apply/personal');
     };
     const handleModalToggle = () => console.log('hello there');
  
-    const listOfQualifications = fields.map((item: any, index: number) => (
+    const listOfQualifications = education.map((item: any, index: number) => (
         <section key={index} className='my-3'>
             <section className='border border-dashed border-gray p-2'>
                 <p> <span className='font-semibold'> {item.school} </span> </p>
@@ -73,34 +87,32 @@ const Education = () => {
                 Adding your qualifications often increase chances of you getting hired.
             </p>
 
-            {fields.length === 0
-                ? (
-                    <Button
-                        onClick={handleModalToggle}
-                        className='flex justify-center bg-background h-16 text-foreground border-2 border-dashed border-gray hover:bg-gray hover:cursor-pointer py-10 px-5'
-                        asChild
-                    >
-                        <section className='flex flex-col justify-center items-center'>
-                            <FiPlus className='text-4xl font-extrabold' />
-                            <h2 className='font-extrabold mt-3 text-md'> Add school or course </h2>
-                            <p className='text-center'> Show clients the courses or certifications you have under your belt. </p>
-                        </section>
-                    </Button>
-            )
-                : listOfQualifications}
-
-                {fields.length > 0 && (
-                    <Button
-                        type='button' 
-                        onClick={handleModalToggle}
-                        className='w-full my-2 hover:opacity-80 px-4 py-2 text-white bg-slate hover:cursor-pointer'
-                    > 
-                    Add More
-                </Button>
-                )}
-
                 <Dialog>
-                    <DialogTrigger> Add Education </DialogTrigger>
+                    {fields.length === 0
+                        ? (
+                            <Button
+                                className='flex justify-center h-30 bg-background text-foreground border-2 border-dashed border-gray hover:bg-gray hover:cursor-pointer py-4 px-5'
+                                disabled={checked}
+                                asChild
+                            >
+                                <DialogTrigger className='h-full' disabled={checked}>
+                                    <section className='flex flex-col py-10 justify-center items-center'>
+                                        <FiPlus className='text-4xl font-extrabold' />
+                                        <h2 className='font-extrabold mt-3 text-md'> Add school or course </h2>
+                                        <p className='text-center'> Show clients the courses or certifications you have under your belt. </p>
+                                    </section>
+                                </DialogTrigger>
+                            </Button>
+                        )
+                        : listOfQualifications}
+
+                    {fields.length > 0 && (
+                        <DialogTrigger
+                            className='w-full my-2 hover:opacity-80 px-4 py-2 text-white bg-primary hover:cursor-pointer'
+                        > 
+                        Add More
+                    </DialogTrigger>
+                    )}
                     <DialogContent>
                         <DialogHeader>
                             <DialogTitle> Add Qualification </DialogTitle>
@@ -224,6 +236,7 @@ const Education = () => {
                                 <FormField 
                                     control={form.control}
                                     name='education.isStillStudying'
+                                    defaultValue={false}
                                     render={({ field }) => (
                                         <FormItem className='flex items-center justify-between'>
                                             <section>
@@ -239,11 +252,12 @@ const Education = () => {
                                     )}
                                 />
 
+
                                 <DialogFooter className='mt-4 w-full flex gap-2'>
                                     <DialogTrigger className='bg-white flex-1' asChild>
                                         <Button className='flex-1' variant='outline'> Cancel </Button>
                                     </DialogTrigger>
-                                    <Button type='submit' className='flex-1' disabled={!form.formState.isValid} variant='secondary'> Save </Button>
+                                    <Button type='submit' className='bg-primary flex-1'> Save </Button>
                                 </DialogFooter>
                             </form>
                             </Form>
@@ -251,9 +265,24 @@ const Education = () => {
                     </DialogContent>
                 </Dialog>
 
-                <section className='mt-4 w-full flex gap-2'>
+                <section className='flex gap-3 my-3'>
+                    <input type='checkbox' id='checked' onChange={(e) => setChecked(e.target.checked)} disabled={education.length > 0} className='self-start' />
+                    <section className='self-start'>
+                        <label htmlFor="checked" className='text-base font-bold'> I don&apos;t have a qualification. </label>
+                        <p className='text-sm'> Check this if you don&apos;t have a qualification as of yet. You will edit later. </p>
+                    </section>
+                </section>
+
+                <section className='mt-4 w-full flex gap-4'>
                     <Button type='button' className='bg-white flex-1' variant='outline'> Back </Button>
-                    <Button type='submit' className='flex-1' disabled={!form.formState.isValid} variant='secondary'> Next Step </Button>
+                    <Button 
+                        type='button' 
+                        onClick={handleNextStep} 
+                        className='bg-primary flex-1' 
+                        disabled={!form.formState.isValid && !checked}
+                    > 
+                    Next Step 
+                    </Button>
                 </section>
         </section>
     );

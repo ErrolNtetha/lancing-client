@@ -12,6 +12,7 @@ import { Button } from '../../../@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../../@/components/ui/form';
 import { Input } from '../../../@/components/ui/input';
 import { Textarea } from '../../../@/components/ui/textarea';
+import { usePersonalStore } from '../../../hooks/useGlobalStore';
 
 const personalSchema = z.object({
     avatar: z 
@@ -30,21 +31,23 @@ const personalSchema = z.object({
 export default function Personal() {
     const imageRef = useRef<HTMLInputElement | null>(null);
     const router = useRouter();
+    const { addPersonalData, personal } = usePersonalStore();
     const form = useForm({
         resolver: zodResolver(personalSchema),
         defaultValues: {
-            avatar: '',
-            title: '',
-            bio: '',
+            avatar: personal.avatar,
+            title: personal.title,
+            bio: personal.bio,
         }
     });
     const { avatar } = form.watch();
 
     const handlePersonalSubmit = (data: z.infer<typeof personalSchema>) => {
-        console.log('Data: ', data);
+        addPersonalData(data);
         router.push('/apply/education');
-        // console.log('Errors: ', errors);
     };
+
+    console.log(personal);
 
     const handleAvatarChange = (e: any) => {
         const imageUrl = e.target.files[0];
@@ -65,7 +68,7 @@ export default function Personal() {
     const avatarComp = (<section className='flex flex-col gap-3'>
         <section className='relative border border-gray rounded-full w-[100px] h-[100px]'>
             <Avatar className='w-full h-full'>
-                <AvatarImage src={avatar} alt='dsfad' />
+                <AvatarImage src={personal.avatar || avatar} alt='dsfad' />
                 <AvatarFallback>
                     <Image
                         src='/assets/images/svg/profileIcon.svg'

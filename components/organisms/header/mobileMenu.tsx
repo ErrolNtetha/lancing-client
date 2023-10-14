@@ -22,7 +22,7 @@ export const MobileMenu = ({ handleMenuToggle, isClient, auth, displayName, avat
                 className='absolute right-0 p-2 hover:cursor-pointer text-[1.8rem]'
                 onClick={handleMenuToggle}
             >
-                <FiX />
+                <FiX className='text-white' />
             </button>
             {auth && (
                 <section className='flex py-2 items-center mb-3 gap-2'>
