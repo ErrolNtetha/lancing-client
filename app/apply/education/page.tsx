@@ -63,7 +63,7 @@ const Education = () => {
 
     const handleNextStep = () => {
         /* Save data to database before moving to the next step */
-        router.push('/apply/personal');
+        router.push('/apply/work-experience');
     };
     const handleModalToggle = () => console.log('hello there');
  
