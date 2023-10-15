@@ -1,0 +1,111 @@
+'use client'
+
+import { format, formatDistance } from 'date-fns';
+import React from 'react';
+import Image from 'next/image';
+import { Avatar, AvatarFallback, AvatarImage } from '../../../@/components/ui/avatar';
+import { useEducationStore, useExperienceStore, usePersonalStore } from '../../../hooks/useGlobalStore';
+import { Button } from '../../../@/components/ui/button';
+
+export default function Preview() {
+    const { personal } = usePersonalStore();
+    const { education } = useEducationStore();
+    const { experience } = useExperienceStore();
+
+    console.log(personal);
+    console.log(education);
+    console.log(experience);
+
+    const handleApplicationSubmit = () => {
+        const { avatar, title, bio } = personal;
+        if (!(avatar || title || bio)) {
+            return;
+        };
+
+        const formData = {
+            application: {
+                isApproved: false,
+                status: 'pending', //  'pending' | 'declined' | 'approved'
+                applicationDate: new Date(),
+                updatedAt: new Date(),
+                reason: null,
+            },
+            education,
+            experience,
+            ...personal,
+        };
+
+        console.log('form data: ', formData);
+    };
+
+    const listOfExperience = experience.map((item: any, index: number) => (
+        <section key={index} className='my-3'>
+            <section className='border border-dashed border-gray p-2'>
+                <p className='font-semibold text-md'> {item.company} </p>
+                <p className='text-[darkgray]'> {item.position} </p>
+                <p className='text-[darkgray]'> 
+                    {format(item.startDate, 'MMM y')} - {item.endDate ? format(item.endDate, 'MMM y') : 'Present'} - {formatDistance(item.startDate, item.endDate || new Date())}
+                </p>
+                <br />
+                {item.responsibilities && (
+                    <section>
+                        <h3 className='font-semibold text-md'> Responsibilities </h3> 
+                        <p> {item.responsibilities} </p>
+                    </section>
+                )}
+            </section>
+        </section>
+    ));
+
+    return (
+        <section>
+            <section>
+                <h3 className='font-semibold text-md text-gray'> Preview Profile </h3>
+                <h3 className='font-semibold text-2xl'>
+                    Done. Confirm if everything is correct and submit your profile.
+                </h3>
+                <p className='text-md mb-4'> </p>
+            </section>
+            <section className='mb-4 border-1 border border-gray p-2 rounded-md'>
+                <section>
+                    <section className='relative border border-gray rounded-full w-[100px] h-[100px]'>
+                        <Avatar className='w-full h-full'>
+                            <AvatarImage src={personal.avatar} alt='My avatar' />
+                            <AvatarFallback>
+                                <Image
+                                    src='/assets/images/svg/profileIcon.svg'
+                                    alt='random image'
+                                    width={200}
+                                    height={200}
+                                />
+                            </AvatarFallback>
+                        </Avatar>
+                    </section>
+                </section>
+                <p className=''> {personal.title || 'No title...'} </p>
+                <h3 className='font-semibold'> Overview </h3>
+                <section>
+                    <p> {personal.bio || 'No bio...'} </p>
+                </section>
+            </section>
+            <section className='border-1 border border-gray p-2 rounded-md'>
+                <h3 className='font-semibold'> Work Experience </h3>
+                {experience.length === 0
+                    ? (
+                        <section
+                            className='flex justify-center py-10 px-5'
+                        >
+                            <section className='flex flex-col justify-center items-center'>
+                                <h2 className='mt-3 text-md'> No work experience to show. </h2>
+                            </section>
+                        </section>
+                    )
+                    : listOfExperience}
+            </section>
+            <section className='mt-4 w-full flex gap-2'>
+                <Button type='button' className='bg-white flex-1' variant='outline'> Back </Button>
+                <Button type='button' className='flex-1' onClick={handleApplicationSubmit} disabled={!personal.avatar && !personal.bio} variant='secondary'> Submit </Button>
+            </section>
+        </section>
+    );
+};
