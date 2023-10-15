@@ -6,15 +6,29 @@ import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '../../../@/components/ui/avatar';
 import { useEducationStore, useExperienceStore, usePersonalStore } from '../../../hooks/useGlobalStore';
 import { Button } from '../../../@/components/ui/button';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../../../firebaseConfig';
+import { useAuth } from '../../../hooks/useAuth';
+import { useRouter } from 'next/navigation';
 
 export default function Preview() {
     const [loading, setLoading] = React.useState(false);
+    const { currentUser } = useAuth();
+    const router = useRouter();
     const { personal } = usePersonalStore();
     const { education } = useEducationStore();
     const { experience } = useExperienceStore();
 
     const handleApplicationSubmit = async() => {
+            const { avatar, title, bio } = personal;
+        console.log(currentUser);
+
+            if (!(avatar || title || bio || currentUser)) {
+                return;
+            };
             setLoading(true);
+
+            const userRef = doc(db, 'users', currentUser.uid);
 
             try {
                 const res = await fetch('/api/preview', {
@@ -40,17 +54,14 @@ export default function Preview() {
                     avatar: data.response
                 };
 
-                console.log('data to be sent: ', formData);
+                await setDoc(userRef, formData, { merge: true });
+                router.push('apply/application-outcome');
             } catch (error) {
                 console.log('error: ', error);
             } finally {
                 setLoading(false);
             }
 
-        const { avatar, title, bio } = personal;
-        if (!(avatar || title || bio)) {
-            return;
-        };
     };
 
     const listOfExperience = experience.map((item: any, index: number) => (
