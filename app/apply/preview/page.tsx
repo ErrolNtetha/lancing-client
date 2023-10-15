@@ -8,34 +8,49 @@ import { useEducationStore, useExperienceStore, usePersonalStore } from '../../.
 import { Button } from '../../../@/components/ui/button';
 
 export default function Preview() {
+    const [loading, setLoading] = React.useState(false);
     const { personal } = usePersonalStore();
     const { education } = useEducationStore();
     const { experience } = useExperienceStore();
 
-    console.log(personal);
-    console.log(education);
-    console.log(experience);
+    const handleApplicationSubmit = async() => {
+            setLoading(true);
 
-    const handleApplicationSubmit = () => {
+            try {
+                const res = await fetch('/api/preview', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ avatar: personal.avatar })
+                });
+
+                const data = await res.json();
+                const formData = {
+                    application: {
+                        isApproved: false,
+                        status: 'pending', //  'pending' | 'declined' | 'approved'
+                        applicationDate: new Date(),
+                        updatedAt: new Date(),
+                        reason: '',
+                    },
+                    education,
+                    experience,
+                    ...personal,
+                    avatar: data.response
+                };
+
+                console.log('data to be sent: ', formData);
+            } catch (error) {
+                console.log('error: ', error);
+            } finally {
+                setLoading(false);
+            }
+
         const { avatar, title, bio } = personal;
         if (!(avatar || title || bio)) {
             return;
         };
-
-        const formData = {
-            application: {
-                isApproved: false,
-                status: 'pending', //  'pending' | 'declined' | 'approved'
-                applicationDate: new Date(),
-                updatedAt: new Date(),
-                reason: null,
-            },
-            education,
-            experience,
-            ...personal,
-        };
-
-        console.log('form data: ', formData);
     };
 
     const listOfExperience = experience.map((item: any, index: number) => (
@@ -104,7 +119,7 @@ export default function Preview() {
             </section>
             <section className='mt-4 w-full flex gap-2'>
                 <Button type='button' className='bg-white flex-1' variant='outline'> Back </Button>
-                <Button type='button' className='flex-1' onClick={handleApplicationSubmit} disabled={!personal.avatar && !personal.bio} variant='secondary'> Submit </Button>
+                <Button type='button' className='flex-1' onClick={handleApplicationSubmit} variant='secondary'> {loading ? 'Submitting...' : 'Submit'} </Button>
             </section>
         </section>
     );
