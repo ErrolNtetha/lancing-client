@@ -83,7 +83,7 @@ const ClientUI = () => {
 
     return (
         <>
-            <section className='container md:flex w-full justify-center'>
+            <section className='md:container md:flex w-full justify-center'>
                 <section className='md:flex w-full justify-center'>
                     <Sidebar 
                         className='hidden p-2 max-h-max flex-[.3] md:block'

@@ -8,7 +8,7 @@ import { OurVision } from '../components/organisms/ourVison';
 
 const Home = () => {
     return (
-        <section className='bg-slate'>
+        <section className='bg-primary'>
             <Head>
                 <title> Find freelancers and get your work done in minutes | Duello </title>
                 <meta name='description' content='Finding freelancers for your work has never been easier with our platform.' />
