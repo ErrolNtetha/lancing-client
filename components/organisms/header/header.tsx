@@ -61,7 +61,7 @@ export const Header = () => {
     }, []);
 
     return (
-        <header className='container flex shadow divide-solid divide-gray bg-background sticky top-0 z-10 justify-between transition-all duration-200 items-center w-full h-[8vh]'>
+        <header className='md:container flex shadow divide-solid divide-gray bg-background sticky top-0 z-10 justify-between transition-all duration-200 items-center w-full h-[8vh]'>
             <section className='px-4 w-full h-full flex z-10 justify-between items-center'>
                 <Link href='/'>
                     <Image src='/assets/images/svg/blackLogo.svg' alt='Company logo' className='fill-current text-black' width={80} height={20} />
