@@ -12,14 +12,15 @@ import { PortfolioModal } from './viewPortfolio/';
 export const VendorComponent = ({
     avatar,
     names,
-    service,
+    title,
     rating,
-    description,
+    bio,
     reviews,
     id,
 }: VendorProps) => {
     const [modal, setModal] = useState(false);
     const [viewPortfolio, setViewPortfolio] = useState(false);
+    console.log(avatar);
 
     const handleModal = () => setModal(!modal);
     const isPlural = reviews.length > 1 ? 'reviews' : 'review';
@@ -37,13 +38,13 @@ export const VendorComponent = ({
                         />
                         <span>
                             <h2 className='text-md md:text-lg font-semibold'>{names.firstName} {names.lastName} </h2>
-                            <p className='flex items-center gap-1'> {service} - <Link className='text-[blue]' href='/postId/reviews'> {clientReviews} </Link> </p>
+                            <p className='flex items-center gap-1'> {title} - <Link className='text-[blue]' href='/postId/reviews'> {clientReviews} </Link> </p>
                             <span className='flex items-center gap-1'> <StarRating value={rating} /> ({rating}/5) </span>
                         </span>
                     </span>
                     { /* <span className='self-start'> <FiMoreHorizontal /> </span> */ }
                 </section>
-                <p className='mb-4'> {description} </p>
+                <p className='mb-4'> {bio} </p>
                 <hr className='opacity-10 mb-2' />
                 <section className='flex justify-between items-center text-sm'>
                     <span className='flex items-center gap-2'>
@@ -58,7 +59,7 @@ export const VendorComponent = ({
                         <Modal>
                             <PortfolioModal 
                                 name={names}
-                                title={service}
+                                title={title}
                                 handleModal={() => setViewPortfolio(!viewPortfolio)}
                             />
                         </Modal> 
