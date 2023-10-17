@@ -6,7 +6,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { Button } from '../../atoms/button';
 import { LoginButton } from '../login/loginButton';
 import { MobileMenu } from './mobileMenu';
 import { UserHead } from './userHead';
@@ -17,6 +16,7 @@ import { DigitCounter } from '../../molecules/digitCounter';
 import { collection, getDocs } from 'firebase/firestore';
 import { useProfileStore } from '../../../hooks/useGlobalStore';
 import { FiAlignRight } from 'react-icons/fi';
+import { Button } from '../../../@/components/ui/button';
 
 export const Header = () => {
     const [nav, setNav] = useState(false);
@@ -111,10 +111,12 @@ export const Header = () => {
                         />
                         <section className='flex items-center justify-center absolute w-full left-0 bottom-4'>
                             <Button
+                                type='button'
                                 className='text-white border-2 border-white font-extrabold w-full p-2 my-1 mx-4'
-                                buttonText={`${currentUser ? 'Logout' : 'Login'}`}
-                                handleClick={() => `${currentUser ? handleLogout() : handleLogIn()}`}
-                            />
+                                onClick={() => `${currentUser ? handleLogout() : handleLogIn()}`}
+                            > 
+                                {`${currentUser ? 'Logout' : 'Login'}`} 
+                            </Button>
                         </section>
                     </section>
                 )}

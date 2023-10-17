@@ -1,29 +1,12 @@
 'use client'
 
-/* eslint-disable react-hooks/exhaustive-deps */
-
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import Image from 'next/image';
-import { useProfileStore } from '../../../hooks/useGlobalStore';
 
 export const Vision = () => {
-    // @ts-ignore
-    const myRef = useRef<React.ElementRef<HTMLElement> | null>(null);
-    const toggleHeader= useProfileStore((state: any) => state.toggleHeader);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver((entries) => {
-            const entry = entries[0];
-            toggleHeader(entry.isIntersecting);
-        });
-
-        // @ts-ignore
-        observer.observe(myRef.current);
-    }, []);
-
     return (
-        <section className='flex items-center bg-white-p h-screen' ref={myRef}>
-            <section className='container md:flex items-center justify-between'>
+        <section className='flex items-center bg-background h-screen'>
+            <section className='md:container md:flex items-center justify-between'>
                 <aside className='text-black max-w-30 m-8'>
                     <h4 className='text-md md:text-lg font-bold opacity-30'> Our Vision </h4>
                     <h1 className='max-w-md font-extrabold text-black text-2xl mb-2'>

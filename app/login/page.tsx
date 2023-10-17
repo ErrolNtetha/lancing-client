@@ -13,7 +13,7 @@ const LoginPage = () => {
             <link rel='icon' href='/favicon.ico' />
           </Head>
 
-            <section className='bg-slate'>
+            <section className='bg-background'>
                 <Login />
             </section>
         </React.Fragment>

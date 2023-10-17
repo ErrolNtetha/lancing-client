@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { Button } from '../../atoms/button';
+// import { Button } from '../../atoms/button';
 import { Navigation } from '../../organisms/navigation';
 import { PersonalDetails, AccountType } from '../../organisms/register';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
@@ -12,6 +12,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../../firebaseConfig';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '../../../@/components/ui/button';
 
 const registrationSchema = z.object({
     accountType: z.string(),
@@ -122,19 +123,23 @@ export const Registration = () => {
                     ? null 
                     : (
                     <Button
-                        buttonText='Back'
-                        handleClick={() => handlePrev()}
-                        className='border border-gray hover:opacity-80 px-4 py-2 text-black'
-                    />
+                        type='button'
+                        onClick={() => handlePrev()}
+                        className='bg-background hover:opacity-80 px-4 py-2 text-foreground'
+                        variant='outline'
+                    >
+                        Back
+                    </Button>
                 )}
                 <Button
                     type={lastPage ? 'submit' : 'button' }
-                    buttonText={buttonText}
                     // @ts-ignore
-                    handleClick={() => lastPage ? onSubmit() : handleNext()}
+                    onClick={() => lastPage ? onSubmit() : handleNext()}
                     disabled= {loading ? true : false}
-                    className={`hover:opacity-80 px-4 py-2 text-white ${loading ? 'bg-gray hover:cursor-not-allowed' : 'bg-slate hover:cursor-pointer'}`}
-                />
+                    className={`hover:opacity-80 px-4 py-2 ${loading ? 'bg-gray hover:cursor-not-allowed' : 'bg-primary hover:cursor-pointer'}`}
+                >
+                    {buttonText}
+                </Button>
             </section>
         </section>
     );
@@ -170,17 +175,17 @@ export const Registration = () => {
     
     return (
         <React.Fragment> 
-            <h4 className='pt-8 text-white text-center font-extrabold'> {`Step ${currentPage + 1} of ${forms.length}`} </h4>
+            <h4 className='pt-8 text-foreground text-center font-extrabold'> {`Step ${currentPage + 1} of ${forms.length}`} </h4>
             <section className='flex justify-around gap-8 px-6 pt-2 bg-cover bg-hero-bg'>
                 <Navigation handleSwitch={() => setCurrentPage(1)} />
                 <section className='py-4'>
-                    <form onSubmit={handleSubmit(onSubmit)} className='shadow-2xl text-xs sm:text-sm bg-white h-max w-[20] md:w-[25rem] px-6 py-6'>
+                    <form onSubmit={handleSubmit(onSubmit)} className='shadow-2xl text-xs sm:text-sm bg-background rounded-md h-max w-[20] md:w-[25rem] px-6 py-6'>
                         {forms[currentPage]}
                         {errorMessage && <section className=' text-center text-[red] py-4 flex justify-center mt-4'>
                             <p> {errorMessage} </p>
                         </section>}
                     </form>
-                    <section className='text-white text-center text-sm m-4'>
+                    <section className='text-foreground text-center text-sm m-4'>
                         <p> Already have an account? <span className='underline'> <Link href='/login'> Login </Link> </span></p> 
                     </section>
                 </section>

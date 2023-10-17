@@ -18,7 +18,7 @@ export const Input = ({
     onChange,
     shouldUnregister = false
 }: InputProps) => {
-    const inputContainer = `${disabled && 'hover:cursor-not-allowed'} flex items-center justify-between p-2 ${disabled && 'bg-[#eeeeee] text-gray'} border border-gray outline-black w-full block`;
+    const inputContainer = `${disabled && 'hover:cursor-not-allowed'} rounded-md flex items-center justify-between p-2 ${disabled && 'bg-[#eeeeee] text-gray'} border border-gray outline-black w-full block`;
 
     return (
         <section className={inputContainer}>

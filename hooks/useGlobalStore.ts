@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware'
 
 type Profile = {
     avatar: string;
@@ -97,11 +98,16 @@ const myProfile: Profile = {
 }
 
 export const useProfileStore: any = create(
-    (set: any) => ({
-        profile: {},
-        addProfile: (user: Profile) => set(() => ({ profile: user })),
-        clearProfile: () => set({ profile: {} }),
-    })
+    persist(
+        (set: any) => ({
+            profile: {},
+            addProfile: (user: Profile) => set(() => ({ profile: user })),
+            clearProfile: () => set({ profile: {} }),
+        }),
+        {
+            name: 'profile-storage-dueple',
+        }
+    )
 );
 
 export const usePersonalStore: any = create(

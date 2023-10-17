@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 export const ShowCase = () => {
     return (
         <section className='bg-white flex items-center'>
-            <section className='container h-full md:flex items-center justify-around'>
+            <section className='md:container h-full md:flex items-center justify-around'>
                 <motion.section 
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
