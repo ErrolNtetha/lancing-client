@@ -4,7 +4,7 @@ import Image from 'next/image';
 export const Features = () => {
     return (
         <section className='w-full md:flex items-center justify-center py-6 bg-white h-full md:h-screen'>
-            <section className='container'>
+            <section className='md:container'>
                 <aside className='text-black max-w-30 m-8'>
                     <h4 className='text-md md:text-lg font-bold opacity-30'> What Sets Us Apart </h4>
                     <h1 className='max-w-md font-extrabold text-black text-2xl mb-2'>

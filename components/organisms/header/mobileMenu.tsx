@@ -32,13 +32,13 @@ export const MobileMenu = ({ handleMenuToggle, isClient, auth, displayName, avat
                         alt={`${displayName} avatar`}
                     />
                     <span className='self-start'>
-                        <h3 className='font-semibold'>{displayName}</h3>
+                        <h3 className='text-white font-semibold'>{displayName}</h3>
                         <p className='text-sm font-semibold text-[blue]'> {accountType} </p>
                     </span>
                 </section>
             )}
             {auth && (
-                <section className='bg-gray p-2 mb-4 rounded-lg'>
+                <section className='bg-gray-100 p-2 mb-4 rounded-lg'>
                     <ul className='text-black divide-y divide-slate divide-opacity-10'>
                         <li className={`flex items-center justify-between  ${totalMessages && 'font-bold'} p-1 hover:bg-opacity-10 hover:cursor-pointer`}> Messages <DigitCounter count={totalMessages} /> </li>
                         <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Notifications </li>
