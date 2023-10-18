@@ -1,18 +1,19 @@
 import React from 'react';
+import { Button } from '../../../@/components/ui/button';
 
 type  CreatePostProps = {
-    handlePost: React.MouseEventHandler<HTMLElement>
+    DialogTrigger: any
 };
 
-export const CreatePost = ({ handlePost }: CreatePostProps) => {
+export const CreatePost = ({ DialogTrigger }: CreatePostProps) => {
     return (
-        <button 
+        <Button 
             className='md:hidden fixed bottom-0 left-0 w-full hover:cursor-pointer'
-            onClick={handlePost}
+            asChild
         >
-            <section className='bg-slate p-2 m-2 text-white font-semibold text-center'> 
+            <DialogTrigger className='bg-primary p-2 m-2 font-semibold text-center'> 
                 Create New Project
-            </section>
-        </button>
+            </DialogTrigger>
+        </Button>
     );
 };
