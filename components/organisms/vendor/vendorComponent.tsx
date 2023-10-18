@@ -20,8 +20,6 @@ export const VendorComponent = ({
 }: VendorProps) => {
     const [modal, setModal] = useState(false);
     const [viewPortfolio, setViewPortfolio] = useState(false);
-    console.log(avatar);
-
     const handleModal = () => setModal(!modal);
     const isPlural = reviews.length > 1 ? 'reviews' : 'review';
     const clientReviews = !reviews.length ? 'No reviews' : `${reviews.length} ${isPlural}`;

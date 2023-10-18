@@ -63,12 +63,13 @@ const projectSchema = z.object({
         required_error: 'Date is required.',
         invalid_type_error: 'Date is invalid. Make sure you selected correct date.',
     }).optional(),
-    duration: z.string({ required_error: 'Duration is required.' }),
+    contract: z.string({ required_error: 'Contract is required.' }),
     skillLevel: z.string({ required_error: 'Skill level is required.' })
 });
 
 const ClientUI = () => {
     const isClient = useProfileStore((state: any) => state.profile?.isClient);
+    // const [isSuccess, setIsSuccess] = React.useState(false);
     const { currentUser } = useAuth();
     const renderUI = isClient ? <Vendor /> : <Client />;
     const dialogTriggerRef = useRef(null);
@@ -77,7 +78,6 @@ const ClientUI = () => {
     });
 
         const handlePostProject = async (data: any) => {
-            console.log(data);
             if (!data) {
                 return;
             }
@@ -269,19 +269,19 @@ const ClientUI = () => {
 
                                     <FormField 
                                             control={form.control}
-                                            name='duration'
+                                            name='contract'
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel> Duration </FormLabel>
+                                                    <FormLabel> Contract </FormLabel>
                                                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                         <FormControl>
                                                             <SelectTrigger>
-                                                                <SelectValue placeholder='Select project duration' />
+                                                                <SelectValue placeholder='Select contract type' />
                                                             </SelectTrigger>
                                                         </FormControl>
                                                         <SelectContent>
-                                                            <SelectItem value='ongoing'> Ongoing </SelectItem>
-                                                            <SelectItem value='once-off'> Once-off </SelectItem>
+                                                            <SelectItem value='Ongoing'> Ongoing </SelectItem>
+                                                            <SelectItem value='Once-off'> Once-off </SelectItem>
                                                         </SelectContent>
                                                     </Select>
                                                 </FormItem>
@@ -301,9 +301,9 @@ const ClientUI = () => {
                                                             </SelectTrigger>
                                                         </FormControl>
                                                         <SelectContent>
-                                                            <SelectItem value='beginner'> Beginner </SelectItem>
-                                                            <SelectItem value='intermediate'> Intermediate </SelectItem>
-                                                            <SelectItem value='expert'> Expert </SelectItem>
+                                                            <SelectItem value='Beginner'> Beginner </SelectItem>
+                                                            <SelectItem value='Intermediate'> Intermediate </SelectItem>
+                                                            <SelectItem value='Expert'> Expert </SelectItem>
                                                         </SelectContent>
                                                     </Select>
                                                 </FormItem>
