@@ -24,6 +24,8 @@ import { Vendor } from '../../organisms/vendor';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../@/components/ui/select';
+import { useToast } from '../../../@/components/ui/use-toast';
+import { MoonLoader } from 'react-spinners';
 
 const PROJECT = {
     TITLE_MIN: 10,
@@ -69,30 +71,59 @@ const projectSchema = z.object({
 
 const ClientUI = () => {
     const isClient = useProfileStore((state: any) => state.profile?.isClient);
-    // const [isSuccess, setIsSuccess] = React.useState(false);
+    // const [success, setSuccess] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+    const { toast } = useToast();
     const { currentUser } = useAuth();
     const renderUI = isClient ? <Vendor /> : <Client />;
     const dialogTriggerRef = useRef(null);
+    const closeDialogRef = useRef(null);
     const form = useForm({ 
         resolver: zodResolver(projectSchema) 
     });
 
-        const handlePostProject = async (data: any) => {
-            if (!data) {
-                return;
-            }
-
-            try {
-                const projectRef = collection(db, 'projects');
-                await addDoc(projectRef, {
-                    ...data,
-                    postedBy: doc(db, `users/${currentUser.uid}`),
-                    createdAt: serverTimestamp(),
-                })
-            } catch (error) {
-                console.log(error);
-            }
+    const handlePostProject = async (data: any) => {
+        if (!data) {
+            return;
         }
+
+        setLoading(true);
+
+        try {
+            const projectRef = collection(db, 'projects');
+            await addDoc(projectRef, {
+                ...data,
+                postedBy: doc(db, `users/${currentUser.uid}`),
+                createdAt: serverTimestamp(),
+            })
+            toast({
+                className: 'bg-[green] text-white',
+                title: 'Success',
+                description: 'Project was successfully posted.'
+            });
+            // @ts-ignore
+            closeDialogRef?.current.click();
+        } catch (error) {
+            console.log(error);
+            toast({
+                variant: 'destructive',
+                title: 'Ops. Something went wrong.',
+                description: 'There was a problem trying to create project.'
+            });
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    React.useEffect(() => {
+        if (form.formState.isSubmitSuccessful) {
+            form.reset({
+                title: '',
+                description: '',
+                budget: '',
+            });
+        }
+    }, [form.formState, form.reset]);
 
     useEffect(() => {
         async function getAuthor(authorRef: DocumentReference<unknown>) {
@@ -311,10 +342,16 @@ const ClientUI = () => {
                                         />
 
                                         <DialogFooter className='mt-4 w-full flex gap-2'>
-                                            <DialogTrigger className='bg-white flex-1' asChild>
+                                            <DialogTrigger ref={closeDialogRef} className='bg-white flex-1' asChild>
                                                 <Button className='flex-1' variant='outline'> Cancel </Button>
                                             </DialogTrigger>
-                                            <Button type='submit' className='bg-primary flex-1'> Post </Button>
+                                            <Button 
+                                                type='submit' 
+                                                className='bg-primary flex-1'
+                                                disabled={loading}
+                                            > 
+                                                {loading ? <MoonLoader size={20} color='white' /> : 'Create'}
+                                            </Button>
                                         </DialogFooter>
                                     </form>
                                     </Form>
