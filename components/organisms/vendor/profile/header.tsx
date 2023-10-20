@@ -14,7 +14,7 @@ type IProps = {
 
 export default function ProfileHeader({ names, title, bio, avatar }: IProps) {
     return (
-        <section className='md:container m-2'>
+        <section className='m-2'>
             <section className='flex flex-col items-center justify-center gap-3'>
                 <section className='relative border border-gray rounded-full w-[60px] h-[60px]'>
                     <Avatar className='w-full h-full'>
@@ -35,7 +35,7 @@ export default function ProfileHeader({ names, title, bio, avatar }: IProps) {
                 </span>
             </section>
             <section className='mt-3'>
-                <p className='text-sm text-center'> {bio} </p>
+                <p className='text-sm text-justify'> {bio} </p>
             </section>
         </section>
   )

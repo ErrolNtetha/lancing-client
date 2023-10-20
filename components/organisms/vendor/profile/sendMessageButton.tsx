@@ -65,7 +65,7 @@ export default function SendMessage({ names, uid }: MessageProps) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className='bg-primary font-semibold w-full flex items-center gap-3'> 
+                <Button variant='outline' className='font-semibold w-full flex items-center gap-3'> 
                     Message <FiSend /> 
                 </Button>
             </DialogTrigger>
