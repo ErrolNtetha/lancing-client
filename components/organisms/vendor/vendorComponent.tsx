@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { FiSend, FiUser } from 'react-icons/fi';
+import { Button } from '../../../@/components/ui/button';
 import { VendorProps } from '../../../types';
 // import { formatAmount } from '../../../utilities/format';
 import { Avatar } from '../../molecules/image';
@@ -47,7 +48,9 @@ export const VendorComponent = ({
                 <section className='flex justify-between items-center text-sm'>
                     <span className='flex items-center gap-2'>
                         <button className='flex items-center gap-1 hover:cursor-pointer'onClick={() => setViewPortfolio(!viewPortfolio)}> <FiUser /> View </button>
-                        {/* | <span className='py-2 text-[.7rem]'> From: R{formatAmount(amount)} { percent && ` | ${percent}%`}  </span> */}
+                        <Button className='py-2 text-[.7rem]'>
+                            <Link href={`/vendors/${id}`}> View Profile </Link>
+                        </Button>
                     </span>
 
                     <button className='flex items-center gap-2 border border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>
