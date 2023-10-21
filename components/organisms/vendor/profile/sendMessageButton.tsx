@@ -48,7 +48,7 @@ export default function SendMessage({ names, uid }: MessageProps) {
             toast({
                 className: 'bg-[green] text-white',
                 title: 'Success',
-                description: 'Message sent.'
+                description: 'Message successfully sent.'
             });
         } catch (error) {
             console.log(error);
@@ -65,13 +65,13 @@ export default function SendMessage({ names, uid }: MessageProps) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant='outline' className='font-semibold w-full flex items-center gap-3'> 
-                    Message <FiSend /> 
+                <Button variant='outline' className='font-semibold w-full flex items-center gap-3 mt-4'> 
+                    Direct Message
                 </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle> Send Message </DialogTitle>
+                    <DialogTitle> Send Direct Message </DialogTitle>
                     <DialogDescription>
                         To: {names?.firstName} {names?.lastName}
                     </DialogDescription>

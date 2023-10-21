@@ -10,7 +10,7 @@ import VendorReviews from '../../organisms/vendor/profile/navigation/reviews'
 export default function Navigation() {
     return (
         <Tabs defaultValue='profile' className='w-full'>
-            <TabsList className='w-full divide-x justify-start overflow-x-hidden'>
+            <TabsList className='w-full divide-x justify-start md:justify-evenly overflow-x-hidden'>
                 <TabsTrigger value='portfolio'> Portfolio </TabsTrigger>
                 <TabsTrigger value='work'> Work Experience </TabsTrigger>
                 <TabsTrigger value='education'> Education </TabsTrigger>
