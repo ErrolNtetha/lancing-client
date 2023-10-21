@@ -17,15 +17,15 @@ export default function ProfileHeader({ names, title, bio, avatar }: IProps) {
     return (
         <section className=''>
             <section className='flex md:flex-col md:justify-center gap-3'>
-                <section className='relative border border-gray rounded-full w-[80px] h-[80px]'>
+                <section className='relative border border-gray rounded-full w-[60px] h-[60px] md:w-[80px] md:h-[80px]'>
                     <Avatar className='w-full h-full'>
                         <AvatarImage src={avatar} alt='My avatar' />
                         <AvatarFallback>
                             <Image
                                 src='/assets/images/svg/profileIcon.svg'
                                 alt='random image'
-                                width={100}
-                                height={100}
+                                width={60}
+                                height={60}
                             />
                         </AvatarFallback>
                     </Avatar>

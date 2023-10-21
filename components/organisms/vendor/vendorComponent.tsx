@@ -35,11 +35,11 @@ export const VendorComponent = ({
                             alt={`${names.firstName}&apos;s avatar`}
                             size='w-14 h-14'
                         />
-                        <span>
-                            <h2 className='text-md md:text-lg font-semibold'>{names.firstName} {names.lastName} </h2>
+                        <section>
+                            <Link href={`/vendors/${id}`} className='text-md md:text-lg font-semibold'>{names.firstName} {names.lastName} </Link>
                             <p className='flex items-center gap-1'> {title} - <Link className='text-[blue]' href='/postId/reviews'> {clientReviews} </Link> </p>
                             <span className='flex items-center gap-1'> <StarRating value={rating} /> ({rating}/5) </span>
-                        </span>
+                        </section>
                     </span>
                     { /* <span className='self-start'> <FiMoreHorizontal /> </span> */ }
                 </section>
@@ -48,9 +48,6 @@ export const VendorComponent = ({
                 <section className='flex justify-between items-center text-sm'>
                     <span className='flex items-center gap-2'>
                         <button className='flex items-center gap-1 hover:cursor-pointer'onClick={() => setViewPortfolio(!viewPortfolio)}> <FiUser /> View </button>
-                        <Button className='py-2 text-[.7rem]'>
-                            <Link href={`/vendors/${id}`}> View Profile </Link>
-                        </Button>
                     </span>
 
                     <button className='flex items-center gap-2 border border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>
