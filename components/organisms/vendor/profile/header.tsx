@@ -17,7 +17,7 @@ export default function ProfileHeader({ names, title, bio, avatar }: IProps) {
     return (
         <>
             <section className='flex md:flex-col md:justify-center gap-3'>
-                <section className='relative border border-gray rounded-full w-[70px] h-[70px] md:w-[80px] md:h-[80px]'>
+                <section className='relative border border-gray-100 rounded-full w-[70px] h-[70px] md:w-[80px] md:h-[80px]'>
                     <Avatar className='w-full h-full'>
                         <AvatarImage src={avatar} alt='My avatar' />
                         <AvatarFallback>
