@@ -1,5 +1,6 @@
 import { Header } from '../components/organisms/header/header';
 import '../app/globals.css';
+import { Toaster } from '../@/components/ui/toaster';
 
 export default function RootLayout({
     children,
@@ -12,6 +13,7 @@ export default function RootLayout({
             <body>
                 <Header />
                 {children}
+                <Toaster />
             </body>
         </html>
     )
