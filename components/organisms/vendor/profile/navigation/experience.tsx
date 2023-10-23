@@ -2,11 +2,19 @@ import { formatDistance } from 'date-fns';
 import format from 'date-fns/format';
 import React from 'react';
 import { FcBriefcase } from 'react-icons/fc';
-import { useVendorExperienceStore } from '../../../../../hooks/useGlobalStore';
 
-export default function VendorExperience() {
-    const { vendorExperience } = useVendorExperienceStore();
-    console.log(vendorExperience);
+type ExperienceProps = {
+    experience: {
+        company: string;
+        responsibilities: string;
+        position: string;
+        startDate: Date | string;
+        endDate: Date | string;
+    }[];
+}
+
+export default function VendorExperience({ experience }: ExperienceProps) {
+    console.log(experience);
 
     const noExperience = (
         <section className='flex justify-center items-center h-[400px]'>
@@ -18,17 +26,17 @@ export default function VendorExperience() {
     );
 
     const formatTheDistance = (item: any) => {
-        if (item.from && item.to) {
-            return formatDistance(new Date(item?.from), new Date(item?.to));
+        if (item.startDate && item.endDate) {
+            return formatDistance(new Date(item?.startDate.seconds), new Date(item?.endDate.seconds));
         }
     };
  
-    const listOfWorkExperience = vendorExperience.map((item: any, index: number) => (
+    const listOfWorkExperience = experience.map((item: any, index: number) => (
             <section className='border border-dashed border-gray p-2' key={index}>
                 <p className='font-semibold text-md'> {item.company} </p>
                 <p className='text-[darkgray]'> {item.position} </p>
                 <p className='text-[darkgray]'> 
-                    {item?.startDate && format(new Date(item?.startDate), 'MMM y')} - {item?.endDate ? format(new Date(item?.endDate), 'MMM y') : 'Present'} - {formatTheDistance(item)}
+                    {item?.startDate && format(new Date(item?.startDate.seconds), 'MMM y')} - {item?.endDate.seconds ? format(new Date(item?.endDate.seconds), 'MMM y') : 'Present'} - {formatTheDistance(item)}
                 </p>
                 <br />
                 {item.responsibilities && (
@@ -40,5 +48,9 @@ export default function VendorExperience() {
             </section>
     ));
 
-    return vendorExperience.length > 0 ? listOfWorkExperience : noExperience;
+    return (
+        <>
+            {experience.length > 0 ? listOfWorkExperience : noExperience}
+        </>
+    );
 };
