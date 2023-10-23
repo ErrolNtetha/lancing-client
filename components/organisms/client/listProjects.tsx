@@ -1,65 +1,67 @@
 /* eslint-disable react/jsx-key */
 
-import Head from 'next/head';
 import React from 'react';
+import { useFetchProjects } from '../../../hooks/useFetchProjects';
 import { ClientProject } from './clientProject';
-
-const clients = [
-    {
-        name: {
-            firstName: 'Mphumeleli',
-            lastName: 'Ntetha'
-        },
-        occupation: 'Marketing Manager',
-        verifiedPayment: true,
-        projectDuration: 'Ongoing',
-        key: 1,
-        photos: 2,
-        budget: 2500,
-        createdAt: '12 minutes ago',
-        avatar: '/assets/images/errol.png',
-        projectDescription: 'We are looking for a logo designer who has an experience in designing logos. We are a startup company. Our startup is a cafe. All specification are attached below for your perusal. This is an ongoing project and might need further work done should you satisfy our requirements.'
-    },
-    {
-        name: {
-            firstName: 'Zama',
-            lastName: 'Radebe'
-        },
-        occupation: 'Project Manager',
-        verifiedPayment: true,
-        projectDuration: 'Ongoing',
-        key: 2,
-        photos: 4,
-        budget: 1200,
-        createdAt: '17 minutes ago',
-        avatar: '/images/users/woman.jpg',
-        projectDescription: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates deserunt dignissimos eius. Culpa nostrum aut non eaque, quibusdam qui sit rem eius quasi quae tenetur vero placeat atque, molestiae illum?'
-    },
-    {
-        name: {
-            firstName: 'Njabulo',
-            lastName: 'Ndlovu'
-        },
-        occupation: 'Office Administrator',
-        verifiedPayment: false,
-        projectDuration: 'Once-off',
-        key: 3,
-        photos: 2,
-        budget: 1500,
-        createdAt: '32 minutes ago',
-        avatar: '/images/users/guy.jpg',
-        projectDescription: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci quos vero sapiente reiciendis praesentium, error nam vitae rem repudiandae porro fugit eius delectus voluptas soluta!'
-    },
-]
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 export const ListProjects = () => {
+    const { docs, loading } = useFetchProjects();
+
+    // const sortByDate = (a: any, b: any) => Number(new Date(b.project.createdAt.seconds)) - Number(new Date(a.project.createdAt.seconds));
 
     return (
-        <section>
-            <Head>
-                <title> Browse Projects and Send Proposals | Duello </title>
-            </Head>
-                {clients.map((client) => <ClientProject {...client} /> )}
-        </section>
-    )
-}
+        <>
+            <section>
+                {
+                    loading 
+                    ? (
+                        <section className='p-3 w-full'>
+                            <section className=''> 
+                                <section className='w-32'>
+                                    <Skeleton count={1} /> 
+                                </section>
+                                <section className='w-16'>
+                                    <Skeleton count={1} /> 
+                                </section>
+                            </section>
+                            <Skeleton count={4} /> 
+                            <section className='w-12'>
+                                <Skeleton count={1} /> 
+                            </section>
+                            <section className='flex justify-end'>
+                                {/* @ts-ignore */}
+                                <Skeleton square width={100} height={30} /> 
+                            </section>
+                        </section>
+                    )
+                    : !docs.length
+                    ? (
+                        <section className='flex justify-center items-center h-[92vh]'>
+                            <span className='text-center max-w-md md:w-full'>
+                                <p className='font-bold'> No projects yet. </p>
+                                <p className='py-3 text-sm md:text-md'> 
+                                    Projects posted by clients will appear here. Check back later. 
+                                </p>
+                            </span>
+                        </section>)
+                    //@ts-ignore
+                    : docs.sort((a, b) => Number(new Date(b.project.createdAt.seconds)) - Number(new Date(a.project.createdAt.seconds))).map((doc: any) => {
+                        const { id, project } = doc;
+                        if (project.postedBy) {
+                            return (
+                                <ClientProject
+                                    key={id}
+                                    projectId={id}
+                                    {...project.postedBy}
+                                    {...project}
+                                />
+                            )
+                        }
+                    })
+                }
+            </section>
+        </>
+    );
+};

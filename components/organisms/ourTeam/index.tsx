@@ -1,36 +1,30 @@
-/* eslint-disable @next/next/no-img-element */
-
-import Image from 'next/image';
 import React from 'react';
+import { ImageSrc } from '../../molecules/image';
 
 export const OurTeam = () => {
     return (
-        <section className='flex items-center justify-center flex-col md:flex-row gap-8 bg-pattern-bg bg-cover h-screen '>
+        <section className='flex items-center justify-center flex-col md:flex-row gap-8 bg-pattern-bg bg-cover h-full py-10'>
             <section className='flex items-center justify-center flex-col text-white'>
-                <Image
+                <ImageSrc
                     src='/assets/images/errol.png'
-                    width={150}
-                    height={150}
-                    objectFit='cover'
-                    className='rounded-full ring-1 ring-black '
-                    alt='Smiling picture of the creator of Tedious'
+                    size='w-28 h-28'
+                    alt='Smiling picture of the creator of Duello'
                 />
                 <section className='flex justify-center items-center mt-4 flex-col'>
-                    <h1 className='font-extrabold'> Mphumeleli Errol Ntetha </h1>
-                    <p> Creator of Duello </p>
+                    <h1 className='font-extrabold text-xl'> Mphumeleli Ntetha </h1>
+                    <p className='text-md'> Founder & CEO, Duello </p>
                 </section>
             </section>
             <span className='flex gap-y-6'>
-                <p className='m-6 text-white text-sm md:text-lg max-w-md'> 
-                    <span className='block text-white font-extrabold text-lg'>&lsquo;&lsquo;</span>
-                     I have been falling short of people who will do my
-                    tedious tasks that I have no idea about, and not knowing where to find them. That is why I have
-                    had to develop this platform.
-                    <span className='text-white font-extrabold text-lg'>&rsquo;&rsquo;</span>
+                <p className='m-6 text-white text-sm md:text-md max-w-md'> 
+                    As a passionate advocate for freelancers and businesses alike, I embarked on a journey to redefine the freelancing 
+                    experience in South Africa. Duello isn&apos;t just a platform; it&apos;s a manifestation of my commitment to empowering talent, fostering 
+                    collaboration, and propelling projects to new heights.
                     <br />
                     <br />
-                    Born in Durban, South Africa, Mphumeleli is the Founder and CEO of Tedious and believes that we as South Africans have 
-                    more than enough capabilities to establish our very own products/services to showcase our skills. 
+                    With a deep-rooted belief in the power of connections, I envisioned a platform that brings together freelancers and clients in an environment 
+                    driven by innovation, integrity, and excellence. Our mission at Duello is to simplify the complex, to transform the mundane into the extraodinary, 
+                    and to unlock opportunities that transcend boundaries.
                 </p>
             </span>
         </section>

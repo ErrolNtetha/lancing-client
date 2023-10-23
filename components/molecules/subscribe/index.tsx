@@ -1,51 +1,63 @@
+'use client'
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { addDoc, collection } from 'firebase/firestore';
 import React, { useState } from 'react';
-import { Button } from '../../atoms/button';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { Button } from '../../../@/components/ui/button';
+import { db } from '../../../firebaseConfig';
+import { FormLabel } from '../formLabel';
+
+const subscribeSchema = z.object({
+    email: z.string({ required_error: 'Email is required.' }).email({ message: 'Email is invalid.' }),
+}).required({ email: true });
 
 export const Subscribe = () => {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
     const [response, setResponse] = useState('');
     const [error, setError] = useState(false);
-    const className = 'bg-slate hover:bg-gray hover:text-black hover:border-black text-white p-2 mt-8 shadow-lg block';
+    const className = 'bg-primary hover:bg-gray-100 hover:text-black hover:border-black text-white py-2 px-3 w-full mt-8 shadow-lg block';
+    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+        resolver: zodResolver(subscribeSchema),
+    });
 
-    const handleSubscribe = async (e) => {
-        e.preventDefault();
-        setFirstName('');
-        setLastName('');
-        setEmail('');
+    const handleSubscribe = async (data: any) => {
+        if (!data.email) {
+            return;
+        }
+
+        const subscribersCollection = collection(db, 'subscribers');
 
         try {
-            const response = await fetch('localhost:5000');
-            console.log('Response: ', response)
-            setResponse('You have Subscribed successfully!')
+            await addDoc(subscribersCollection, data);
+            setResponse('You have subscribed successfully!')
             
         } catch (error) {
             console.log('An erorr: ', error);   
-            if (error) setError(true);
+            setError(true);
         }
     };
     
     return (
         <section className='shadow-2xl text-black p-8 bg-white max-w-md m-4 sm:max-w-md border-black'>
             <p className='divide-solid font-extrabold max-w-2'> Subscribe to our newsletter. </p>
-            <p className='text-sm max-w-md font-light'> Be a step ahead and receive updates straight to your inbox with our new coming platform. </p>
-            <form action='onSubmit' className='space-y-4 mt-8'>
-                <section>
-                    <label htmlFor="firstName"> First Names </label>
-                    <input type='text' name='firstName' autoComplete='off' className='p-2 outline-gray w-full block' placeholder='John' onChange={(e) => setFirstName(e.target.value)} value={firstName} />
-                </section>
-                <section>
-                    <label htmlFor="firstName"> Last Name </label>
-                    <input type='text' className='p-2 outline-gray block w-full' placeholder='Doe' onChange={(e) => setLastName(e.target.value)} value={lastName} />
-                </section>
-                <section>
-                    <label htmlFor="firstName"> Email </label>
-                    <input type='email' className='p-2 outline-gray block w-full' placeholder='johndoe@example.com' onChange={(e) => setEmail(e.target.value)} value={email} />
-                </section>
-                <Button buttonText='Subscribe' className={className} handleClick={handleSubscribe} />
+            <p className='text-sm max-w-md font-light'> Be a step ahead and receive updates straight to your inbox. </p>
+            <form action='onSubmit' onSubmit={handleSubmit(handleSubscribe)} className='mt-8'>
+                <FormLabel
+                    name='email'
+                    type='email'
+                    placeholder='Enter your email address'
+                    labelName='Email Address'
+                    required={true}
+                    register={register}
+                    errorMessage={errors?.email?.message?.toString()}
+                />
+                <Button onClick={handleSubscribe} className={className}>
+                    {`${isSubmitting ? 'Subscribing...' : 'Subscribe'}`}
+                </Button>
+
             </form>
-            {response ? <p className='pt-5 text-green block'> {response} </p> : error ? <p className='pt-5 text-green block'> There was an error subscribing. </p> : null}
+            {response ? <p className='pt-5 text-[green] block'> {response} </p> : error ? <p className='pt-5 text-[red] block'> There was an error subscribing. </p> : null}
         </section>
     )
 }

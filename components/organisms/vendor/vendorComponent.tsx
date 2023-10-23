@@ -1,68 +1,63 @@
-import Image from 'next/image';
+import Link from 'next/link';
 import React, { useState } from 'react';
 import { FiSend, FiUser } from 'react-icons/fi';
+import { Button } from '../../../@/components/ui/button';
+import { VendorProps } from '../../../types';
+// import { formatAmount } from '../../../utilities/format';
+import { Avatar } from '../../molecules/image';
 import { StarRating } from '../../molecules/star-rating';
 import { Modal } from '../modal';
 import { EnquiryModal } from './enquiryModal';
-import { PortfolioModal } from './portfolioModal';
+import { PortfolioModal } from './viewPortfolio/';
 
-type VendorProps = {
-    recipient: {
-        firstName: string;
-        lastName: string;
-    },
-    avatar: string;
-    service: string;
-    rating: number;
-    pitchText: string;
-};
-
-export const VendorComponent = ({ 
+export const VendorComponent = ({
     avatar,
-    recipient,
-    service,
+    names,
+    title,
     rating,
-    pitchText
+    bio,
+    reviews,
+    id,
 }: VendorProps) => {
     const [modal, setModal] = useState(false);
     const [viewPortfolio, setViewPortfolio] = useState(false);
-
     const handleModal = () => setModal(!modal);
+    const isPlural = reviews.length > 1 ? 'reviews' : 'review';
+    const clientReviews = !reviews.length ? 'No reviews' : `${reviews.length} ${isPlural}`;
+
     return (
         <section className='text-black text-[.8rem] md:text-sm my-3 border border-gray bg-white shadow-md w-full md:w-[35rem] max-h-max p-2'>
             <section>
                 <section className='flex items-center justify-between mb-4'>
-                    <span className='flex gap-3'>
-                        <Image
+                    <span className='flex gap-2'>
+                        <Avatar
                             src={avatar}
-                            alt={`${recipient.firstName}&apos;s avatar`}
-                            width={50}
-                            height={50}
-                            className='rounded-full ring-1 ring-gray object-cover'
+                            alt={`${names.firstName}&apos;s avatar`}
+                            size='w-14 h-14'
                         />
-                        <span>
-                            <h2 className='text-md md:text-lg font-semibold'>{recipient.firstName} {recipient.lastName} </h2>
-                            <p className='flex items-center gap-1'> {service} </p>
-                            <p className='flex items-center gap-1'></p>
-                        </span>
+                        <section>
+                            <Link href={`/vendors/${id}`} className='text-md md:text-lg font-semibold'>{names.firstName} {names.lastName} </Link>
+                            <p className='flex items-center gap-1'> {title} - <Link className='text-[blue]' href='/postId/reviews'> {clientReviews} </Link> </p>
+                            <span className='flex items-center gap-1'> <StarRating value={rating} /> ({rating}/5) </span>
+                        </section>
                     </span>
                     { /* <span className='self-start'> <FiMoreHorizontal /> </span> */ }
                 </section>
-                <p className='mb-4'> {pitchText} </p>
-                <span className='flex items-center gap-2'> <StarRating value={rating} /> ({rating}/5) </span>
+                <p className='mb-4'> {bio} </p>
                 <hr className='opacity-10 mb-2' />
                 <section className='flex justify-between items-center text-sm'>
                     <span className='flex items-center gap-2'>
-                        <span className='flex items-center gap-1 hover:cursor-pointer' onClick={() => setViewPortfolio(!viewPortfolio)}> <FiUser /> View </span>|
-                        <span className='py-2 text-[.7rem]'> From: R2,000 </span>
+                        <button className='flex items-center gap-1 hover:cursor-pointer'onClick={() => setViewPortfolio(!viewPortfolio)}> <FiUser /> View </button>
                     </span>
 
-                    <span className='flex items-center gap-2 border-2 border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>
+                    <button className='flex items-center gap-2 border border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>
                         <FiSend /> Enquire
-                    </span>
+                    </button>
                     {viewPortfolio && (
                         <Modal>
                             <PortfolioModal 
+                                name={names}
+                                title={title}
                                 handleModal={() => setViewPortfolio(!viewPortfolio)}
                             />
                         </Modal> 
@@ -71,7 +66,8 @@ export const VendorComponent = ({
                         <Modal>
                             <EnquiryModal
                                 handleModal={handleModal}
-                                recipient={recipient}
+                                recipient={names}
+                                uid={id}
                             />
                         </Modal> 
                     }
@@ -80,3 +76,4 @@ export const VendorComponent = ({
         </section>
     );
 };
+

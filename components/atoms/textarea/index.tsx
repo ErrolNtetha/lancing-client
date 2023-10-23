@@ -15,7 +15,7 @@ export const TextareaInput = ({ required, name, register, placeholder }: Textare
             <textarea
                 name={name}
                 cols={4}
-                rows={10}
+                rows={4}
                 wrap=''
                 placeholder={placeholder}
                 autoComplete='off'

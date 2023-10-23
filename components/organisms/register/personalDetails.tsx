@@ -1,13 +1,16 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { FormLabel, FormLabelProps } from '../../molecules/formLabel';
+import { FieldErrors, FieldValues } from 'react-hook-form';
+import { FormLabel } from '../../molecules/formLabel';
 
-interface IProps extends FormLabelProps {
+interface IProps {
     register: Function;
     component: React.ReactNode;
+    watch: Function;
+    errorMessage: FieldErrors<FieldValues>;
 }
 
-export const PersonalDetails = ({ component, register }: IProps) => {
+export const PersonalDetails = ({ component, errorMessage, register, watch }: IProps) => {
     const [hidden, setHidden] = useState(true);
 
     return (
@@ -20,6 +23,7 @@ export const PersonalDetails = ({ component, register }: IProps) => {
                     name='firstName'
                     register={register}
                     required={true}
+                    errorMessage={errorMessage?.firstName?.message?.toString()}
                 />
                 <FormLabel
                     type='text'
@@ -28,6 +32,7 @@ export const PersonalDetails = ({ component, register }: IProps) => {
                     name='lastName'
                     register={register}
                     required={true}
+                    errorMessage={errorMessage?.lastName?.message?.toString()}
                 />
                 <FormLabel
                     type='email'
@@ -36,14 +41,7 @@ export const PersonalDetails = ({ component, register }: IProps) => {
                     name='email'
                     register={register}
                     required={true}
-                />
-                <FormLabel
-                    type='text'
-                    placeholder='935 Mitchelle Street, Durban 4001'
-                    labelName='Address'
-                    name='address'
-                    register={register}
-                    required={true}
+                    errorMessage={errorMessage?.email?.message?.toString()}
                 />
                 <FormLabel
                     type={hidden ? 'password' : 'text'}
@@ -53,8 +51,10 @@ export const PersonalDetails = ({ component, register }: IProps) => {
                     register={register}
                     required={true}
                     handleHideIcon={() => setHidden(!hidden)}
-                    hasHideIcon={true}
+                    hasHideIcon={false}
                     isHidden={hidden}
+                    inputHasValue={watch ? true : false}
+                    errorMessage={errorMessage?.password?.message?.toString()}
                 />
                 <section className='mt-4 block'>
                     {component}

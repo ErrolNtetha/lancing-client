@@ -1,62 +1,126 @@
+'use client'
 /* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
-// import { useScreenWidth } from '../../../hooks/useScreenWidth';
-import { FiAlignRight } from 'react-icons/fi';
-import { useProfileStore } from '../../../hooks/useGlobalStore';
-import { Button } from '../../atoms/button';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { LoginButton } from '../login/loginButton';
 import { MobileMenu } from './mobileMenu';
+import { UserHead } from './userHead';
+import { useAuth } from '../../../hooks/useAuth';
+import { signOut } from 'firebase/auth';
+import { auth, db } from '../../../firebaseConfig';
+import { DigitCounter } from '../../molecules/digitCounter';
+import { collection, getDocs } from 'firebase/firestore';
+import { useProfileStore } from '../../../hooks/useGlobalStore';
+import { FiAlignRight } from 'react-icons/fi';
+import { Button } from '../../../@/components/ui/button';
 
 export const Header = () => {
     const [nav, setNav] = useState(false);
-    const p = useProfileStore();
-    const { profile } = p;
+    const [proposals, setProposals] = useState([]);
+    const p: any = [];
+    const { vision, profile: { isClient }, clearProfile } = useProfileStore();
     const router = useRouter();
+    const { currentUser } = useAuth();
+    // const  header = useProfileStore((state) => state.header);
 
-    const handleLogout = () => {
-        console.log('logged out')
-        setNav(!nav);
-        router.push('/login');
+    const handleLogIn = () => {
+        router.push('/login')
     };
 
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            clearProfile();
+            setNav(!nav);
+            router.push('/login');
+        } catch(error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        async function getMessages() {
+            try {
+                const messagesRef = collection(db, 'proposals');
+
+                const querySnapshot = await getDocs(messagesRef);
+                querySnapshot.forEach(async (doc) => {
+                    p.push({ id: doc.id, proposal: doc.data()});
+                })
+                setProposals(p);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        getMessages();
+    }, []);
+
     return (
-        <header className='flex z-10 justify-between items-center relative text-white bg-slate h-[5vh] px-6'>
-            <Image src='/images/logo.svg' alt='company logo' className='' width={80} height={20} />
-            <FiAlignRight onClick={() => setNav(!nav)} className='hover:cursor-pointer text-[1.8rem] block md:hidden translate-y-[-50%] absolute top-[50%] right-[25px] transition-transform' />
-            <section className='ml-auto'>
-                <ul className='p-0 hidden md:flex'>
-                    <li className='ml-4 mr-4' >
-                        <Link className='block w-full' href='/feed'>Home</Link>
-                    </li>
-                    <li className='ml-4 mr-4'>
-                        <Link className='block w-full' href='/browse'>Browse</Link>
-                    </li>
-                    <li className='ml-4 mr-4'>
-                        <Link href='/contact'>Contact</Link>
-                    </li>
-                    <li className='ml-4 mr-4'>
-                        <Link href='/about'>About</Link>
-                    </li>
-                    <li className='ml-4 mr-4'>
-                        <Link href='/settings'>Settings</Link>
-                    </li>
-                </ul>
-            </section>
-            {nav && (
-                <section className='fixed bg-slate top-0 left-0 bottom-0 w-full'>
-                    <MobileMenu avatar={profile.avatar} name={profile.name} handleMenuToggle={() => setNav(!nav)} />
-                    <section className='flex items-center justify-center absolute w-full left-0 bottom-4'>
-                        <Button
-                            className='border-2 border-white font-extrabold w-full p-2 my-1 mx-4'
-                            buttonText='Logout'
-                            handleClick={handleLogout}
-                        />
-                    </section>
+        <header className='md:container flex shadow divide-solid divide-gray bg-background sticky top-0 z-10 justify-between transition-all duration-200 items-center w-full h-[8vh]'>
+            <section className='px-4 w-full h-full flex z-10 justify-between items-center'>
+                <Link href='/'>
+                    <Image src='/assets/images/svg/blackLogo.svg' alt='Company logo' className='fill-current text-black' width={80} height={20} />
+                </Link>
+                <section className='hidden md:flex ml-auto'>
+                    <ul className='p-0 md:flex'>
+                        <li className='ml-4 mr-4' >
+                            <Link className='block w-full' href='/feed'>Home</Link>
+                        </li>
+                        <li className='ml-4 mr-4'>
+                            <Link className='block w-full' href='/blog'>Blog</Link>
+                        </li>
+                        <li className='ml-4 mr-4'>
+                            <Link href='/contact'>Contact</Link>
+                        </li>
+                        <li className='ml-4 mr-4'>
+                            <Link href='/about'>About</Link>
+                        </li>
+                        <li className='ml-4 mr-4'>
+                            <Link href='/faq'>FAQ</Link>
+                        </li>
+                    </ul>
                 </section>
-            )}
+                <section className='relative p-2 hover:cursor-pointer gap-2'>
+                    {isClient && <DigitCounter count={proposals.length} className='bg-[red] pointer-events-none top-0 right-0' absolute={true} />}
+                    <FiAlignRight onClick={() => setNav(!nav)} className='text-[1.8rem] block md:hidden transition duration-200 ease-in-out' />
+                </section>
+                <span className='hidden md:block ml-4'> 
+                    {currentUser
+                        ? <UserHead 
+                           avatar={currentUser?.avatar} 
+                            displayName={currentUser?.displayName} 
+                            isClient={isClient}
+                            /> 
+                        : <LoginButton />} 
+                </span>
+                {nav && (
+                    <section className='fixed bg-primary top-0 left-0 bottom-0 w-full'>
+                        <MobileMenu
+                            auth={currentUser}
+                            email={currentUser?.email}
+                            isClient={isClient}
+                            avatar={currentUser?.avatar}
+                            displayName={currentUser?.displayName}
+                            handleMenuToggle={() => setNav(!nav)}
+                            totalMessages={proposals.length}
+                        />
+                        <section className='flex items-center justify-center absolute w-full left-0 bottom-4'>
+                            <Button
+                                type='button'
+                                className='text-white border-2 border-white font-extrabold w-full p-2 my-1 mx-4'
+                                onClick={() => `${currentUser ? handleLogout() : handleLogIn()}`}
+                            > 
+                                {`${currentUser ? 'Logout' : 'Login'}`} 
+                            </Button>
+                        </section>
+                    </section>
+                )}
+            </section>
         </header>
     );
 };
