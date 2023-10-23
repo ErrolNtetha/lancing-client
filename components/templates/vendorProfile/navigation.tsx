@@ -14,7 +14,7 @@ type VendorProps = {
 export default function Navigation({ vendor }: VendorProps) {
     const { experience } = vendor;
     return (
-        <Tabs defaultValue='profile' className='w-full'>
+        <Tabs defaultValue='portfolio' className='w-full'>
             <TabsList className='w-full divide-x justify-start md:justify-evenly overflow-x-hidden'>
                 <TabsTrigger value='portfolio'> Portfolio </TabsTrigger>
                 <TabsTrigger value='work'> Work Experience </TabsTrigger>

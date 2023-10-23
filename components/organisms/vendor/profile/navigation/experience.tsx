@@ -34,15 +34,15 @@ export default function VendorExperience({ experience }: ExperienceProps) {
     const listOfWorkExperience = experience.map((item: any, index: number) => (
             <section className='border border-dashed border-gray p-2' key={index}>
                 <p className='font-semibold text-md'> {item.company} </p>
-                <p className='text-[darkgray]'> {item.position} </p>
-                <p className='text-[darkgray]'> 
+                <p className='text-[darkgray] text-sm md:text-md'> {item.position} </p>
+                <p className='text-[darkgray] text-sm md:text-md'> 
                     {item?.startDate && format(new Date(item?.startDate.seconds), 'MMM y')} - {item?.endDate.seconds ? format(new Date(item?.endDate.seconds), 'MMM y') : 'Present'} - {formatTheDistance(item)}
                 </p>
                 <br />
                 {item.responsibilities && (
                     <section>
                         <h3 className='font-semibold text-md'> Responsibilities </h3> 
-                        <p> {item.responsibilities} </p>
+                        <p className='text-sm md:text-md'> {item.responsibilities} </p>
                     </section>
                 )}
             </section>
