@@ -7,9 +7,14 @@ import VendorExperience from '../../organisms/vendor/profile/navigation/experien
 import VendorPortfolio from '../../organisms/vendor/profile/navigation/portfolio'
 import VendorReviews from '../../organisms/vendor/profile/navigation/reviews'
 
-export default function Navigation() {
+type VendorProps = {
+    vendor: any;
+}
+
+export default function Navigation({ vendor }: VendorProps) {
+    const { experience } = vendor;
     return (
-        <Tabs defaultValue='profile' className='w-full'>
+        <Tabs defaultValue='portfolio' className='w-full'>
             <TabsList className='w-full divide-x justify-start md:justify-evenly overflow-x-hidden'>
                 <TabsTrigger value='portfolio'> Portfolio </TabsTrigger>
                 <TabsTrigger value='work'> Work Experience </TabsTrigger>
@@ -20,7 +25,7 @@ export default function Navigation() {
                 <VendorPortfolio />
             </TabsContent>
             <TabsContent value='work'>
-                <VendorExperience />
+                <VendorExperience experience={experience} />
             </TabsContent>
             <TabsContent value='education'>
                 <VendorEducation />

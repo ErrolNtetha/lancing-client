@@ -141,3 +141,10 @@ export const usePortfolioStore: any = create(
         addPortfolio: (portfolio: any) => set((state: any) => ({ portfolio: [...state.portfolio, { ...portfolio }] })),
     })
 );
+
+export const useVendorExperienceStore: any = create(
+    (set: any) => ({
+        vendorExperience: [],
+        addVendorExperience: (experience: any) => set((state: any) => ({ experience: [...state.experience, experience ] })),
+    })
+);

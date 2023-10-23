@@ -1,35 +1,17 @@
 // @ts-nocheck
-'use client'
 
-import { doc, getDoc } from 'firebase/firestore';
-import { useParams } from 'next/navigation';
 import React from 'react';
-import { db } from '../../../firebaseConfig';
 import ProfileHeader from '../../organisms/vendor/profile/header';
 import SendMessage from '../../organisms/vendor/profile/sendMessageButton';
 
-export default function VendorSidebar() {
-    const [vendor, setVendor] = React.useState({});
-    const { vendorId } = useParams();
+type VendorProps = {
+    vendor: any;
+    vendorId: string;
+}
 
-    React.useEffect(() => {
-        const getVendorProfile = async() => {
-            const userRef = doc(db, `users/${vendorId}`);
-            try {
-                const author = await getDoc(userRef);
-                if (author.exists()) {
-                    setVendor(author.data());
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-        getVendorProfile();
-    }, [vendorId]);
-
+export default function VendorSidebar({ vendor, vendorId }: VendorProps) {
     return (
-        <section className='m-4'>
+        <section className='my-4 md:m-4'>
             <ProfileHeader
                 names={vendor?.names} 
                 title={vendor?.title} 
