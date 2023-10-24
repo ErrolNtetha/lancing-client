@@ -5,7 +5,7 @@ import { ScrollArea, ScrollBar } from '../../../@/components/ui/scroll-area';
 const works = [
     {
         title: 'Graphic Design and Multimedia',
-        subtext: 'Some random long text for subtext.',
+        subtext: 'Some random long text for subtext. But this text not wrapping.',
         image: '/assets/images/home/6.jpg'
     },
     {
