@@ -25,7 +25,7 @@ export default function Showcase() {
         <section className='container p-6 bg-gray-100'>
             <section>
                 <h1 className='font-extrabold uppercase text-2xl'> Where skills shine, <br /> dreams thrive. </h1>
-                <p> Browse through hundreds of telented freelancers from around the country. </p>
+                <p> Browse through hundreds of talented freelancers from around the country. </p>
             </section>
             <ScrollArea className='w-96 whitespace-nowrap py-6'>
                 <section className='flex w-max space-x-4'>
@@ -40,7 +40,7 @@ export default function Showcase() {
                                     height={400}
                                 />
                             </section>             
-                            <figcaption className='pt-2 w-max aspect-[3/4] h-fit w-fit'>
+                            <figcaption className='pt-2 w-max'>
                                 <h1 className='font-extrabold text-lg'>{item.title}</h1> 
                                 <p> {item.subtext} </p>
                             </figcaption>
