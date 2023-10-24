@@ -5,6 +5,7 @@ import { Hero } from '../components/organisms/hero';
 import { Newsletter } from '../components/organisms/newsletter';
 import { OurTeam } from '../components/organisms/ourTeam';
 import { OurVision } from '../components/organisms/ourVison';
+import Showcase from '../components/organisms/showcase';
 
 const Home = () => {
     return (
@@ -16,6 +17,7 @@ const Home = () => {
 
             <main>
                 <Hero />
+                <Showcase />
                 <OurVision />
                 <OurTeam />
                 <Newsletter />
