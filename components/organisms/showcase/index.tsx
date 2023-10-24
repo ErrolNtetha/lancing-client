@@ -27,8 +27,8 @@ export default function Showcase() {
                 <h1 className='font-extrabold uppercase text-2xl'> Where skills shine, <br /> dreams thrive. </h1>
                 <p> Browse through hundreds of talented freelancers from around the country. </p>
             </section>
-            <ScrollArea className='w-96 whitespace-nowrap py-6'>
-                <section className='flex w-max space-x-4'>
+            <ScrollArea className='w-96 whitespace-normal py-6'>
+                <section className='flex space-x-4'>
                     {works.map((item) => (
                         <figure key={item.title} className='shrink-0'>
                             <section className='overflow-hidden rounded-md'>
@@ -40,7 +40,7 @@ export default function Showcase() {
                                     height={400}
                                 />
                             </section>             
-                            <figcaption className='pt-2 w-max'>
+                            <figcaption className='pt-2 max-w-[300px]'>
                                 <h1 className='font-extrabold text-lg'>{item.title}</h1> 
                                 <p> {item.subtext} </p>
                             </figcaption>
