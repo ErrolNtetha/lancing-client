@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export const About = () => {
     return (
-        <section className='md:flex items-center justify-center bg-backgroung md:pt-0 py-8 h-full md:h-screen'>
+        <section className='md:flex items-center justify-center bg-background md:pt-0 py-8 h-full md:h-screen'>
             <section className='md:container md:flex items-center justify-around'>
                 <aside className='text-black max-w-30 m-8'>
                     <h4 className='text-md md:text-lg font-bold opacity-30'> Who We Are </h4>
