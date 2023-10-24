@@ -34,7 +34,7 @@ export default function Showcase() {
                             <section className='overflow-hidden rounded-md'>
                                 <Image 
                                     src={item.image}
-                                    alt='Mphumeleli'
+                                    alt='lorem'
                                     className='aspect-[3/4] h-fit w-fit object-cover'
                                     width={300}
                                     height={400}
