@@ -5,17 +5,17 @@ import { ScrollArea, ScrollBar } from '../../../@/components/ui/scroll-area';
 const works = [
     {
         title: 'Graphic Design and Multimedia',
-        subtext: 'Some random long text for subtext. But this text not wrapping.',
+        subtext: 'Logo Design, Website Design, UI/UX Design, Packaging Design, Animation, Video Editing, etc.',
         image: '/assets/images/home/6.jpg'
     },
     {
         title: 'Creative Art and Entertainment',
-        subtext: 'Some random text for subtext',
+        subtext: 'Music Composition, Sound Design, Voiceover, Acting, Scriptwriting, Screenwriting, etc.',
         image: '/assets/images/home/5.jpg'
     },
     {
         title: 'Programming and Software Development',
-        subtext: 'Some random text for subtext',
+        subtext: 'Web Development, App Development, Game Development, QA Testing, Cybersecurity, DevOps, etc.',
         image: '/assets/images/home/4.jpg'
     },
 ];
@@ -42,7 +42,7 @@ export default function Showcase() {
                             </section>             
                             <figcaption className='pt-2 max-w-[300px]'>
                                 <h1 className='font-extrabold text-lg'>{item.title}</h1> 
-                                <p> {item.subtext} </p>
+                                <p className='text-muted-foreground overflow-hidden text-ellipsis w-[400px]'> {item.subtext} </p>
                             </figcaption>
                         </figure>
                 ))}
