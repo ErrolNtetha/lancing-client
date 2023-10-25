@@ -40,9 +40,9 @@ export default function Showcase() {
                                     height={400}
                                 />
                             </section>             
-                            <figcaption className='pt-2 max-w-[300px]'>
+                            <figcaption className='pt-2'>
                                 <h1 className='font-extrabold text-lg'>{item.title}</h1> 
-                                <p className='text-muted-foreground overflow-hidden text-ellipsis w-[400px]'> {item.subtext} </p>
+                                <p className='text-muted-foreground max-w-[300px]'> {item.subtext} </p>
                             </figcaption>
                         </figure>
                 ))}
