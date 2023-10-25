@@ -20,7 +20,7 @@ export default function Preview() {
     const { education } = useEducationStore();
     const { experience } = useExperienceStore();
     const { profile } = useProfileStore();
-    const { names: { firstName, lastName } } = profile;
+    const { names } = profile;
 
     const handleApplicationSubmit = async() => {
             const { avatar, title, bio } = personal;
@@ -109,7 +109,7 @@ export default function Preview() {
                         </Avatar>
                     </section>
                     <section>
-                        <h3 className='font-bold'> {firstName} {lastName} </h3>
+                        <h3 className='font-bold'> {names?.firstName} {names?.lastName} </h3>
                         <p className='whitespace-pre-wrap'> {personal.title || 'No title...'} </p>
                     </section>
                 </section>
