@@ -128,9 +128,9 @@ export default function Preview() {
                     )
                     : listOfExperience}
             </section>
-            <section className='fixed left-0 bottom-0 w-full flex gap-2'>
+            <section className='fixed left-0 bottom-0 w-full flex gap-2 m-3'>
                 <Button type='button' onClick={() => router.push('/apply/preview')} className='bg-white flex-1' variant='outline'> Back </Button>
-                <Button type='button' className='flex-1 bg-primary' onClick={handleApplicationSubmit} variant='secondary'> {loading ? 'Submitting...' : 'Submit'} </Button>
+                <Button type='button' className='flex-1 bg-primary' onClick={handleApplicationSubmit}> {loading ? 'Submitting...' : 'Submit'} </Button>
             </section>
         </section>
     );

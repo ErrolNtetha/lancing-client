@@ -300,7 +300,7 @@ const WorkExperience = () => {
                     </section>
                 </section>
 
-                <section className='fixed left-0 bottom-0 w-full flex gap-4'>
+                <section className='fixed left-0 bottom-0 w-full flex gap-4 m-3'>
                     <Button type='button' onClick={() => router.push('/apply/education')} className='bg-white flex-1' variant='outline'> Back </Button>
                     <Button 
                         type='button' 

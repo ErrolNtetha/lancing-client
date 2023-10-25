@@ -139,9 +139,9 @@ export default function Personal() {
                         )}
                     />
                 </section>
-                <section className='fixed left-0 bottom-0 w-full flex gap-2'>
+                <section className='fixed left-0 bottom-0 w-full flex gap-2 m-3'>
                     <Button type='button' onClick={() => router.push('/apply/getting-started')} className='bg-white flex-1' variant='outline'> Back </Button>
-                    <Button type='submit' className='flex-1 bg-primary' disabled={!form.formState.isValid} variant='secondary'> Next Step </Button>
+                    <Button type='submit' className='flex-1 bg-primary' disabled={!form.formState.isValid}> Next Step </Button>
                 </section>
 
             </form>
