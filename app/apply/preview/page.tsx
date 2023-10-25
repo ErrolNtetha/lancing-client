@@ -4,7 +4,7 @@ import { format, formatDistance } from 'date-fns';
 import React from 'react';
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '../../../@/components/ui/avatar';
-import { useEducationStore, useExperienceStore, usePersonalStore } from '../../../hooks/useGlobalStore';
+import { useEducationStore, useExperienceStore, usePersonalStore, useProfileStore } from '../../../hooks/useGlobalStore';
 import { Button } from '../../../@/components/ui/button';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
@@ -19,10 +19,11 @@ export default function Preview() {
     const { personal } = usePersonalStore();
     const { education } = useEducationStore();
     const { experience } = useExperienceStore();
+    const { profile } = useProfileStore();
+    const { names: { firstName, lastName } } = profile;
 
     const handleApplicationSubmit = async() => {
             const { avatar, title, bio } = personal;
-        console.log(currentUser);
 
             if (!(avatar || title || bio || currentUser)) {
                 return;
@@ -93,24 +94,26 @@ export default function Preview() {
                 <p className='text-md mb-4'> </p>
             </section>
             <section className='mb-4 border-1 border border-gray p-2 rounded-md'>
-                <section>
-                    <section className='relative border border-gray rounded-full w-[100px] h-[100px]'>
+                <section className='flex gap-3'>
+                    <section className='relative border border-gray rounded-full w-[80px] h-[80px]'>
                         <Avatar className='w-full h-full'>
                             <AvatarImage src={personal.avatar} alt='My avatar' />
                             <AvatarFallback>
                                 <Image
                                     src='/assets/images/svg/profileIcon.svg'
                                     alt='random image'
-                                    width={200}
-                                    height={200}
+                                    width={80}
+                                    height={80}
                                 />
                             </AvatarFallback>
                         </Avatar>
                     </section>
+                    <section>
+                        <h3 className='font-bold'> {firstName} {lastName} </h3>
+                        <p className='whitespace-pre-wrap'> {personal.title || 'No title...'} </p>
+                    </section>
                 </section>
-                <p className=''> {personal.title || 'No title...'} </p>
-                <h3 className='font-semibold'> Overview </h3>
-                <section>
+                <section className='mt-3'>
                     <p> {personal.bio || 'No bio...'} </p>
                 </section>
             </section>
