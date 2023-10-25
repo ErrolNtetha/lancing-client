@@ -10,6 +10,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
 import { useAuth } from '../../../hooks/useAuth';
 import { useRouter } from 'next/navigation';
+import { FcBriefcase } from 'react-icons/fc';
 
 export default function Preview() {
     const [loading, setLoading] = React.useState(false);
@@ -46,7 +47,6 @@ export default function Preview() {
                         status: 'pending', //  'pending' | 'declined' | 'approved'
                         createdAt: new Date(),
                         updatedAt: new Date(),
-                        reason: '',
                     },
                     education,
                     experience,
@@ -114,15 +114,15 @@ export default function Preview() {
                     <p> {personal.bio || 'No bio...'} </p>
                 </section>
             </section>
+
             <section className='border-1 border border-gray p-2 rounded-md'>
                 <h3 className='font-semibold'> Work Experience </h3>
                 {experience.length === 0
                     ? (
-                        <section
-                            className='flex justify-center py-10 px-5'
-                        >
-                            <section className='flex flex-col justify-center items-center'>
-                                <h2 className='mt-3 text-md'> No work experience to show. </h2>
+                        <section className='flex justify-center items-center h-[320px]'>
+                            <section className='flex justify-center gap-3 items-center flex-col'>
+                                <FcBriefcase className='text-[6rem]' />
+                                <h2 className='font-semibold text-md'> No work experience to show. </h2>
                             </section>
                         </section>
                     )
