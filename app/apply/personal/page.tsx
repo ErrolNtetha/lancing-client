@@ -139,7 +139,7 @@ export default function Personal() {
                         )}
                     />
                 </section>
-                <section className='fixed left-0 bottom-0 w-full flex gap-2 m-3'>
+                <section className='fixed left-0 bottom-0 gap-3 p-2 w-full flex'>
                     <Button type='button' onClick={() => router.push('/apply/getting-started')} className='bg-white flex-1' variant='outline'> Back </Button>
                     <Button type='submit' className='flex-1 bg-primary' disabled={!form.formState.isValid}> Next Step </Button>
                 </section>
