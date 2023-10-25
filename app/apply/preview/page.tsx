@@ -44,7 +44,7 @@ export default function Preview() {
                     application: {
                         isApproved: false,
                         status: 'pending', //  'pending' | 'declined' | 'approved'
-                        applicationDate: new Date(),
+                        createdAt: new Date(),
                         updatedAt: new Date(),
                         reason: '',
                     },
@@ -128,7 +128,7 @@ export default function Preview() {
                     )
                     : listOfExperience}
             </section>
-            <section className='fixed left-0 bottom-0 gap-3 p-2 w-full flex'>
+            <section className='bg-background fixed left-0 bottom-0 gap-3 p-2 w-full flex'>
                 <Button type='button' onClick={() => router.push('/apply/work-experience')} className='bg-white flex-1' variant='outline'> Back </Button>
                 <Button type='button' className='flex-1 bg-primary' onClick={handleApplicationSubmit}> {loading ? 'Submitting...' : 'Submit'} </Button>
             </section>

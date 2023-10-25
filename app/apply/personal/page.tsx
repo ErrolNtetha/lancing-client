@@ -32,6 +32,7 @@ export default function Personal() {
     const { addPersonalData, personal } = usePersonalStore();
     const form = useForm({
         resolver: zodResolver(personalSchema),
+        mode: 'onChange',
         defaultValues: {
             avatar: personal.avatar,
             title: personal.title,
@@ -132,14 +133,13 @@ export default function Personal() {
                                 </FormControl>
                                 <p className='text-sm text-muted-foreground'>
                                     This is what is going to appear on your profile when clients view your profile.
-                                    Min: 30.
                                 </p>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
                 </section>
-                <section className='fixed left-0 bottom-0 gap-3 p-2 w-full flex'>
+                <section className='bg-background fixed left-0 bottom-0 gap-3 p-2 w-full flex'>
                     <Button type='button' onClick={() => router.push('/apply/getting-started')} className='bg-white flex-1' variant='outline'> Back </Button>
                     <Button type='submit' className='flex-1 bg-primary' disabled={!form.formState.isValid}> Next Step </Button>
                 </section>
