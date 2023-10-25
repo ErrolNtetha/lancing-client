@@ -271,8 +271,8 @@ const Education = () => {
                     </section>
                 </section>
 
-                <section className='mt-4 w-full flex gap-4'>
-                    <Button type='button' className='bg-white flex-1' variant='outline'> Back </Button>
+                <section className='bg-background fixed left-0 bottom-0 gap-3 p-2 w-full flex'>
+                    <Button type='button' onClick={() => router.push('/apply/personal')} className='bg-white flex-1' variant='outline'> Back </Button>
                     <Button 
                         type='button' 
                         onClick={handleNextStep} 
