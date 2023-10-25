@@ -16,15 +16,13 @@ import { usePersonalStore } from '../../../hooks/useGlobalStore';
 
 const personalSchema = z.object({
     avatar: z 
-        .string()
+        .string({ required_error: 'Avatar is required.' })
         .min(1, 'Avatar is required.'),
     title: z
-        .string()
-        .min(1, 'Title is required.')
+        .string({ required_error: 'Title is required.' })
         .min(2, 'Title is too short. It must be at least 2 characters long.'),
     bio: z
-        .string()
-        .min(1, 'Bio is required.')
+        .string({ required_error: 'Bio is required.' })
         .min(30, 'Bio is too short. It must be at least 30 characters long.'),
 });
 
@@ -46,8 +44,6 @@ export default function Personal() {
         addPersonalData(data);
         router.push('/apply/education');
     };
-
-    console.log(personal);
 
     const handleAvatarChange = (e: any) => {
         const imageUrl = e.target.files[0];
@@ -134,15 +130,18 @@ export default function Personal() {
                                 <FormControl>
                                     <Textarea {...field} placeholder='Write your bio explaining yourself and your skills' />
                                 </FormControl>
-                                <p className='text-sm text-muted-foreground'> Double check your grammar, spellings, and punctuation marks. </p>
+                                <p className='text-sm text-muted-foreground'>
+                                    This is what is going to appear on your profile when clients view your profile.
+                                    Min: 30.
+                                </p>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
                 </section>
-                <section className='mt-4 w-full flex gap-2'>
-                    <Button type='button' className='bg-white flex-1' variant='outline'> Back </Button>
-                    <Button type='submit' className='flex-1' disabled={!form.formState.isValid} variant='secondary'> Next Step </Button>
+                <section className='fixed left-0 bottom-0 w-full flex gap-2'>
+                    <Button type='button' onClick={() => router.push('/apply/getting-started')} className='bg-white flex-1' variant='outline'> Back </Button>
+                    <Button type='submit' className='flex-1 bg-primary' disabled={!form.formState.isValid} variant='secondary'> Next Step </Button>
                 </section>
 
             </form>
