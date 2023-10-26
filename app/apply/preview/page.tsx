@@ -11,6 +11,7 @@ import { db } from '../../../firebaseConfig';
 import { useAuth } from '../../../hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import { FcBriefcase } from 'react-icons/fc';
+import { Separator } from '../../../@/components/ui/separator';
 
 export default function Preview() {
     const [loading, setLoading] = React.useState(false);
@@ -77,7 +78,7 @@ export default function Preview() {
                 {item.responsibilities && (
                     <section>
                         <h3 className='font-semibold text-md'> Responsibilities </h3> 
-                        <p> {item.responsibilities} </p>
+                        <p className='text-sm'> {item.responsibilities} </p>
                     </section>
                 )}
             </section>
@@ -93,7 +94,7 @@ export default function Preview() {
                 </h3>
                 <p className='text-md mb-4'> </p>
             </section>
-            <section className='mb-4 border-1 border border-gray p-2 rounded-md'>
+            <section className='my-4'>
                 <section className='flex gap-3'>
                     <section className='relative border border-gray rounded-full w-[80px] h-[80px]'>
                         <Avatar className='w-full h-full'>
@@ -110,16 +111,19 @@ export default function Preview() {
                     </section>
                     <section>
                         <h3 className='font-bold'> {names?.firstName} {names?.lastName} </h3>
-                        <p className='whitespace-pre-wrap'> {personal.title || 'No title...'} </p>
+                        <p className=''> {personal.title || 'No title...'} </p>
                     </section>
                 </section>
                 <section className='mt-3'>
-                    <p> {personal.bio || 'No bio...'} </p>
+                    <p className='text-sm'> {personal.bio || 'No bio...'} </p>
                 </section>
             </section>
 
-            <section className='border-1 border border-gray p-2 rounded-md'>
-                <h3 className='font-semibold'> Work Experience </h3>
+            { /********* ANOTHER SECTION ***********/ }
+
+            <Separator />
+            <section className='my-4'>
+                <h3 className='font-bold'> Work Experience </h3>
                 {experience.length === 0
                     ? (
                         <section className='flex justify-center items-center h-[320px]'>
