@@ -1,6 +1,6 @@
 'use client'
 
-import { format, formatDistance } from 'date-fns';
+import { format, formatDistance, isPast } from 'date-fns';
 import React from 'react';
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '../../../@/components/ui/avatar';
@@ -10,7 +10,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
 import { useAuth } from '../../../hooks/useAuth';
 import { useRouter } from 'next/navigation';
-import { FcBriefcase } from 'react-icons/fc';
+import { FcBriefcase, FcGraduationCap } from 'react-icons/fc';
 import { Separator } from '../../../@/components/ui/separator';
 
 export default function Preview() {
@@ -66,6 +66,16 @@ export default function Preview() {
 
     };
 
+    const listOfQualifications = education.map((item: any, index: number) => (
+        <section key={index} className='my-3'>
+            <section className='border border-dashed border-gray p-2'>
+                <p> <span className='font-semibold'> {item.school} </span> </p>
+                <p> {(item.endDate && isPast(item.endDate)) ? 'Studied' : 'Studying'} <span className='font-semibold'> {item.fieldOfStudy} </span></p>
+                {isPast(item.endDate) && <p> Graduated on: <span className='font-semibold'> {format(item.endDate, 'MMM y')} </span></p>}
+            </section>
+        </section>
+    ));
+
     const listOfExperience = experience.map((item: any, index: number) => (
         <section key={index} className='my-3'>
             <section className='border border-dashed border-gray p-2'>
@@ -88,7 +98,7 @@ export default function Preview() {
     return (
         <section>
             <section>
-                <h3 className='font-semibold text-md text-gray'> Preview Profile </h3>
+                <h3 className='font-semibold text-md text-muted-foreground'> Preview Profile </h3>
                 <h3 className='font-semibold text-2xl'>
                     Done. Confirm if everything is correct and submit your profile.
                 </h3>
@@ -118,12 +128,28 @@ export default function Preview() {
                     <p className='text-sm'> {personal.bio || 'No bio...'} </p>
                 </section>
             </section>
+            
+            { /********* ANOTHER SECTION ***********/ }
+            <section className='my-4 p-2 border border-gray-100 rounded-md'>
+                <h3 className='font-bold pb-2'> Education </h3>
+                <section className=' max-h-[320px] overflow-auto'>
+                {education.length === 0
+                    ? (
+                        <section className='flex justify-center items-center h-[320px]'>
+                            <section className='flex justify-center gap-3 items-center flex-col'>
+                                <FcGraduationCap className='text-[6rem]' />
+                                <h2 className='font-semibold text-md'> No qualifications to show. </h2>
+                            </section>
+                        </section>
+                    )
+                    : listOfQualifications}
+                </section>
+            </section>
 
             { /********* ANOTHER SECTION ***********/ }
-
-            <Separator />
-            <section className='my-4'>
-                <h3 className='font-bold'> Work Experience </h3>
+            <section className='my-4 max-h-[320px] overflow-auto border border-gray-100 rounded-md'>
+                <h3 className='font-bold pb-2'> Work Experience </h3>
+                <section className='max-h-[320px] overflow-auto'>
                 {experience.length === 0
                     ? (
                         <section className='flex justify-center items-center h-[320px]'>
@@ -134,7 +160,9 @@ export default function Preview() {
                         </section>
                     )
                     : listOfExperience}
+                </section>
             </section>
+
             <section className='bg-background fixed left-0 bottom-0 gap-3 p-2 w-full flex'>
                 <Button type='button' onClick={() => router.push('/apply/work-experience')} className='bg-white flex-1' variant='outline'> Back </Button>
                 <Button type='button' className='flex-1 bg-primary' onClick={handleApplicationSubmit}> {loading ? 'Submitting...' : 'Submit'} </Button>
