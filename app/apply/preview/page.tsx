@@ -68,7 +68,7 @@ export default function Preview() {
 
     const listOfQualifications = education.map((item: any, index: number) => (
         <section key={index} className='my-3'>
-            <section className='border border-dashed border-gray p-2'>
+            <section className='border border-dashed text-sm border-gray p-2'>
                 <p> <span className='font-semibold'> {item.school} </span> </p>
                 <p> {(item.endDate && isPast(item.endDate)) ? 'Studied' : 'Studying'} <span className='font-semibold'> {item.fieldOfStudy} </span></p>
                 {isPast(item.endDate) && <p> Graduated on: <span className='font-semibold'> {format(item.endDate, 'MMM y')} </span></p>}
@@ -78,7 +78,7 @@ export default function Preview() {
 
     const listOfExperience = experience.map((item: any, index: number) => (
         <section key={index} className='my-3'>
-            <section className='border border-dashed border-gray p-2'>
+            <section className='border border-dashed text-sm border-gray p-2'>
                 <p className='font-semibold text-md'> {item.company} </p>
                 <p className='text-[darkgray]'> {item.position} </p>
                 <p className='text-[darkgray]'> 
@@ -147,7 +147,7 @@ export default function Preview() {
             </section>
 
             { /********* ANOTHER SECTION ***********/ }
-            <section className='my-4 max-h-[320px] overflow-auto border border-gray-100 rounded-md'>
+            <section className='my-4 p-2 border border-gray-100 rounded-md'>
                 <h3 className='font-bold pb-2'> Work Experience </h3>
                 <section className='max-h-[320px] overflow-auto'>
                 {experience.length === 0
