@@ -11,7 +11,7 @@ import { db } from '../../../firebaseConfig';
 import { useAuth } from '../../../hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import { FcBriefcase, FcGraduationCap } from 'react-icons/fc';
-import { Separator } from '../../../@/components/ui/separator';
+// import { Separator } from '../../../@/components/ui/separator';
 
 export default function Preview() {
     const [loading, setLoading] = React.useState(false);
@@ -28,7 +28,7 @@ export default function Preview() {
 
             if (!(avatar || title || bio || currentUser)) {
                 return;
-            };
+            }
             setLoading(true);
 
             const userRef = doc(db, 'users', currentUser.uid);
@@ -96,17 +96,17 @@ export default function Preview() {
     ));
 
     return (
-        <section>
+        <>
             <section>
                 <h3 className='font-semibold text-md text-muted-foreground'> Preview Profile </h3>
                 <h3 className='font-semibold text-2xl'>
-                    Done. Confirm if everything is correct and submit your profile.
+                    Confirm if everything is correct and submit.
                 </h3>
                 <p className='text-md mb-4'> </p>
             </section>
             <section className='my-4'>
                 <section className='flex gap-3'>
-                    <section className='relative border border-gray rounded-full w-[80px] h-[80px]'>
+                    <section className='relative border border-gray-100 rounded-full w-[80px] h-[80px]'>
                         <Avatar className='w-full h-full'>
                             <AvatarImage src={personal.avatar} alt='My avatar' />
                             <AvatarFallback>
@@ -115,17 +115,18 @@ export default function Preview() {
                                     alt='random image'
                                     width={80}
                                     height={80}
+                                    className='object-cover'
                                 />
                             </AvatarFallback>
                         </Avatar>
                     </section>
                     <section>
                         <h3 className='font-bold'> {names?.firstName} {names?.lastName} </h3>
-                        <p className=''> {personal.title || 'No title...'} </p>
+                        <p className=''> {personal.title || 'No title to show.'} </p>
                     </section>
                 </section>
                 <section className='mt-3'>
-                    <p className='text-sm'> {personal.bio || 'No bio...'} </p>
+                    <p className='text-sm'> {personal.bio || 'No bio to show.'} </p>
                 </section>
             </section>
             
@@ -167,6 +168,6 @@ export default function Preview() {
                 <Button type='button' onClick={() => router.push('/apply/work-experience')} className='bg-white flex-1' variant='outline'> Back </Button>
                 <Button type='button' className='flex-1 bg-primary' onClick={handleApplicationSubmit}> {loading ? 'Submitting...' : 'Submit'} </Button>
             </section>
-        </section>
+        </>
     );
 };
