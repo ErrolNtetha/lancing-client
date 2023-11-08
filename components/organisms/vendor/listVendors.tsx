@@ -12,7 +12,11 @@ export const ListVendors = () => {
 	return (
 		<React.Fragment>
             {!v.length
-                ? <NoContent main='No freelancers found yet.' body='Once freelancers are available, they will appear here.' />
+                ? (
+                    <section className='h-[92vh]'> 
+                        <NoContent main='No freelancers found yet.' body='Once freelancers are available, they will appear here.' />
+                    </section>
+                )
                 : v.map((v: any) => <VendorComponent key={uuidv4()} {...v} {...v.vendor} />)}
 		</React.Fragment>
 	);

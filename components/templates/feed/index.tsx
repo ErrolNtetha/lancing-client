@@ -203,13 +203,14 @@ const ClientUI = () => {
 
                         {isClient && (
                         <Dialog>
-                            <DialogTrigger ref={dialogTriggerRef} className='bg-primary text-white p-2 m-2 font-semibold text-center md:hidden fixed bottom-0 left-0 w-full hover:cursor-pointer'> 
-                                Create New Project
+                            <DialogTrigger ref={dialogTriggerRef} className='bg-background text-white p-2 font-semibold text-center md:hidden fixed bottom-0 left-0 w-full hover:cursor-pointer'> 
+                                <Button className='w-full'>
+                                    Create New Project
+                                </Button>
                             </DialogTrigger>
                             <DialogContent>
                                 <DialogHeader>
-                                    <DialogTitle> Post New Project </DialogTitle>
-                                    <DialogDescription> Create new project by specifying all requirements. </DialogDescription>
+                                    <DialogTitle> New Project </DialogTitle>
                                 </DialogHeader>
                                 <section className='py-4'>
                                     <Form {...form}>
