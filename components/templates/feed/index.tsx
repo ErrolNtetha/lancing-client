@@ -236,7 +236,7 @@ const ClientUI = () => {
                                                 <FormItem>
                                                     <FormLabel htmlFor='description'> Description </FormLabel>
                                                     <FormControl>
-                                                        <Textarea {...field} placeholder='What are you looking for? What are the requirements for this project?' />
+                                                        <Textarea {...field} placeholder='What are the requirements for this project?' />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
