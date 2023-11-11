@@ -6,9 +6,9 @@ export const lists = [
         },
         avatar: null,
         title: 'Logo Designer',
-        cover: '/assets/images/list.png',
+        cover: '/assets/images/veges.jpg',
         category: 'Graphic Designing and Multimedia',
-        isActive: true,
+        isActive: false,
         description: 'I will create custom logo for your company or personal brand.',
         ratings: {
             reviews: [],
