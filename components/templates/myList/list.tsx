@@ -14,5 +14,5 @@ export default function List() {
         />
     ));
 
-    return <section>{allLists}</section>
+    return <section className='flex flex-col gap-3'>{allLists}</section>
 };

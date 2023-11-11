@@ -37,7 +37,7 @@ export const lists = [
         cover: '/assets/images/veges.jpg',
         category: 'Graphic Designing and Multimedia',
         isActive: false,
-        description: 'I will create custom logo for your company or personal brand.',
+        description: 'I will create a fully custom logo for your company or personal brand.',
         ratings: {
             reviews: [],
             rating: 4,
