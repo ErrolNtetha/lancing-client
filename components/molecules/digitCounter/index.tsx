@@ -11,7 +11,7 @@ export const DigitCounter = ({ count, className, absolute = false }: CounterProp
     return (
         <React.Fragment>
             {count > 0 && (
-                <span className={`${absolute && 'absolute'} ${className || 'bg-slate'} flex justify-center items-center rounded-full w-6 h-6 text-white text-sm`}>
+                <span className={`${absolute && 'absolute'} ${className || 'bg-primary'} flex justify-center items-center rounded-full w-6 h-6 text-white text-sm`}>
                     {isMany}
                 </span>
             )}
