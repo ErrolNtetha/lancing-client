@@ -25,7 +25,7 @@ export default function CardList({ cover, isActive, category, description, packa
         <section className='rounded-md text-sm p-3 border border-gray-100'>
             <p className='flex items-center gap-2'> <FiFolder /> <span className='font-bold text-xs'> {category} </span></p>
             <p className='mb-4 mt-2 text-md'> {description} </p>
-            <section className='w-full border border-gray-100'>
+            <section className='w-full border border-gray-500'>
                 <AspectRatio ratio={16/9}>
                     <Image src={cover} fill={true} alt='An image' className='rounded-md object-cover' />
                 </AspectRatio>
