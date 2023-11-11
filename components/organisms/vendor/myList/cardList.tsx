@@ -22,7 +22,7 @@ export default function CardList({ cover, isActive, category, description, packa
     return (
         <section className='rounded-md text-sm p-3 border border-gray-100'>
             <p> In <span className='font-bold text-xs'> {category} </span></p>
-            <p className='my-4 text-md'> {description} </p>
+            <p className='my-4 text-xl'> {description} </p>
             <section className='w-full border border-gray-100'>
                 <AspectRatio ratio={16/9}>
                     <Image src={cover} fill={true} alt='An image' className='rounded-md object-cover' />
