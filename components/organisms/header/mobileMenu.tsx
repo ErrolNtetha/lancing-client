@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import { FiX } from 'react-icons/fi';
 import { DigitCounter } from '../../molecules/digitCounter';
@@ -40,10 +41,11 @@ export const MobileMenu = ({ handleMenuToggle, isClient, auth, displayName, avat
             {auth && (
                 <section className='bg-gray-100 p-2 mb-4 rounded-lg'>
                     <ul className='text-black divide-y divide-slate divide-opacity-10'>
-                        <li className={`flex items-center justify-between  ${totalMessages && 'font-bold'} p-1 hover:bg-opacity-10 hover:cursor-pointer`}> Messages <DigitCounter count={totalMessages} /> </li>
-                        <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Notifications </li>
-                        <li className='flex items-center justify-between p-1 hover:cursor-pointer'> My Projects </li>
-                        <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Offers </li>
+                        <Link href='/messages'><li className={`flex items-center justify-between  ${totalMessages && 'font-bold'} p-1 hover:bg-opacity-10 hover:cursor-pointer`}> Messages <DigitCounter count={totalMessages} /> </li></Link>
+                        {/* <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Notifications </li> */}
+                        {isClient && <Link href='/myprojects'><li className='flex items-center justify-between p-1 hover:cursor-pointer'> My Projects </li></Link>}
+                        {!isClient && <Link href='/mylists'> <li className='flex items-center justify-between p-1 hover:cursor-pointer'> My Lists </li> </Link>}
+                        {!isClient && <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Offers </li>}
                     </ul>
                 </section>
             )}
