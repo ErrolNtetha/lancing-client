@@ -6,7 +6,7 @@ export const lists = [
         },
         avatar: null,
         title: 'Logo Designer',
-        cover: '/assets/images/list.png',
+        cover: '/assets/images/veges.jpg',
         category: 'Programming and software development',
         isActive: true,
         description: 'I will do wireframe, design and develop your website.',
@@ -21,7 +21,7 @@ export const lists = [
                 level: 'premium'
             },
             {
-                price: 89.99,
+                price: 249.99,
                 rate: 'hrly',
                 level: 'basic'
             },
@@ -34,8 +34,8 @@ export const lists = [
         },
         avatar: null,
         title: 'Logo Designer',
-        cover: '/assets/images/veges.jpg',
-        category: 'Graphic Designing and Multimedia',
+        cover: '/assets/images/packageDesign.png',
+        category: 'Graphic designing and multimedia',
         isActive: false,
         description: 'I will create a fully custom logo for your company or personal brand.',
         ratings: {
