@@ -1,9 +1,12 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import Image from 'next/image';
+import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { FiImage } from 'react-icons/fi';
 import { z } from 'zod';
+import { AspectRatio } from '../../../@/components/ui/aspect-ratio';
 import { Button } from '../../../@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../../../@/components/ui/dialog';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../../../@/components/ui/form';
@@ -22,17 +25,56 @@ const listSchema = z.object({
 });
 
 export default function MyList() {
+    const imageRef = useRef<HTMLInputElement | null>(null);
+
     const form = useForm({
-        mode: 'onSubmit',
+        mode: 'onChange',
         resolver: zodResolver(listSchema),
         defaultValues: {
             list: {
                 isActive: true,
                 category: '',
                 description: '',
+                avatar: '',
             }
         }
     });
+    const { list: { avatar } } = form.watch();
+
+    const handleAvatarChange = (e: any) => {
+        const imageUrl = e.target.files[0];
+
+        if (imageUrl) {
+            const reader = new FileReader();
+
+            reader.readAsDataURL(imageUrl);
+            reader.onload = () => {
+                if (reader.result) {
+                    // @ts-ignore
+                    form.setValue('list.avatar', reader.result);
+                }
+            };
+        }
+    }
+
+    const listCoverPhoto = (
+            <>
+                <input
+                    type='file'
+                    onChange={handleAvatarChange}
+                    ref={imageRef}
+                    hidden
+                />
+                <section className='flex flex-col gap-2 justify-center my-4'> 
+                    <section className='w-full border border-gray-100'>
+                        <AspectRatio ratio={16/9}>
+                            <Image src={avatar} fill={true} alt='An image' className='rounded-md object-cover' />
+                        </AspectRatio>
+                    </section>
+                    <Button className='w-full' variant='outline'> Change cover</Button>
+                </section>
+            </>
+    );
 
     const handleAddNewList = (data: any) => console.log('Data: ', data);
 
@@ -102,6 +144,21 @@ export default function MyList() {
                                     )}
                                 />
 
+                            {!avatar 
+                                ? (
+                                    <section>
+                                        <section className='rounded-md bg-background h-44 border border-dashed border-gray-200 flex justify-center items-center'>
+                                            <section className='flex flex-col justfiy-center items-center text-foreground'>
+                                                <span> <FiImage className='text-2xl' /> </span>
+                                                <h2> Cover Photo </h2>
+                                            </section>
+                                        </section>
+                                        <Button className='mt-4 w-full' onClick={() => imageRef.current?.click()} variant='outline'> Upload Cover Photo </Button>
+                                    </section>
+                                )
+                            : listCoverPhoto}
+
+                                <section className='p-2 w-full border border-gray-200 rounded-md'>
                                 <FormField 
                                     control={form.control}
                                     name='list.isActive'
@@ -123,7 +180,7 @@ export default function MyList() {
                                         </FormItem>
                                     )}
                                 />
-
+                                </section>
 
                                 <DialogFooter className='mt-4 w-full flex gap-2'>
                                     <Button type='submit' className='bg-primary flex-1'> Create </Button>
