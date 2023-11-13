@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { Button } from '../../../@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../../../@/components/ui/dialog';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../../../@/components/ui/form';
-import { Input } from '../../../@/components/ui/input';
+// import { Input } from '../../../@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../@/components/ui/select';
 import { Switch } from '../../../@/components/ui/switch';
 import { Textarea } from '../../../@/components/ui/textarea';
@@ -23,6 +23,13 @@ export default function MyList() {
     const form = useForm({
         mode: 'onSubmit',
         resolver: zodResolver(listSchema),
+        defaultValues: {
+            list: {
+                isActive: true,
+                category: '',
+                description: '',
+            }
+        }
     });
 
     const handleAddNewList = (data: any) => console.log('Data: ', data);
@@ -42,7 +49,6 @@ export default function MyList() {
                     <DialogContent>
                         <DialogHeader>
                             <DialogTitle> Add New List </DialogTitle>
-                            <DialogDescription> By default, newly created list will be active. </DialogDescription>
                         </DialogHeader>
                         <section className='py-4'>
                             <Form {...form}>
@@ -80,7 +86,7 @@ export default function MyList() {
                                         <FormItem>
                                             <FormLabel htmlFor='experience.description'> Description </FormLabel>
                                             <FormControl>
-                                                <Textarea {...field} placeholder='I will create a fully custom logo for your company.' />
+                                                <Textarea {...field} placeholder='Ex. &apos;I will create a fully custom logo for your company.&apos;' />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -92,9 +98,12 @@ export default function MyList() {
                                     name='list.isActive'
                                     defaultValue={false}
                                     render={({ field }) => (
-                                        <FormItem className='flex items-center justify-between'>
+                                        <FormItem className='flex justify-between'>
                                             <section>
                                                 <FormLabel className='text-base'> Activate </FormLabel>
+                                                <FormDescription>
+                                                    List is activated on creation by default. You can deactivate this at anytime.
+                                                </FormDescription>
                                             </section>
                                             <FormControl>
                                                 <Switch
@@ -102,16 +111,13 @@ export default function MyList() {
                                                     onCheckedChange={field.onChange}
                                                 />
                                             </FormControl>
-                                            <FormDescription>
-                                                List is activated on creation by default. You can deactivate it at anytime.
-                                            </FormDescription>
                                         </FormItem>
                                     )}
                                 />
 
 
                                 <DialogFooter className='mt-4 w-full flex gap-2'>
-                                    <Button type='submit' className='bg-primary flex-1'> Save </Button>
+                                    <Button type='submit' className='bg-primary flex-1'> Create </Button>
                                 </DialogFooter>
                             </form>
                             </Form>
