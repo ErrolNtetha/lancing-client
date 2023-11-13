@@ -15,7 +15,9 @@ import List from './list';
 
 const listSchema = z.object({
     list: z.object({
+        category: z.string({ required_error: 'This is required.' }),
         description: z.string({ required_error: 'This field is required.' }).min(10, 'Description is too short').max(50, 'Description is too long.'),
+        isActive: z.boolean({ required_error: 'This is required.'}).optional()
     })
 });
 
@@ -48,7 +50,7 @@ export default function MyList() {
                     </DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
-                            <DialogTitle> Add New List </DialogTitle>
+                            <DialogTitle> Create New List </DialogTitle>
                         </DialogHeader>
                         <section className='py-4'>
                             <Form {...form}>
@@ -63,16 +65,23 @@ export default function MyList() {
                                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                 <FormControl>
                                                     <SelectTrigger>
-                                                        <SelectValue placeholder='Select category to add this list from' />
+                                                        <SelectValue placeholder='Select category' />
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent>
                                                     <SelectItem value='Programming and software development'> Programming and software development </SelectItem>
                                                     <SelectItem value='Graphic design and multimedia'> Graphic design and multimedia </SelectItem>
+                                                    <SelectItem value='Writing and translation'> Writing and translation </SelectItem>
+                                                    <SelectItem value='Digital marketing and advertising'>Digital marketing and advertising</SelectItem>
+                                                    <SelectItem value='Business and administrative support'>Business and administrative support</SelectItem>
+                                                    <SelectItem value='Creative and entertainment'>Creative and entertainment</SelectItem>
+                                                    <SelectItem value='Engineering and architecture'>Engineering and architecture</SelectItem>
+                                                    <SelectItem value='Sales and custormer service'>Sales and custormer service</SelectItem>
+                                                    <SelectItem value='Consulting and coaching'>Consulting and coaching</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                             <FormDescription>
-                                                Choose a category you want to add list to.
+                                                Choose a category this list should appear from.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -98,7 +107,7 @@ export default function MyList() {
                                     name='list.isActive'
                                     defaultValue={false}
                                     render={({ field }) => (
-                                        <FormItem className='flex justify-between'>
+                                        <FormItem className='flex justify-between gap-3'>
                                             <section>
                                                 <FormLabel className='text-base'> Activate </FormLabel>
                                                 <FormDescription>

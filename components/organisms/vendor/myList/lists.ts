@@ -21,7 +21,7 @@ export const lists = [
                 level: 'premium'
             },
             {
-                price: 89.99,
+                price: 249.99,
                 rate: 'hrly',
                 level: 'basic'
             },
