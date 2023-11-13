@@ -59,12 +59,6 @@ export default function MyList() {
 
     const listCoverPhoto = (
             <>
-                <input
-                    type='file'
-                    onChange={handleAvatarChange}
-                    ref={imageRef}
-                    hidden
-                />
                 <section className='flex flex-col gap-2 justify-center my-4'> 
                     <section className='w-full border border-gray-100'>
                         <AspectRatio ratio={16/9}>
@@ -143,10 +137,29 @@ export default function MyList() {
                                         </FormItem>
                                     )}
                                 />
-
-                            {!avatar 
-                                ? <Button className='my-3 w-full' type='button' onClick={() => imageRef.current?.click()} variant='outline'> Upload Cover Photo <FiImage /> </Button>
-                                : listCoverPhoto}
+                                <section>
+                                    <input
+                                        type='file'
+                                        onChange={handleAvatarChange}
+                                        ref={imageRef}
+                                        hidden
+                                    />
+                                    {!avatar 
+                                        ? (
+                                            <Button className='my-3 w-full' type='button' onClick={() => imageRef.current?.click()} variant='outline'> 
+                                                Upload Cover Photo <FiImage className='ml-3' /> 
+                                            </Button>
+                                        )
+                                        : (
+                                            <section className='flex flex-col gap-2 justify-center my-4'> 
+                                                <section className='w-full border border-gray-100'>
+                                                    <AspectRatio ratio={16/9}>
+                                                        <Image src={avatar} fill={true} alt='An image' className='rounded-md object-cover' />
+                                                    </AspectRatio>
+                                                </section>
+                                                <Button className='w-full' type='button' variant='outline'> Change Cover </Button>
+                                        </section>)}
+                                    </section>
 
                                 <section className='p-2 w-full border border-gray-200 rounded-md'>
                                 <FormField 
