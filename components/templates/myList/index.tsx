@@ -71,7 +71,7 @@ export default function MyList() {
                             <Image src={avatar} fill={true} alt='An image' className='rounded-md object-cover' />
                         </AspectRatio>
                     </section>
-                    <Button className='w-full' variant='outline'> Change cover</Button>
+                    <Button className='w-full' type='button' variant='outline'> Change Cover </Button>
                 </section>
             </>
     );
@@ -145,18 +145,8 @@ export default function MyList() {
                                 />
 
                             {!avatar 
-                                ? (
-                                    <section>
-                                        <section className='rounded-md bg-background h-44 border border-dashed border-gray-200 flex justify-center items-center'>
-                                            <section className='flex flex-col justfiy-center items-center text-foreground'>
-                                                <span> <FiImage className='text-2xl' /> </span>
-                                                <h2> Cover Photo </h2>
-                                            </section>
-                                        </section>
-                                        <Button className='mt-4 w-full' onClick={() => imageRef.current?.click()} variant='outline'> Upload Cover Photo </Button>
-                                    </section>
-                                )
-                            : listCoverPhoto}
+                                ? <Button className='my-3 w-full' type='button' onClick={() => imageRef.current?.click()} variant='outline'> Upload Cover Photo <FiImage /> </Button>
+                                : listCoverPhoto}
 
                                 <section className='p-2 w-full border border-gray-200 rounded-md'>
                                 <FormField 
