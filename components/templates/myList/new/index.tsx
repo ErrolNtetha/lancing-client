@@ -4,12 +4,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useRef } from 'react';
-import { useForm } from 'react-hook-form';
-import { FiImage } from 'react-icons/fi';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { FiImage, FiPlusCircle } from 'react-icons/fi';
 import { z } from 'zod';
 import { AspectRatio } from '../../../../@/components/ui/aspect-ratio';
 import { Button } from '../../../../@/components/ui/button';
-import { DialogFooter } from '../../../../@/components/ui/dialog';
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '../../../../@/components/ui/dialog';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../../../../@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../../@/components/ui/select';
 import { Switch } from '../../../../@/components/ui/switch';
@@ -21,6 +21,7 @@ const listSchema = z.object({
         description: z.string({ required_error: 'This field is required.' }).min(30, 'Description is too short').max(130, 'Description is too long.'),
         isActive: z.boolean({ required_error: 'This is required.'}).optional(),
         avatar: z.string({ required_error: 'This is required.' }),
+        packages: z.array(z.object({ value: z.string(), tier: z.string(), price: z.number(), description: z.string() })).length(3).nonempty({ message: 'At least add one package.' }),
     })
 });
 
@@ -36,9 +37,36 @@ export default function NewList() {
                 category: '',
                 description: '',
                 avatar: '',
+                packages: [
+                    {
+                        value: 'basic',
+                        tier: 'Basic',
+                        price: 0,
+                        description: '',
+                    },
+                    {
+                        value: 'standard',
+                        tier: 'Standard',
+                        price: 0,
+                        description: '',
+                    },
+                    {
+                        value: 'premium',
+                        tier: 'Premium',
+                        price: 0,
+                        description: '',
+                    },
+                ],
             }
         }
     });
+
+    const { control } = form;
+    const { fields, append } = useFieldArray({
+        control,
+        name: 'list.packages'
+    });
+    console.log('Fields: ', fields);
 
     const handleAvatarChange = (e: any) => {
         const imageUrl = e.target.files[0];
@@ -62,7 +90,7 @@ export default function NewList() {
     return (
         <section className='m-3'>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(handleAddNewList)} className='flex flex-col gap-3'>
+                <form onSubmit={form.handleSubmit(handleAddNewList)} className='flex flex-col gap-4'>
                     <section>
                         <input
                             type='file'
@@ -138,6 +166,41 @@ export default function NewList() {
                 )}
             />
 
+            <section>
+                <label htmlFor="package"> Packages </label>
+                {fields.map((field, index) => (
+                <Dialog key={field.id}>
+                    <DialogTrigger asChild> 
+                        <Button variant='outline' className='mb-3 font-semibold w-full bg-background text-foreground flex items-center justify-between gap-2'>
+                            Add {field.tier} Package <FiPlusCircle className='text-lg' />
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle> {field.tier} Package </DialogTitle>
+                        </DialogHeader>
+                        <section>
+                                <FormField
+                                    key={field.id}
+                                    control={form.control}
+                                    name={`list.packages.${index}.description`}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel htmlFor='list.description'> Description </FormLabel>
+                                            <FormControl>
+                                                <Textarea {...field} placeholder='Ex. &apos;I will create a fully custom logo for your company.&apos;' />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                        </section>
+                    </DialogContent>
+                </Dialog>
+                ))}
+                <FormMessage />
+            </section>
+
             <section className='p-2 w-full border border-gray-200 rounded-md'>
                 <FormField 
                     control={form.control}
@@ -161,7 +224,8 @@ export default function NewList() {
                     )}
                 />
             </section>
-            <section className='mt-4 w-full flex  gap-2'>
+
+            <section className='fixed bottom-0 left-0 p-2 bg-background w-full flex gap-2'>
                 <Button variant='outline' className='flex-1' asChild>
                     <Link href='/mylistings'> Back </Link>
                 </Button>
