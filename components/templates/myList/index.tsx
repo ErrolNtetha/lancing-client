@@ -57,19 +57,6 @@ export default function MyList() {
         }
     }
 
-    const listCoverPhoto = (
-            <>
-                <section className='flex flex-col gap-2 justify-center my-4'> 
-                    <section className='w-full border border-gray-100'>
-                        <AspectRatio ratio={16/9}>
-                            <Image src={avatar} fill={true} alt='An image' className='rounded-md object-cover' />
-                        </AspectRatio>
-                    </section>
-                    <Button className='w-full' type='button' variant='outline'> Change Cover </Button>
-                </section>
-            </>
-    );
-
     const handleAddNewList = (data: any) => console.log('Data: ', data);
 
     return (
@@ -91,6 +78,33 @@ export default function MyList() {
                         <section className='py-4'>
                             <Form {...form}>
                             <form onSubmit={form.handleSubmit(handleAddNewList)} className='flex flex-col gap-3'>
+                                <section>
+                                    <input
+                                        type='file'
+                                        onChange={handleAvatarChange}
+                                        ref={imageRef}
+                                        hidden
+                                    />
+                                    {!avatar 
+                                        ? (
+                                            <>
+                                                <Button className='my-3 w-full' type='button' onClick={() => imageRef.current?.click()} variant='outline'> 
+                                                    Upload Cover Photo <FiImage className='ml-2' /> 
+                                                </Button>
+                                            </>
+                                        )
+                                        : (
+                                            <section className='flex flex-col gap-2 justify-center my-4'> 
+                                                <section className='w-full border border-gray-100'>
+                                                    <AspectRatio ratio={16/9}>
+                                                        <Image src={avatar} fill={true} alt='An image' className='rounded-md object-cover' />
+                                                    </AspectRatio>
+                                                </section>
+                                                <Button className='w-full' type='button' onClick={() => imageRef.current?.click()} variant='outline'> Change Cover Photo </Button>
+                                            </section>
+                                    )}
+                                    <p className='block text-gray-500'> Recommended size is 1280x720 </p>
+                                </section>
 
                                 <FormField
                                     control={form.control}
@@ -137,30 +151,6 @@ export default function MyList() {
                                         </FormItem>
                                     )}
                                 />
-                                <section>
-                                    <input
-                                        type='file'
-                                        onChange={handleAvatarChange}
-                                        ref={imageRef}
-                                        hidden
-                                    />
-                                    {!avatar 
-                                        ? (
-                                            <Button className='my-3 w-full' type='button' onClick={() => imageRef.current?.click()} variant='outline'> 
-                                                Upload Cover Photo <FiImage className='ml-3' /> 
-                                            </Button>
-                                        )
-                                        : (
-                                            <section className='flex flex-col gap-2 justify-center my-4'> 
-                                                <section className='w-full border border-gray-100'>
-                                                    <AspectRatio ratio={16/9}>
-                                                        <Image src={avatar} fill={true} alt='An image' className='rounded-md object-cover' />
-                                                    </AspectRatio>
-                                                </section>
-                                                <Button className='w-full' type='button' onClick={() => imageRef.current?.click()} variant='outline'> Change Cover Photo </Button>
-                                            </section>
-                                    )}
-                                </section>
 
                                 <section className='p-2 w-full border border-gray-200 rounded-md'>
                                 <FormField 
