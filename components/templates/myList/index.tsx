@@ -157,7 +157,7 @@ export default function MyList() {
                                                         <Image src={avatar} fill={true} alt='An image' className='rounded-md object-cover' />
                                                     </AspectRatio>
                                                 </section>
-                                                <Button className='w-full' type='button' variant='outline'> Change Cover </Button>
+                                                <Button className='w-full' type='button' onClick={() => imageRef.current?.click()} variant='outline'> Change Cover Photo </Button>
                                         </section>)}
                                     </section>
 
