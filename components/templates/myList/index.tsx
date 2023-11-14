@@ -158,8 +158,9 @@ export default function MyList() {
                                                     </AspectRatio>
                                                 </section>
                                                 <Button className='w-full' type='button' onClick={() => imageRef.current?.click()} variant='outline'> Change Cover Photo </Button>
-                                        </section>)}
-                                    </section>
+                                            </section>
+                                    )}
+                                </section>
 
                                 <section className='p-2 w-full border border-gray-200 rounded-md'>
                                 <FormField 
