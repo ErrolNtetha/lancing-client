@@ -24,7 +24,7 @@ export const VendorComponent = ({
                         <Avatar
                             src='/assets/images/errol.png'
                             alt={`${names.firstName}&apos;s avatar`}
-                            size='w-13 h-13'
+                            size='w-14 h-14'
                         />
                         <section>
                             <Link href={`/vendors/${id}`} className='text-md md:text-lg font-semibold'>{names.firstName} {names.lastName} </Link>
