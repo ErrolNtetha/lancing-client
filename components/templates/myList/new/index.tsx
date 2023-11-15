@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { doc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -97,6 +97,7 @@ export default function NewList() {
     const handleAddNewList = async (data: any) => {
         const { list: { cover } } = data;
         const userRef = doc(db, 'users', currentUser.uid);
+        const listCollectionRef = collection(db, 'lists');
 
         try {
             const res = await fetch('/api/mylistings/new', {
@@ -109,15 +110,14 @@ export default function NewList() {
 
             const coverUrl = await res.json();
             const formData = {
-                list: {
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                    ...data.list,
-                    cover: coverUrl.response,
-                }
+                author: userRef,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                ...data.list,
+                cover: coverUrl.response,
             };
 
-            await setDoc(userRef, formData, { merge: true });
+            await addDoc(listCollectionRef, formData);
             router.push('/mylistings');
         } catch (error) {
             console.log('error: ', error);
@@ -206,11 +206,10 @@ export default function NewList() {
             />
 
             <section>
-                <label htmlFor="package" className='py-6 font-medium'> Packages </label>
+                <label htmlFor="package" className='py-6 font-normal text-sm'> Packages </label>
 
                 {fields.map((field, index) => (
                 <Dialog key={field.id}>
-
                     <DialogTrigger asChild> 
                         <section>
                             {field.price > 0 && (
@@ -218,7 +217,7 @@ export default function NewList() {
                                     <section className='mb-6'>
                                         <h1 className='font-bold text-sm text-gray-500'>{field.tier} Package </h1>
                                         <h1 className='font-bold'> This includes: </h1>
-                                        <p className='whitespace-pre-wrap'> {field.description} </p>
+                                        <p className='text-sm whitespace-pre-wrap'> {field.description} </p>
                                     </section>
                                     <span className='mt-4'>
                                         <h6 className='font-bold text-sm text-gray-600'> PRICE </h6>
