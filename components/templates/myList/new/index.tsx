@@ -89,7 +89,7 @@ export default function NewList() {
     const handleAddNewList = (data: any) => console.log('Data: ', data);
 
     return (
-        <section className='m-3 pb-8'>
+        <section className='m-3 pb-12'>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(handleAddNewList)} className='flex flex-col gap-4'>
                     <section>
@@ -176,7 +176,7 @@ export default function NewList() {
                     <DialogTrigger asChild> 
                         <section>
                             {field.price > 0 && (
-                                <section className='mb-4 rounded-md border border-gray-500 p-2'>
+                                <section className='mb-4 rounded-md border border-gray-300 p-2'>
                                     <section className='mb-6'>
                                         <h1 className='font-bold text-sm text-gray-500'>{field.tier} Package </h1>
                                         <h1 className='font-bold'> This includes: </h1>
