@@ -1,9 +1,9 @@
-import { collection, doc, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query } from 'firebase/firestore';
 import React from 'react';
 import { db } from '../../../firebaseConfig';
-import { useAuth } from '../../../hooks/useAuth';
+// import { useAuth } from '../../../hooks/useAuth';
 import CardList from '../../organisms/vendor/myList/cardList';
-import { lists } from '../../organisms/vendor/myList/lists';
+// import { lists } from '../../organisms/vendor/myList/lists';
 
 export default function List() {
     const [allList, setAllLists] = React.useState<any>([]);

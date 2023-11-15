@@ -206,11 +206,10 @@ export default function NewList() {
             />
 
             <section>
-                <label htmlFor="package" className='py-6 font-medium'> Packages </label>
+                <label htmlFor="package" className='py-6 font-normal text-sm'> Packages </label>
 
                 {fields.map((field, index) => (
                 <Dialog key={field.id}>
-
                     <DialogTrigger asChild> 
                         <section>
                             {field.price > 0 && (
@@ -218,7 +217,7 @@ export default function NewList() {
                                     <section className='mb-6'>
                                         <h1 className='font-bold text-sm text-gray-500'>{field.tier} Package </h1>
                                         <h1 className='font-bold'> This includes: </h1>
-                                        <p className='whitespace-pre-wrap'> {field.description} </p>
+                                        <p className='text-sm whitespace-pre-wrap'> {field.description} </p>
                                     </section>
                                     <span className='mt-4'>
                                         <h6 className='font-bold text-sm text-gray-600'> PRICE </h6>
