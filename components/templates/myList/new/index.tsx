@@ -183,7 +183,7 @@ export default function NewList() {
                                         <p className='text-pre-wrap'> {field.description} </p>
                                     </section>
                                     <span className='mt-4'>
-                                        <h6 className='font-bold text-sm text-gray-600'> STARTING FROM </h6>
+                                        <h6 className='font-bold text-sm text-gray-600'> PRICE </h6>
                                         <h2 className='flex font-bold'> 
                                             <span className='text-sm'> R </span> 
                                             <span className='text-2xl'>{formatAmount(field.price)}<span className='text-sm'>/hr</span> </span>
