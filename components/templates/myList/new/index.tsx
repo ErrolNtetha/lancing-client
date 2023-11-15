@@ -11,9 +11,11 @@ import { AspectRatio } from '../../../../@/components/ui/aspect-ratio';
 import { Button } from '../../../../@/components/ui/button';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '../../../../@/components/ui/dialog';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../../../../@/components/ui/form';
+import { Input } from '../../../../@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../../@/components/ui/select';
 import { Switch } from '../../../../@/components/ui/switch';
 import { Textarea } from '../../../../@/components/ui/textarea';
+import { formatAmount } from '../../../../utilities/format';
 
 const listSchema = z.object({
     list: z.object({
@@ -21,7 +23,7 @@ const listSchema = z.object({
         description: z.string({ required_error: 'This field is required.' }).min(30, 'Description is too short').max(130, 'Description is too long.'),
         isActive: z.boolean({ required_error: 'This is required.'}).optional(),
         avatar: z.string({ required_error: 'This is required.' }),
-        packages: z.array(z.object({ value: z.string(), tier: z.string(), price: z.number(), description: z.string() })).length(3).nonempty({ message: 'At least add one package.' }),
+        packages: z.array(z.object({ value: z.string(), tier: z.string(), price: z.coerce.number(), description: z.string() })).length(3).nonempty({ message: 'At least add one package.' }),
     })
 });
 
@@ -62,11 +64,10 @@ export default function NewList() {
     });
 
     const { control } = form;
-    const { fields, append } = useFieldArray({
+    const { fields, update } = useFieldArray({
         control,
         name: 'list.packages'
     });
-    console.log('Fields: ', fields);
 
     const handleAvatarChange = (e: any) => {
         const imageUrl = e.target.files[0];
@@ -82,13 +83,13 @@ export default function NewList() {
                 }
             };
         }
-    }
+    };
 
     const { list: { avatar } } = form.watch();
     const handleAddNewList = (data: any) => console.log('Data: ', data);
 
     return (
-        <section className='m-3'>
+        <section className='m-3 mb-8'>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(handleAddNewList)} className='flex flex-col gap-4'>
                     <section>
@@ -167,13 +168,35 @@ export default function NewList() {
             />
 
             <section>
-                <label htmlFor="package"> Packages </label>
+                <label htmlFor="package" className='py-2'> Packages </label>
+
                 {fields.map((field, index) => (
                 <Dialog key={field.id}>
+
                     <DialogTrigger asChild> 
-                        <Button variant='outline' className='mb-3 font-semibold w-full bg-background text-foreground flex items-center justify-between gap-2'>
-                            Add {field.tier} Package <FiPlusCircle className='text-lg' />
-                        </Button>
+                        <section>
+                            {field.price > 0 && (
+                                <section className='mb-4 rounded-md border border-gray-200 p-2'>
+                                    <section className='mb-6'>
+                                        <h1 className='font-bold text-sm text-gray-500'>{field.tier}</h1>
+                                        <h1 className='font-bold'> What you get: </h1>
+                                        <p> {field.description} </p>
+                                    </section>
+                                    <span className='mt-4'>
+                                        <h6 className='font-bold text-sm text-gray-600'> STARTING FROM </h6>
+                                        <h2 className='flex font-bold'> 
+                                            <span className='text-sm'> R </span> 
+                                            <span className='text-2xl'>{formatAmount(field.price)}<span className='text-sm'>/hr</span> </span>
+                                        </h2>
+                                    </span>
+                                </section>
+                        )}
+                        {!field.price && (
+                            <Button variant='outline' className='mb-3 font-semibold w-full bg-background text-foreground flex items-center justify-between gap-2'>
+                                Add {field.tier} Package <FiPlusCircle className='text-lg' />
+                            </Button>
+                        )}
+                    </section>
                     </DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
@@ -181,20 +204,35 @@ export default function NewList() {
                         </DialogHeader>
                         <section>
                                 <FormField
-                                    key={field.id}
+                                    control={form.control}
+                                    name={`list.packages.${index}.price`}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel htmlFor={`list.packages.${index}.price`}> Price </FormLabel>
+                                            <FormControl>
+                                                <Input {...field} type='number' placeholder='Price per hour' />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
                                     control={form.control}
                                     name={`list.packages.${index}.description`}
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor='list.description'> Description </FormLabel>
+                                            <FormLabel htmlFor={`list.packages.${index}.description`}> Description </FormLabel>
                                             <FormControl>
-                                                <Textarea {...field} placeholder='Ex. &apos;I will create a fully custom logo for your company.&apos;' />
+                                                <Textarea {...field} placeholder='What are you offering in this package?' />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
                                     )}
                                 />
                         </section>
+                        <DialogFooter>
+                            <Button onClick={() => update(index, form.watch(`list.packages.${index}`))}> Add </Button>
+                        </DialogFooter>
                     </DialogContent>
                 </Dialog>
                 ))}
