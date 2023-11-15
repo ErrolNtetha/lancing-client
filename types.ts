@@ -34,9 +34,8 @@ export type VendorProps = {
         lastName: string;
     },
     avatar: string;
-    title: string;
-    rating: number;
-    bio: string;
+    cover: any;
+    description: string;
     id: string;
     approved: {
         isApproved: boolean;
