@@ -1,8 +1,10 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { doc, setDoc } from 'firebase/firestore';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { FiImage, FiPlusCircle } from 'react-icons/fi';
@@ -15,6 +17,8 @@ import { Input } from '../../../../@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../../@/components/ui/select';
 import { Switch } from '../../../../@/components/ui/switch';
 import { Textarea } from '../../../../@/components/ui/textarea';
+import { db } from '../../../../firebaseConfig';
+import { useAuth } from '../../../../hooks/useAuth';
 import { formatAmount } from '../../../../utilities/format';
 
 const listSchema = z.object({
@@ -22,13 +26,16 @@ const listSchema = z.object({
         category: z.string({ required_error: 'This is required.' }),
         description: z.string({ required_error: 'This field is required.' }).min(30, 'Description is too short').max(130, 'Description is too long.'),
         isActive: z.boolean({ required_error: 'This is required.'}).optional(),
-        avatar: z.string({ required_error: 'This is required.' }),
+        cover: z.string({ required_error: 'This is required.' }),
         packages: z.array(z.object({ value: z.string(), tier: z.string(), price: z.coerce.number(), description: z.string() })).length(3).nonempty({ message: 'At least add one package.' }),
     })
 });
 
 export default function NewList() {
+    const [loading, setLoading] = React.useState(true);
     const imageRef = useRef<HTMLInputElement | null>(null);
+    const router = useRouter();
+    const { currentUser } = useAuth();
 
     const form = useForm({
         mode: 'onChange',
@@ -38,7 +45,7 @@ export default function NewList() {
                 isActive: true,
                 category: '',
                 description: '',
-                avatar: '',
+                cover: '',
                 packages: [
                     {
                         value: 'basic',
@@ -79,14 +86,45 @@ export default function NewList() {
             reader.onload = () => {
                 if (reader.result) {
                     // @ts-ignore
-                    form.setValue('list.avatar', reader.result);
+                    form.setValue('list.cover', reader.result);
                 }
             };
         }
     };
 
-    const { list: { avatar } } = form.watch();
-    const handleAddNewList = (data: any) => console.log('Data: ', data);
+    const { list: { cover } } = form.watch();
+
+    const handleAddNewList = async (data: any) => {
+        const { list: { cover } } = data;
+        const userRef = doc(db, 'users', currentUser.uid);
+
+        try {
+            const res = await fetch('/api/mylistings/new', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ cover })
+            });
+
+            const coverUrl = await res.json();
+            const formData = {
+                list: {
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                    ...data.list,
+                    cover: coverUrl.response,
+                }
+            };
+
+            await setDoc(userRef, formData, { merge: true });
+            router.push('/mylistings');
+        } catch (error) {
+            console.log('error: ', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <section className='m-3 pb-12'>
@@ -99,7 +137,7 @@ export default function NewList() {
                             ref={imageRef}
                             hidden
                         />
-                        {!avatar 
+                        {!cover
                             ? (
                                 <>
                                     <Button className='my-3 w-full' type='button' onClick={() => imageRef.current?.click()} variant='outline'> 
@@ -111,7 +149,7 @@ export default function NewList() {
                                 <section className='flex flex-col gap-2 justify-center my-4'> 
                                     <section className='w-full border border-gray-100'>
                                         <AspectRatio ratio={16/9}>
-                                            <Image src={avatar} fill={true} alt='An image' className='rounded-md object-cover' />
+                                            <Image src={cover} fill={true} alt='An image' className='rounded-md object-cover' />
                                         </AspectRatio>
                                     </section>
                                     <Button className='w-full' type='button' onClick={() => imageRef.current?.click()} variant='outline'> Change Cover Photo </Button>
@@ -168,7 +206,7 @@ export default function NewList() {
             />
 
             <section>
-                <label htmlFor="package" className='py-4 font-lightbold'> Packages </label>
+                <label htmlFor="package" className='py-6 font-medium'> Packages </label>
 
                 {fields.map((field, index) => (
                 <Dialog key={field.id}>
@@ -180,7 +218,7 @@ export default function NewList() {
                                     <section className='mb-6'>
                                         <h1 className='font-bold text-sm text-gray-500'>{field.tier} Package </h1>
                                         <h1 className='font-bold'> This includes: </h1>
-                                        <p className='text-pre-wrap'> {field.description} </p>
+                                        <p className='whitespace-pre-wrap'> {field.description} </p>
                                     </section>
                                     <span className='mt-4'>
                                         <h6 className='font-bold text-sm text-gray-600'> PRICE </h6>
@@ -192,7 +230,7 @@ export default function NewList() {
                                 </section>
                         )}
                         {!field.price && (
-                            <Button variant='outline' className='mb-3 font-semibold w-full bg-background text-foreground flex items-center justify-between gap-2'>
+                            <Button variant='outline' type='button' className='mb-3 font-semibold w-full bg-background text-foreground flex items-center justify-between gap-2'>
                                 Add {field.tier} Package <FiPlusCircle className='text-lg' />
                             </Button>
                         )}
@@ -231,7 +269,7 @@ export default function NewList() {
                                 />
                         </section>
                         <DialogFooter>
-                            <Button onClick={() => update(index, form.watch(`list.packages.${index}`))}> Add </Button>
+                            <Button type='button' onClick={() => update(index, form.watch(`list.packages.${index}`))}> Add </Button>
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>
