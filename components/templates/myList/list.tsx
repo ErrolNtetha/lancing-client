@@ -1,11 +1,30 @@
+import { collection, doc, getDocs, query, where } from 'firebase/firestore';
 import React from 'react';
+import { db } from '../../../firebaseConfig';
+import { useAuth } from '../../../hooks/useAuth';
 import CardList from '../../organisms/vendor/myList/cardList';
 import { lists } from '../../organisms/vendor/myList/lists';
 
 export default function List() {
-    const allLists = lists.map((item, index) => (
+    const [allList, setAllLists] = React.useState<any>([]);
+
+    React.useEffect(() => {
+        const q = query(collection(db, 'lists'))
+
+        async function getLists() {
+            const querySnapshot = await getDocs(q);
+
+            querySnapshot.forEach((doc) => {
+                setAllLists([{ ...doc.data(), id: doc.id }]);
+            });
+        }
+
+        getLists();
+    }, []);
+
+    const allLists = allList.map((item: any) => (
         <CardList 
-            key={index}
+            key={item.id}
             cover={item.cover}
             category={item.category}
             description={item.description}
