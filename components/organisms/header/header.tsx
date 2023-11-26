@@ -15,14 +15,14 @@ import { auth, db } from '../../../firebaseConfig';
 import { DigitCounter } from '../../molecules/digitCounter';
 import { collection, getDocs } from 'firebase/firestore';
 import { useProfileStore } from '../../../hooks/useGlobalStore';
-import { FiAlignRight } from 'react-icons/fi';
+import { FiAlignRight, FiBell } from 'react-icons/fi';
 import { Button } from '../../../@/components/ui/button';
 
 export const Header = () => {
     const [nav, setNav] = useState(false);
     const [proposals, setProposals] = useState([]);
     const p: any = [];
-    const { vision, profile: { isClient }, clearProfile } = useProfileStore();
+    const { profile, clearProfile } = useProfileStore();
     const router = useRouter();
     const { currentUser } = useAuth();
     // const  header = useProfileStore((state) => state.header);
@@ -61,40 +61,91 @@ export const Header = () => {
     }, []);
 
     return (
-        <header className='md:container flex shadow divide-solid divide-gray bg-background sticky top-0 z-10 justify-between transition-all duration-200 items-center w-full h-[8vh]'>
-            <section className='px-4 w-full h-full flex z-10 justify-between items-center'>
-                <Link href='/'>
-                    <Image src='/assets/images/svg/blackLogo.svg' alt='Company logo' className='fill-current text-black' width={80} height={20} />
+        <header className='flex shadow divide-solid divide-gray bg-background sticky top-0 z-10 justify-between transition-all duration-200 items-center w-full h-[8vh]'>
+            <section className='container px-4 w-full h-full flex z-10 justify-between items-center'>
+                <Link href={currentUser ? '/feed' : '/'} className='max-w-full'>
+                    <Image src='/assets/images/svg/blackLogo.svg' alt='Company logo' className='fill-current text-white' width={120} height={120} />
                 </Link>
-                <section className='hidden md:flex ml-auto'>
-                    <ul className='p-0 md:flex'>
-                        <li className='ml-4 mr-4' >
-                            <Link className='block w-full' href='/feed'>Home</Link>
-                        </li>
-                        <li className='ml-4 mr-4'>
-                            <Link className='block w-full' href='/blog'>Blog</Link>
-                        </li>
-                        <li className='ml-4 mr-4'>
-                            <Link href='/contact'>Contact</Link>
-                        </li>
-                        <li className='ml-4 mr-4'>
-                            <Link href='/about'>About</Link>
-                        </li>
-                        <li className='ml-4 mr-4'>
-                            <Link href='/faq'>FAQ</Link>
-                        </li>
-                    </ul>
-                </section>
-                <section className='relative p-2 hover:cursor-pointer gap-2'>
-                    {isClient && <DigitCounter count={proposals.length} className='bg-[red] pointer-events-none top-0 right-0' absolute={true} />}
-                    <FiAlignRight onClick={() => setNav(!nav)} className='text-[1.8rem] block md:hidden transition duration-200 ease-in-out' />
+                    {!currentUser && (
+                        <section className='hidden md:flex ml-auto'>
+                            <ul className='p-0 md:flex'>
+                                <li className='ml-4 mr-4' >
+                                    <Link className='block w-full' href='/feed'>Home</Link>
+                                </li>
+                                <li className='ml-4 mr-4'>
+                                    <Link className='block w-full' href='/blog'>Blog</Link>
+                                </li>
+                                <li className='ml-4 mr-4'>
+                                    <Link href='/contact'>Contact</Link>
+                                </li>
+                                <li className='ml-4 mr-4'>
+                                    <Link href='/about'>About</Link>
+                                </li>
+                                <li className='ml-4 mr-4'>
+                                    <Link href='/faq'>FAQ</Link>
+                                </li>
+                            </ul>
+                        </section>
+                )}
+                {currentUser && !profile.isClient
+                    ? (
+                        <section className='hidden md:flex ml-auto'>
+                            <ul className='p-0 md:flex'>
+                                <li className='ml-4 mr-4' >
+                                    <Link className='w-full flex items-center gap-2' href='/messages'> 
+                                        Messages 
+                                        <DigitCounter count={6} className='bg-[red] pointer-events-none' />
+                                    </Link>
+                                </li>
+                                <li className='ml-4 mr-4'>
+                                    <Link className='w-full flex items-center gap-2' href='/offers'>
+                                        Offers 
+                                        <DigitCounter count={2} className='bg-[red] pointer-events-none' />
+                                    </Link>
+                                </li>
+                                <li className='ml-4 mr-4'>
+                                    <Link href='/mylistings'> My Lists </Link>
+                                </li>
+                            </ul>
+                        </section>
+                )
+                : (
+                        <section className='hidden md:flex ml-auto'>
+                            <ul className='p-0 md:flex'>
+                                <li className='ml-4 mr-4' >
+                                    <Link className='w-full flex items-center gap-2' href='/messages'> 
+                                        Messages 
+                                        <DigitCounter count={6} className='bg-[red] pointer-events-none' />
+                                    </Link>
+                                </li>
+                                <li className='ml-4 mr-4'>
+                                    <Link className='w-full flex items-center gap-2' href='/offers'>
+                                        Offers 
+                                        <DigitCounter count={2} className='bg-[red] pointer-events-none' />
+                                    </Link>
+                                </li>
+                                <li className='ml-4 mr-4'>
+                                    <Link href='/mylistings'> My Projects </Link>
+                                </li>
+                            </ul>
+                        </section>
+                )}
+                <section className='flex items-center gap-2'>
+                    <section className='relative p-2 hover:cursor-pointer md:hidden gap-2'>
+                        <DigitCounter count={2} className='bg-[red] pointer-events-none top-0 right-0 md:hidden' absolute={true} />
+                        <FiBell className='text-[1.8rem] block' />
+                    </section>
+                    <section className='relative p-2 hover:cursor-pointer gap-2'>
+                        {profile?.isClient && <DigitCounter count={proposals.length} className='bg-[red] pointer-events-none top-0 right-0' absolute={true} />}
+                        <FiAlignRight onClick={() => setNav(!nav)} className='text-[1.8rem] block md:hidden transition duration-200 ease-in-out' />
+                    </section>
                 </section>
                 <span className='hidden md:block ml-4'> 
                     {currentUser
                         ? <UserHead 
-                           avatar={currentUser?.avatar} 
-                            displayName={currentUser?.displayName} 
-                            isClient={isClient}
+                           avatar={profile?.avatar} 
+                            names={profile?.names} 
+                            isClient={profile?.isClient}
                             /> 
                         : <LoginButton />} 
                 </span>
@@ -102,10 +153,10 @@ export const Header = () => {
                     <section className='fixed bg-primary top-0 left-0 bottom-0 w-full'>
                         <MobileMenu
                             auth={currentUser}
-                            email={currentUser?.email}
-                            isClient={isClient}
-                            avatar={currentUser?.avatar}
-                            displayName={currentUser?.displayName}
+                            email={profile?.email}
+                            isClient={profile?.isClient}
+                            avatar={profile?.avatar}
+                            name={profile?.names}
                             handleMenuToggle={() => setNav(!nav)}
                             totalMessages={proposals.length}
                         />

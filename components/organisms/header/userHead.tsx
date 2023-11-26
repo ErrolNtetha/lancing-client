@@ -3,11 +3,14 @@ import { Avatar } from '../../molecules/image';
 
 type UserHeadProps = {
     avatar: string;
-    displayName: string;
+    names: {
+        firstName: string;
+        lastName: string;
+    }
     isClient: boolean;
 }
 
-export const UserHead = ({ avatar, displayName, isClient }: UserHeadProps) => {
+export const UserHead = ({ avatar, names, isClient }: UserHeadProps) => {
     const accountType = isClient ? 'Client Account' : 'Freelancer Account';
 
     return (
@@ -18,7 +21,7 @@ export const UserHead = ({ avatar, displayName, isClient }: UserHeadProps) => {
                 alt='My avatar'
             />
             <span className='flex-col align-center justify-center gap-2'>
-                <h6 className='text-sm font-bold'> {displayName} </h6>
+                <h6 className='text-sm font-bold'> {names.firstName} {names.lastName} </h6>
                 <p className='text-sm font-semibold text-[green]'> {accountType} </p>
             </span>
         </section>
