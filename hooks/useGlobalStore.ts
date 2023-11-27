@@ -137,8 +137,8 @@ export const useExperienceStore: any = create(
 
 export const usePortfolioStore: any = create(
     (set: any) => ({
-        portfolio: [],
-        addPortfolio: (portfolio: any) => set((state: any) => ({ portfolio: [...state.portfolio, { ...portfolio }] })),
+        portfolios: [],
+        addPortfolio: (experience: any) => set((state: any) => ({ experience: [...state.experience, experience ] })),
     })
 );
 
@@ -148,3 +148,4 @@ export const useVendorExperienceStore: any = create(
         addVendorExperience: (experience: any) => set((state: any) => ({ experience: [...state.experience, experience ] })),
     })
 );
+
