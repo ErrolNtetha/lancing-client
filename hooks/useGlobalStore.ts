@@ -100,12 +100,12 @@ const myProfile: Profile = {
 export const useProfileStore: any = create(
     persist(
         (set: any) => ({
-            profile: {},
+            profile: null,
             addProfile: (user: Profile) => set(() => ({ profile: user })),
             clearProfile: () => set({ profile: {} }),
         }),
         {
-            name: 'profile-storage-dueple',
+            name: 'profile-storage-tedcrunch',
         }
     )
 );
@@ -137,8 +137,8 @@ export const useExperienceStore: any = create(
 
 export const usePortfolioStore: any = create(
     (set: any) => ({
-        portfolio: [],
-        addPortfolio: (portfolio: any) => set((state: any) => ({ portfolio: [...state.portfolio, { ...portfolio }] })),
+        portfolios: [],
+        addPortfolio: (experience: any) => set((state: any) => ({ experience: [...state.experience, experience ] })),
     })
 );
 
@@ -148,3 +148,4 @@ export const useVendorExperienceStore: any = create(
         addVendorExperience: (experience: any) => set((state: any) => ({ experience: [...state.experience, experience ] })),
     })
 );
+
