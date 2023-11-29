@@ -43,9 +43,6 @@ const Portfolio = () => {
     const form = useForm({
         mode: 'onSubmit',
         resolver: zodResolver(experienceSchema),
-        defaultValues: {
-            portfolios,
-        }
     });
     const { control } = form;
     const router = useRouter();
@@ -67,17 +64,18 @@ const Portfolio = () => {
             reader.onload = () => {
                 if (reader.result) {
                     // @ts-ignore
-                    form.setValue('portfolios.cover', reader.result);
+                    form.setValue('portfolio.cover', reader.result);
                 }
             };
         }
     };
 
-    const { portfolios: { cover } } = form.watch();
+    const { portfolio } = form.watch();
 
-    console.log('Errors: ', form.formState.errors);
+    // console.log('Errors: ', form.formState.errors);
     
-    const handlePortfolio = (data: any) => {
+    const handlePortfolio = (data: z.infer<typeof experienceSchema>) => {
+        append({ ...form.watch().portfolio });
         console.log('Portfolio data: ', data);
         return; 
 
@@ -97,7 +95,7 @@ const Portfolio = () => {
         }
     };
  
-    const listOfWorkExperience = portfolios.map((item: any, index: number) => (
+    const listOfWorkExperience = fields.map((item: any, index: number) => (
             <section className='border border-dashed border-gray p-2' key={index}>
                 <p className='font-semibold text-md'> {item.company} </p>
                 <p className='text-[darkgray]'> {item.position} </p>
@@ -105,10 +103,10 @@ const Portfolio = () => {
                     {item?.startDate && format(new Date(item?.startDate), 'MMM y')} - {item?.endDate ? format(new Date(item?.endDate), 'MMM y') : 'Present'} - {formatTheDistance(item)}
                 </p>
                 <br />
-                {item.responsibilities && (
+                {item.description && (
                     <section>
-                        <h3 className='font-semibold text-md'> Responsibilities </h3> 
-                        <p> {item.responsibilities} </p>
+                        <h3 className='font-semibold text-md'> Description </h3> 
+                        <p> {item.description} </p>
                     </section>
                 )}
             </section>
@@ -160,7 +158,7 @@ const Portfolio = () => {
                             <form onSubmit={form.handleSubmit(handlePortfolio)} className='flex flex-col gap-3'>
                                 <FormField
                                     control={form.control}
-                                    name='experience.company'
+                                    name='portfolio.company'
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel htmlFor='portfolio.title'> Title </FormLabel>
@@ -207,7 +205,7 @@ const Portfolio = () => {
                                         ref={imageRef}
                                         hidden
                                     />
-                                    {!cover
+                                    {!portfolio?.cover
                                         ? (
                                             <>
                                                 <Button className='my-3 w-full' type='button' onClick={() => imageRef.current?.click()} variant='outline'> 
@@ -219,7 +217,7 @@ const Portfolio = () => {
                                             <section className='flex flex-col gap-2 justify-center my-4'> 
                                                 <section className='relative w-full border border-gray-100'>
                                                     <AspectRatio ratio={16/9}>
-                                                        <Image src={cover} fill={true} alt='Cover image for portfolio item' className='rounded-md object-cover' />
+                                                        <Image src={portfolio?.cover} fill={true} alt='Cover image for portfolio item' className='rounded-md object-cover' />
                                                         <Button 
                                                             className='absolute rounded-full m-2 border-2 border-solid top-0 right-0' type='button'
                                                             onClick={() => imageRef.current?.click()}

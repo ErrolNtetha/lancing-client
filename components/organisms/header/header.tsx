@@ -87,7 +87,7 @@ export const Header = () => {
                             </ul>
                         </section>
                 )}
-                {currentUser && !profile.isClient
+                {currentUser && !profile?.isClient
                     ? (
                         <section className='hidden md:flex ml-auto'>
                             <ul className='p-0 md:flex'>
@@ -143,10 +143,10 @@ export const Header = () => {
                 <span className='hidden md:block ml-4'> 
                     {currentUser
                         ? <UserHead 
-                           avatar={profile?.avatar} 
+                            avatar={profile?.avatar} 
                             names={profile?.names} 
                             isClient={profile?.isClient}
-                            /> 
+                        /> 
                         : <LoginButton />} 
                 </span>
                 {nav && (

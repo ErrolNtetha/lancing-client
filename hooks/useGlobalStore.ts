@@ -100,12 +100,12 @@ const myProfile: Profile = {
 export const useProfileStore: any = create(
     persist(
         (set: any) => ({
-            profile: {},
+            profile: null,
             addProfile: (user: Profile) => set(() => ({ profile: user })),
             clearProfile: () => set({ profile: {} }),
         }),
         {
-            name: 'profile-storage-dueple',
+            name: 'profile-storage-tedcrunch',
         }
     )
 );
