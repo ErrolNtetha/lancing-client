@@ -21,7 +21,7 @@ export const UserHead = ({ avatar, names, isClient }: UserHeadProps) => {
                 alt='My avatar'
             />
             <span className='flex-col align-center justify-center gap-2'>
-                <h6 className='text-sm font-bold'> {names.firstName} {names.lastName} </h6>
+                <h6 className='text-sm font-bold'> {names?.firstName} {names?.lastName} </h6>
                 <p className='text-sm font-semibold text-[green]'> {accountType} </p>
             </span>
         </section>

@@ -9,7 +9,15 @@ export default function RootLayout({
 }) {
     return (
         <html>
-            <head></head>
+            <head>
+                <title> Find Freelancers for Your Project | Tedcrunch </title>
+                <meta property='og:title' content='Find Freelancers for Your Project' />
+                <meta property='og:description' content='Tedcrunch is a South African freelance marketplace for businesses or individuals to find highly skilled freelancers.' />
+                <meta property='og:type' content='website' />
+                <meta property='og:image' content='/assets/images/list.png' />
+                <meta property='og:url' content='https://www.tedcrunch.co.za' />
+                <meta property='twitter:card' content='summary_large_image' />
+            </head>
             <body>
                 <Header />
                 {children}

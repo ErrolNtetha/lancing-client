@@ -87,7 +87,7 @@ export const Header = () => {
                             </ul>
                         </section>
                 )}
-                {currentUser && !profile.isClient
+                {currentUser && !profile?.isClient
                     ? (
                         <section className='hidden md:flex ml-auto'>
                             <ul className='p-0 md:flex'>
