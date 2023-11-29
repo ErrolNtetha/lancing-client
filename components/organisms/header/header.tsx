@@ -25,7 +25,6 @@ export const Header = () => {
     const { profile, clearProfile } = useProfileStore();
     const router = useRouter();
     const { currentUser } = useAuth();
-    // const  header = useProfileStore((state) => state.header);
 
     const handleLogIn = () => {
         router.push('/login')
