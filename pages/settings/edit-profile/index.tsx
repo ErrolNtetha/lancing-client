@@ -4,7 +4,7 @@ import { useProfileStore } from '../../../hooks/useGlobalStore';
 
 
 const Edit = () => {
-    const { isClient } = useProfileStore().profile;
+    const { isClient } = useProfileStore((state: any) => state?.profile);
 
     return isClient ? <EditProfileClient /> : 'vendor edit profile page';
 };
