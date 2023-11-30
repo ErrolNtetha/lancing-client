@@ -7,11 +7,15 @@ import { Login } from '../../components/templates/login';
 const LoginPage = () => {
     return (
         <React.Fragment>
-          <Head>
-            <title> Login Into Account </title>
-            <meta name='description' content='Login into your Duello account.' />
-            <link rel='icon' href='/favicon.ico' />
-          </Head>
+            <head>
+                <title> Login To Your Account | Tedcrunch </title>
+                <meta property='og:title' content='Login to find freelancers. - Tedcrunch' />
+                <meta property='og:description' content='Login to browse freelancers at your fingertips.' />
+                <meta property='og:type' content='website' />
+                <meta property='og:image' content='/assets/images/seo/logo.png' />
+                <meta property='og:url' content='https://www.tedcrunch.co.za' />
+                <meta property='twitter:card' content='summary_large_image' />
+            </head>
 
             <section className='bg-background'>
                 <Login />
