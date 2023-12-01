@@ -5,6 +5,7 @@ import React from 'react';
 import { Button } from '../../../@/components/ui/button';
 import { useAuth } from '../../../hooks/useAuth';
 import { MoonLoader } from 'react-spinners';
+import withAuth from '../../../hoc/withAuth';
 
 /*
  * TO DO:
@@ -12,7 +13,7 @@ import { MoonLoader } from 'react-spinners';
  *
  */
 
-export default function Email() {
+function Email() {
     const { currentUser } = useAuth();
     const [loading, setLoading] = React.useState(false);
     const [isSuccessful, setIsSuccessful] = React.useState<null | boolean>(null);
@@ -55,3 +56,5 @@ export default function Email() {
         </section>
     );
 };
+
+export default withAuth(Email);
