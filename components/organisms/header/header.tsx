@@ -110,17 +110,17 @@ export const Header = () => {
                 )
                 : (
                         <section className='hidden md:flex ml-auto'>
-                            <ul className='p-0 md:flex'>
-                                <li className='ml-4 mr-4' >
+                            <ul className='p-0 text-sm md:flex'>
+                                <li className='ml-3 mr-3' >
                                     <Link className='w-full flex items-center gap-2' href='/messages'> 
                                         Messages 
-                                        <DigitCounter count={6} className='bg-[red] pointer-events-none' />
+                                        <DigitCounter count={7} className='bg-[red] pointer-events-none' />
                                     </Link>
                                 </li>
                                 <li className='ml-4 mr-4'>
                                     <Link className='w-full flex items-center gap-2' href='/offers'>
                                         Offers 
-                                        <DigitCounter count={2} className='bg-[red] pointer-events-none' />
+                                        <DigitCounter count={3} className='bg-[red] pointer-events-none' />
                                     </Link>
                                 </li>
                                 <li className='ml-4 mr-4'>
@@ -139,6 +139,15 @@ export const Header = () => {
                         <FiAlignRight onClick={() => setNav(!nav)} className='text-[1.8rem] block md:hidden transition duration-200 ease-in-out' />
                     </section>
                 </section>
+                {(!profile?.isClient && profile.hasOwnProperty('application')) && (
+                    <Button
+                        type='button'
+                        className='text-white bg-primary font-extrabold py-2 px-10 hidden md:block'
+                        asChild
+                    > 
+                        <Link href='/apply/getting-started'> Apply </Link>
+                    </Button>
+                )}
                 <span className='hidden md:block ml-4'> 
                     {currentUser
                         ? <UserHead 
@@ -159,7 +168,16 @@ export const Header = () => {
                             handleMenuToggle={() => setNav(!nav)}
                             totalMessages={proposals.length}
                         />
-                        <section className='flex items-center justify-center absolute w-full left-0 bottom-4'>
+                        <section className='flex items-center justify-center flex-col px-3 gap-3 absolute w-full left-0 bottom-4'>
+                        {(!profile?.isClient && profile.hasOwnProperty('application')) && (
+                            <Button
+                                type='button'
+                                className='text-black bg-background font-extrabold w-full'
+                                asChild
+                            > 
+                                <Link href='/apply/getting-started'> Apply </Link>
+                            </Button>
+                            )}
                             <Button
                                 type='button'
                                 className='text-white border-2 border-white font-extrabold w-full p-2 my-1 mx-4'
