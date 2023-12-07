@@ -67,7 +67,7 @@ export const Header = () => {
                 </Link>
                     {!currentUser && (
                         <section className='hidden md:flex ml-auto'>
-                            <ul className='p-0 md:flex'>
+                            <ul className='p-0 md:flex items-center'>
                                 <li className='ml-4 mr-4' >
                                     <Link className='block w-full' href='/feed'>Home</Link>
                                 </li>
@@ -89,7 +89,7 @@ export const Header = () => {
                 {currentUser && !profile?.isClient
                     ? (
                         <section className='hidden md:flex ml-auto'>
-                            <ul className='p-0 md:flex'>
+                            <ul className='p-0 md:flex items-center'>
                                 <li className='ml-4 mr-4' >
                                     <Link className='w-full flex items-center gap-2' href='/messages'> 
                                         Messages 
@@ -99,7 +99,13 @@ export const Header = () => {
                                 <li className='ml-4 mr-4'>
                                     <Link className='w-full flex items-center gap-2' href='/offers'>
                                         Offers 
-                                        <DigitCounter count={2} className='bg-[red] pointer-events-none' />
+                                        <DigitCounter count={1} className='bg-[red] pointer-events-none' />
+                                    </Link>
+                                </li>
+                                <li className='ml-4 mr-4'>
+                                    <Link className='w-full flex items-center gap-2' href='/notifications'>
+                                        Notifications 
+                                        <DigitCounter count={3} className='bg-[red] pointer-events-none' />
                                     </Link>
                                 </li>
                                 <li className='ml-4 mr-4'>
@@ -110,21 +116,21 @@ export const Header = () => {
                 )
                 : (
                         <section className='hidden md:flex ml-auto'>
-                            <ul className='p-0 text-sm md:flex'>
+                            <ul className='p-0 text-sm md:flex md:items-center'>
                                 <li className='ml-3 mr-3' >
                                     <Link className='w-full flex items-center gap-2' href='/messages'> 
                                         Messages 
-                                        <DigitCounter count={7} className='bg-[red] pointer-events-none' />
+                                        <DigitCounter count={1} className='bg-[red] pointer-events-none' />
                                     </Link>
                                 </li>
                                 <li className='ml-4 mr-4'>
-                                    <Link className='w-full flex items-center gap-2' href='/offers'>
-                                        Offers 
+                                    <Link href='/myprojects'> My Projects </Link>
+                                </li>
+                                <li className='ml-4 mr-4'>
+                                    <Link className='w-full flex items-center gap-2' href='/notifications'>
+                                        Notifications 
                                         <DigitCounter count={3} className='bg-[red] pointer-events-none' />
                                     </Link>
-                                </li>
-                                <li className='ml-4 mr-4'>
-                                    <Link href='/mylistings'> My Projects </Link>
                                 </li>
                             </ul>
                         </section>
