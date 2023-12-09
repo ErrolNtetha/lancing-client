@@ -33,7 +33,7 @@ export type VendorProps = {
         firstName: string;
         lastName: string;
     },
-    avatar: string;
+    avatar: any;
     cover: any;
     description: string;
     id: string;
