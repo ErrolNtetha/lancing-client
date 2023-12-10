@@ -35,6 +35,7 @@ export default function Offer() {
     const foundVendors = vendors.filter((v) => v.id === Number(params?.vendorId));
     const router = useRouter();
     const form = useForm<z.infer<typeof OfferScheme>>({
+        mode: 'onChange',
         resolver: zodResolver(OfferScheme),
     });
 
