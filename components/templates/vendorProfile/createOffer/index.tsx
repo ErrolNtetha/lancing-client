@@ -60,9 +60,10 @@ export default function Offer() {
                 <Separator />
                 <form onSubmit={form.handleSubmit(handleSubmitOffer)} className='mt-3 w-full md:max-w-[70%]'>
                     <Form {...form}>
-                        <section className='border border-gray-200 rounded-md p-3 mb-3'>
+                        <section className='border border-gray-600 rounded-md p-3 mb-3'>
                             <section className='mb-2'>
                                 <h1 className='font-bold text-md'> Project Details </h1>
+                                <Separator />
                             </section>
 
                             <FormField
@@ -93,9 +94,10 @@ export default function Offer() {
                             />
                         </section>
 
-                        <section className='border border-gray-200 rounded-md p-3 mb-3'>
+                        <section className='border border-gray-600 rounded-md p-3 mb-3'>
                             <section className='mb-2'>
                                 <h1 className='font-bold text-md'> Timeline and Deadlines </h1>
+                                <Separator />
                             </section>
                             <FormField
                                 control={form.control}
@@ -192,9 +194,10 @@ export default function Offer() {
                             </section>
                         </section> */}
 
-                        <section className='border border-gray-200 rounded-md p-3 mb-3'>
+                        <section className='border border-gray-600 rounded-md p-3 mb-3'>
                             <section className='mb-2'>
                                 <h1 className='font-bold text-md'> Budget and Compensation </h1>
+                                <Separator />
                             </section>
 
                             <FormField
