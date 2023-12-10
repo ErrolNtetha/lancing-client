@@ -57,15 +57,15 @@ export const vendors = [
     },
     {
         names: {
-            firstName: 'Sandile',
-            lastName: 'Dlamini',
+            firstName: 'Nicole',
+            lastName: 'Pamela',
         },
         id: 1,
-        service: 'Logo Designer',
+        service: 'Copywriter',
         amount: 4200,
         rating: 5,
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati fugiat est hic. Voluptatem quam consequatur hic harum qui earum ipsa omnis quaerat animi. Ipsam facere impedit laborum delectus nostrum magnam!',
-        avatar: '/images/users/man.jpg',
+        avatar: '/images/users/woman.jpg',
         cover: '/assets/images/veges.jpg',
         approved: {
             isApproved: false,
