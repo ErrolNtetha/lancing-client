@@ -41,7 +41,7 @@ export default function Offer() {
     const handleSubmitOffer = (data: z.infer<typeof OfferScheme>) => console.log(data);
 
     return (
-        <section className='md:container mb-6 flex gap-6 relative'>
+        <section className='md:container mb-10 flex gap-6 relative'>
             <section className='md:p-3 h-max flex-[70%] rounded-md md:border border-gray-200'>
                 <section className='mb-4 gap-3'>
                     <h1 className='font-bold text-xl mb-2'> Create an offer </h1>
@@ -291,7 +291,6 @@ export default function Offer() {
                             type='button'
                             onClick={() => router.back()}
                             className='flex-1 font-bold'
-                            asChild
                         >
                             Cancel
                         </Button>
