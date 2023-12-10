@@ -60,14 +60,14 @@ export const Header = () => {
     }, []);
 
     return (
-        <header className='flex shadow divide-solid divide-gray bg-background sticky top-0 z-10 justify-between transition-all duration-200 items-center w-full h-[8vh]'>
-            <section className='container px-4 w-full h-full flex z-10 justify-between items-center'>
+        <header className='md:container flex shadow divide-solid divide-gray bg-background sticky top-0 z-10 justify-between transition-all duration-200 items-center w-full h-[8vh]'>
+            <section className=' px-4 w-full h-full flex z-10 justify-between items-center'>
                 <Link href={currentUser ? '/feed' : '/'} className='max-w-full'>
                     <Image src='/assets/images/svg/blackLogo.svg' alt='Company logo' className='fill-current text-white' width={120} height={120} />
                 </Link>
                     {!currentUser && (
                         <section className='hidden md:flex ml-auto'>
-                            <ul className='p-0 md:flex'>
+                            <ul className='p-0 md:flex items-center'>
                                 <li className='ml-4 mr-4' >
                                     <Link className='block w-full' href='/feed'>Home</Link>
                                 </li>
@@ -89,7 +89,7 @@ export const Header = () => {
                 {currentUser && !profile?.isClient
                     ? (
                         <section className='hidden md:flex ml-auto'>
-                            <ul className='p-0 md:flex'>
+                            <ul className='p-0 md:flex items-center'>
                                 <li className='ml-4 mr-4' >
                                     <Link className='w-full flex items-center gap-2' href='/messages'> 
                                         Messages 
@@ -99,7 +99,13 @@ export const Header = () => {
                                 <li className='ml-4 mr-4'>
                                     <Link className='w-full flex items-center gap-2' href='/offers'>
                                         Offers 
-                                        <DigitCounter count={2} className='bg-[red] pointer-events-none' />
+                                        <DigitCounter count={1} className='bg-[red] pointer-events-none' />
+                                    </Link>
+                                </li>
+                                <li className='ml-4 mr-4'>
+                                    <Link className='w-full flex items-center gap-2' href='/notifications'>
+                                        Notifications 
+                                        <DigitCounter count={3} className='bg-[red] pointer-events-none' />
                                     </Link>
                                 </li>
                                 <li className='ml-4 mr-4'>
@@ -110,35 +116,46 @@ export const Header = () => {
                 )
                 : (
                         <section className='hidden md:flex ml-auto'>
-                            <ul className='p-0 md:flex'>
-                                <li className='ml-4 mr-4' >
+                            <ul className='p-0 text-sm md:flex md:items-center'>
+                                <li className='ml-3 mr-3' >
                                     <Link className='w-full flex items-center gap-2' href='/messages'> 
                                         Messages 
-                                        <DigitCounter count={6} className='bg-[red] pointer-events-none' />
+                                        <DigitCounter count={1} className='bg-[red] pointer-events-none' />
                                     </Link>
                                 </li>
                                 <li className='ml-4 mr-4'>
-                                    <Link className='w-full flex items-center gap-2' href='/offers'>
-                                        Offers 
-                                        <DigitCounter count={2} className='bg-[red] pointer-events-none' />
-                                    </Link>
+                                    <Link href='/myprojects'> My Projects </Link>
                                 </li>
                                 <li className='ml-4 mr-4'>
-                                    <Link href='/mylistings'> My Projects </Link>
+                                    <Link className='w-full flex items-center gap-2' href='/notifications'>
+                                        Notifications 
+                                        <DigitCounter count={3} className='bg-[red] pointer-events-none' />
+                                    </Link>
                                 </li>
                             </ul>
                         </section>
                 )}
                 <section className='flex items-center gap-2'>
-                    <section className='relative p-2 hover:cursor-pointer md:hidden gap-2'>
-                        <DigitCounter count={2} className='bg-[red] pointer-events-none top-0 right-0 md:hidden' absolute={true} />
-                        <FiBell className='text-[1.8rem] block' />
-                    </section>
+                    {currentUser && (
+                        <section className='relative p-2 hover:cursor-pointer md:hidden gap-2'>
+                            <DigitCounter count={3} className='bg-[red] pointer-events-none top-0 right-0 md:hidden' absolute={true} />
+                            <FiBell className='text-[1.8rem] block' />
+                        </section>
+                    )}
                     <section className='relative p-2 hover:cursor-pointer gap-2'>
                         {profile?.isClient && <DigitCounter count={proposals.length} className='bg-[red] pointer-events-none top-0 right-0' absolute={true} />}
                         <FiAlignRight onClick={() => setNav(!nav)} className='text-[1.8rem] block md:hidden transition duration-200 ease-in-out' />
                     </section>
                 </section>
+                {(!profile?.isClient && profile?.hasOwnProperty('application')) && (
+                    <Button
+                        type='button'
+                        className='text-white bg-primary font-extrabold py-2 px-10 hidden md:block'
+                        asChild
+                    > 
+                        <Link href='/apply/getting-started'> Apply </Link>
+                    </Button>
+                )}
                 <span className='hidden md:block ml-4'> 
                     {currentUser
                         ? <UserHead 
@@ -159,7 +176,16 @@ export const Header = () => {
                             handleMenuToggle={() => setNav(!nav)}
                             totalMessages={proposals.length}
                         />
-                        <section className='flex items-center justify-center absolute w-full left-0 bottom-4'>
+                        <section className='flex items-center justify-center flex-col px-3 gap-3 absolute w-full left-0 bottom-4'>
+                        {(!profile?.isClient && profile?.hasOwnProperty('application')) && (
+                            <Button
+                                type='button'
+                                className='text-black bg-background font-extrabold w-full'
+                                asChild
+                            > 
+                                <Link href='/apply/getting-started'> Apply </Link>
+                            </Button>
+                            )}
                             <Button
                                 type='button'
                                 className='text-white border-2 border-white font-extrabold w-full p-2 my-1 mx-4'
