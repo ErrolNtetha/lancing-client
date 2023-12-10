@@ -53,8 +53,9 @@ export default function Offer() {
                             size='w-12 h-12'
                         />
                         <section>
-                            <p className='flex items-center gap-2'> To: {foundVendors[0].names?.firstName} {foundVendors[0].names?.lastName} <StarRating value={4} /> </p>
+                            <p className='flex items-center gap-2'> To: {foundVendors[0].names?.firstName} {foundVendors[0].names?.lastName} </p>
                             <p className=''> {foundVendors[0].service} </p>
+                            <p><StarRating value={4} /></p>
                         </section>
                     </section>
                     <p className='mt-2 text-sm md:text-md'> It is essential to provide clear and comprehensive information to ensure a smooth collaboration. </p>
