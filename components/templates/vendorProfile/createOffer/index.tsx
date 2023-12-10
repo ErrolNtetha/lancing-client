@@ -35,13 +35,14 @@ export default function Offer() {
     const foundVendors = vendors.filter((v) => v.id === Number(params?.vendorId));
     const router = useRouter();
     const form = useForm<z.infer<typeof OfferScheme>>({
+        mode: 'onChange',
         resolver: zodResolver(OfferScheme),
     });
 
     const handleSubmitOffer = (data: z.infer<typeof OfferScheme>) => console.log(data);
 
     return (
-        <section className='md:container mb-6 flex gap-6 relative'>
+        <section className='md:container mb-10 flex gap-6 relative'>
             <section className='md:p-3 h-max flex-[70%] rounded-md md:border border-gray-200'>
                 <section className='mb-4 gap-3'>
                     <h1 className='font-bold text-xl mb-2'> Create an offer </h1>
@@ -52,8 +53,9 @@ export default function Offer() {
                             size='w-12 h-12'
                         />
                         <section>
-                            <p className='flex items-center gap-2'> To: {foundVendors[0].names?.firstName} {foundVendors[0].names?.lastName} <StarRating value={4} /> </p>
+                            <p className='flex items-center gap-2'> To: {foundVendors[0].names?.firstName} {foundVendors[0].names?.lastName} </p>
                             <p className=''> {foundVendors[0].service} </p>
+                            <p><StarRating value={4} /></p>
                         </section>
                     </section>
                     <p className='mt-2 text-sm md:text-md'> It is essential to provide clear and comprehensive information to ensure a smooth collaboration. </p>
@@ -291,7 +293,6 @@ export default function Offer() {
                             type='button'
                             onClick={() => router.back()}
                             className='flex-1 font-bold'
-                            asChild
                         >
                             Cancel
                         </Button>

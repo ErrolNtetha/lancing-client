@@ -8,7 +8,7 @@ import { Nav } from '../../molecules/nav';
 type MenuProps = {
     handleMenuToggle: React.MouseEventHandler<HTMLSpanElement>;
     auth: object | null;
-    name: {
+    names: {
         firstName: string;
         lastName: string;
     };
@@ -18,7 +18,7 @@ type MenuProps = {
     totalMessages: number;
 };
 
-export const MobileMenu = ({ handleMenuToggle, isClient, auth, name, avatar, totalMessages }: MenuProps) => {
+export const MobileMenu = ({ handleMenuToggle, isClient, auth, names, avatar, totalMessages }: MenuProps) => {
     const accountType = isClient ? 'Client Account' : 'Freelancer Account';
     return (
         <section className='relative p-3'>
@@ -33,10 +33,10 @@ export const MobileMenu = ({ handleMenuToggle, isClient, auth, name, avatar, tot
                     <Avatar
                         src={avatar}
                         size='w-12 h-12'
-                        alt={`${name.firstName} avatar`}
+                        alt={`${names?.firstName} avatar`}
                     />
                     <span className='self-start'>
-                        <h3 className='text-white font-semibold'> {name.firstName} {name.lastName} </h3>
+                        <h3 className='text-white font-semibold'> {names?.firstName} {names?.lastName} </h3>
                         <p className='text-sm font-semibold text-[blue]'> {accountType} </p>
                     </span>
                 </section>
