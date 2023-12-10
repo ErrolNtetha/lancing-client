@@ -1,5 +1,5 @@
 import React from 'react';
-import ProposalLayout from '../../../../components/templates/clients/clientId/create-proposal';
+import ProposalLayout from '../../../../components/templates/projects/projectId/create-proposal';
 
 export default function CreateProposalPage() {
     return (

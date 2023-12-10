@@ -3,7 +3,7 @@ import Proposal from './proposal';
 
 export default function ProposalLayout() {
     return (
-        <section>
+        <section className='p-3'>
             <Proposal />
         </section>
     );
