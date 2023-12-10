@@ -25,7 +25,7 @@ const OfferScheme = z.object({
     description: z.string({ required_error: 'This field is required.' }).min(10, 'Description is too short.'),
     startDate: z.date({ required_error: 'Start date is required.' }),
     deadline: z.date({ required_error: 'Deadline date is required.' }),
-    totalBudget: z.number({ required_error: 'Total budget date is required.' }),
+    totalBudget: z.coerce.number({ required_error: 'Total budget date is required.' }).min(200, 'Budget should be at least R200.'),
     paymentStructure: z.string({ required_error: 'This is required.' }),
     paymentSchedule: z.string({ required_error: 'This is required.' }),
 });
@@ -55,7 +55,7 @@ export default function Offer() {
                             <p className=''> {foundVendors[0].service} </p>
                         </section>
                     </section>
-                    <p className='mt-2 text-sm text-gray-400 md:text-md'> It is essential to provide clear and comprehensive information to ensure a smooth collaboration. </p>
+                    <p className='mt-2 text-sm md:text-md'> It is essential to provide clear and comprehensive information to ensure a smooth collaboration. </p>
                 </section>
                 <Separator />
                 <form onSubmit={form.handleSubmit(handleSubmitOffer)} className='mt-3 w-full md:max-w-[70%]'>
@@ -72,7 +72,7 @@ export default function Offer() {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel> Title </FormLabel>
-                                        <Input {...field} placeholder='Write title' />
+                                        <Input {...field} placeholder='Title' />
                                         <FormMessage />
                                     </FormItem>
                                 )}
@@ -205,7 +205,7 @@ export default function Offer() {
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel> Title </FormLabel>
+                                        <FormLabel> Total Budget </FormLabel>
                                         <Input type='number' {...field} placeholder='Specify total budget' />
                                         <FormMessage />
                                     </FormItem>
@@ -284,7 +284,7 @@ export default function Offer() {
                             </section>
                         </section> */}
 
-                    <section className='fixed w-full p-2 bg-background bottom-0 left-0 flex items-center md:mt-3 gap-3 md:justify-end'>
+                    <section className='fixed mt-8 w-full p-2 bg-background bottom-0 left-0 flex items-center md:mt-3 gap-3 md:justify-end'>
                         <Button variant='outline' className='flex-1 font-bold'>
                             Cancel
                         </Button>
