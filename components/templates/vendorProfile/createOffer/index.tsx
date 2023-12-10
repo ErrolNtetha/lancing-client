@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import format from 'date-fns/format';
 import { CalendarIcon } from 'lucide-react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -33,6 +33,7 @@ const OfferScheme = z.object({
 export default function Offer() {
     const params = useParams();
     const foundVendors = vendors.filter((v) => v.id === Number(params?.vendorId));
+    const router = useRouter();
     const form = useForm<z.infer<typeof OfferScheme>>({
         resolver: zodResolver(OfferScheme),
     });
@@ -40,7 +41,7 @@ export default function Offer() {
     const handleSubmitOffer = (data: z.infer<typeof OfferScheme>) => console.log(data);
 
     return (
-        <section className='md:container flex gap-6 relative'>
+        <section className='md:container mb-6 flex gap-6 relative'>
             <section className='md:p-3 h-max flex-[70%] rounded-md md:border border-gray-200'>
                 <section className='mb-4 gap-3'>
                     <h1 className='font-bold text-xl mb-2'> Create an offer </h1>
@@ -284,11 +285,20 @@ export default function Offer() {
                             </section>
                         </section> */}
 
-                    <section className='fixed mt-8 w-full p-2 bg-background bottom-0 left-0 flex items-center md:mt-3 gap-3 md:justify-end'>
-                        <Button variant='outline' className='flex-1 font-bold'>
+                    <section className='fixed w-full p-2 bg-background bottom-0 left-0 flex items-center md:mt-3 gap-3 md:justify-end'>
+                        <Button
+                            variant='outline'
+                            type='button'
+                            onClick={() => router.back()}
+                            className='flex-1 font-bold'
+                            asChild
+                        >
                             Cancel
                         </Button>
-                        <Button className='font-bold flex-1'>
+                        <Button 
+                            className='font-bold flex-1'
+                            disabled={!form.formState.isValid}
+                        >
                             Send Offer
                         </Button>
                     </section>
