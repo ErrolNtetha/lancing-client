@@ -5,6 +5,8 @@ import { Proposal } from './proposal';
 import { MdVerifiedUser } from 'react-icons/md';
 import { FiActivity, FiBriefcase, FiCalendar, FiClock, FiDollarSign } from 'react-icons/fi';
 import { formatDistance } from 'date-fns';
+import { Button } from '../../../@/components/ui/button';
+import Link from 'next/link';
 
 type ClientProps = {
     postedBy: {
@@ -100,19 +102,12 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                         {/* <span className='flex items-center gap-1 hover:cursor-pointer'> <FiFolder /> {project.files} files </span> */}
                         {/* <span className='py-2 text-sm'> Budget: R{formatNumber(project.budget)} </span> */}
                     </span>
-                    <button className='border-2 border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>
-                        Send Proposal
-                    </button>
-                    { modal && 
-                    <Modal>
-                        <Proposal
-                            handleModal={handleModal}
-                            recipient={props.postedBy.names}
-                            budget={budget}
-                            projectId={projectId}
-                        />
-                    </Modal> 
-                    }
+                    <Button
+                        variant='outline'
+                        asChild
+                        >
+                            <Link href={`/projects/${projectId}/create-proposal`}> Send Proposal </Link>
+                    </Button>
                 </section>
             </section>
         </section>
