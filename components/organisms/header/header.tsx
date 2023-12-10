@@ -172,7 +172,7 @@ export const Header = () => {
                             email={profile?.email}
                             isClient={profile?.isClient}
                             avatar={profile?.avatar}
-                            name={profile?.names}
+                            names={profile?.names}
                             handleMenuToggle={() => setNav(!nav)}
                             totalMessages={proposals.length}
                         />
