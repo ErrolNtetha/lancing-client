@@ -147,7 +147,7 @@ export const Header = () => {
                         <FiAlignRight onClick={() => setNav(!nav)} className='text-[1.8rem] block md:hidden transition duration-200 ease-in-out' />
                     </section>
                 </section>
-                {(!profile?.isClient && profile.hasOwnProperty('application')) && (
+                {(!profile?.isClient && profile?.hasOwnProperty('application')) && (
                     <Button
                         type='button'
                         className='text-white bg-primary font-extrabold py-2 px-10 hidden md:block'
@@ -177,7 +177,7 @@ export const Header = () => {
                             totalMessages={proposals.length}
                         />
                         <section className='flex items-center justify-center flex-col px-3 gap-3 absolute w-full left-0 bottom-4'>
-                        {(!profile?.isClient && profile.hasOwnProperty('application')) && (
+                        {(!profile?.isClient && profile?.hasOwnProperty('application')) && (
                             <Button
                                 type='button'
                                 className='text-black bg-background font-extrabold w-full'

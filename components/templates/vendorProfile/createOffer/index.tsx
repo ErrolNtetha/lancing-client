@@ -46,7 +46,7 @@ export default function Offer() {
                     <h1 className='font-bold text-xl mb-2'> Create an offer </h1>
                     <section className='flex items-center gap-3'>
                         <Avatar
-                            src='/assets/images/errol.png'
+                            src={foundVendors[0].avatar}
                             alt={`${foundVendors[0].names?.firstName}&apos;s avatar`}
                             size='w-12 h-12'
                         />
