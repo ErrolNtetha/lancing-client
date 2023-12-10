@@ -103,7 +103,7 @@ export default function Proposal() {
                             </section>
                         </section> */}
 
-                        <section className='border border-gray-200 rounded-md p-3 mb-3'>
+                        <section className='border border-gray-600 rounded-md p-3 mb-3'>
                             <section className='mb-2'>
                                 <h1 className='font-bold text-md'> Timeline and Availability </h1>
                             </section>
