@@ -24,6 +24,7 @@ const ProposalScheme = z.object({
     coverLetter: z.string({ required_error: 'This field is required.' }).min(30, 'Cover letter is too short.').max(1200, 'Your letter is more than 1200 characters.').optional(),
     estimatedPeriod: z.string({ required_error: 'This field is required.' }),
     additionalNotes: z.string().max(250, 'Too many characters.').optional(),
+    methodology: z.string().max(1200, 'Too many characters.').optional(),
     rate: z.string(),
     bidAmount: z.coerce.number({ required_error: 'Bid amount is required.' }).min(200, 'Budget should be at least R200.'),
     paymentTerms: z.string({ required_error: 'This is required.' }),
@@ -86,7 +87,7 @@ export default function Proposal() {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel> Cover Letter </FormLabel>
-                                        <Textarea {...field} placeholder='Write a description' />
+                                        <Textarea {...field} placeholder='Briefly introduce yourself and your expertise.' />
                                         <FormDescription>
                                              Provide a brief description on why you are a good fit for this project. Max: 1200 characters.
                                         </FormDescription>
@@ -96,16 +97,31 @@ export default function Proposal() {
                             />
                         </section>
 
-                        {/* <section className='border border-gray-600 rounded-md p-3 mb-3'>
+                        <section className='border border-gray-600 rounded-md p-3 mb-3'>
                             <section className='mb-2'>
-                                <h1 className='font-bold text-md'> Timeline and Deadlines </h1>
+                                <h1 className='font-bold text-md'> Approach and Methodology </h1>
                                 <Separator />
                             </section>
-                        </section> */}
+                            <FormField
+                                name='methodology'
+                                control={form.control}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel> Methodology </FormLabel>
+                                        <Textarea {...field} placeholder='Explain steps you would take to achieve this project&apos;s goals.' />
+                                        <FormDescription>
+                                             Showing how you would approach the project often increases the likelihood of getting hired.
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </section>
 
                         <section className='border border-gray-600 rounded-md p-3 mb-3'>
                             <section className='mb-2'>
                                 <h1 className='font-bold text-md'> Timeline and Availability </h1>
+                                <Separator />
                             </section>
 
                             <FormField
@@ -125,12 +141,9 @@ export default function Proposal() {
                                                 <SelectItem value='2wks'> Less than 2 weeks </SelectItem>
                                                 <SelectItem value='1mnth'> Less than 1 month </SelectItem>
                                                 <SelectItem value='3mnths'> Less than 3 months </SelectItem>
-                                                <SelectItem value='12mnths'> More than 6 months </SelectItem>
+                                                <SelectItem value='6mnths'> More than 6 months </SelectItem>
                                             </SelectContent>
                                         </Select>
-                                        <FormDescription>
-                                            Indicate how would you like the client to pay you.
-                                        </FormDescription>
                                         <FormMessage />
                                     </FormItem>
                                 )}
@@ -142,9 +155,9 @@ export default function Proposal() {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel> Notes </FormLabel>
-                                        <Textarea {...field} placeholder='Any notes on estimated duration?' />
+                                        <Textarea {...field} placeholder='Comment on estimated period above.' />
                                         <FormDescription>
-                                             Additional information regarding estimated duration.
+                                             Additional information regarding estimated period.
                                         </FormDescription>
                                         <FormMessage />
                                     </FormItem>
