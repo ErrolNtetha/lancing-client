@@ -7,7 +7,12 @@ export const formatNumber = (number: number) => {
     return f;
 }
 
-export const formatAmount = (amount: number) => {
-    const f = format(',.2f')(amount);
+export const formatAmount = (amount: number | null) => {
+    const f = format(',.2r')(amount);
+    return f;
+}
+
+export const formatAmountSuffix = (amount: number | null) => {
+    const f = format('.2s')(amount);
     return f;
 }
