@@ -9,7 +9,7 @@ export default function ListOffersCards() {
     const listOffers = offers.map((item) => <OfferCard key={item.id} {...item} />);
 
     return (
-        <section className='flex-[0.3] border border-gray-200 rounded-md p-2'>
+        <section className='flex-[0.3] md:border md:border-gray-200 md:rounded-md md:p-2'>
             <section className='mb-3'>
                 <h1 className='font-bold text-lg'> Offers ({offers.length}) </h1>
                 <Separator />
