@@ -54,6 +54,7 @@ export default function Proposal() {
             });
 
             toast({
+                className: 'bg-[green]',
                 title: 'Success',
                 description: 'Proposal successfully sent.'
             });
