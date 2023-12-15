@@ -9,7 +9,7 @@ type FProps = {
 
 export default function OfferFooter({ handleAcceptOffer, handleDeclineOffer }: FProps) {
     return (
-        <div className='absolute flex items-center p-2 bg-background gap-2 w-full bottom-0 left-0'>
+        <div className='fixed flex items-center p-2 bg-background gap-2 w-full bottom-0 left-0'>
             <AlertDialog>
                 <AlertDialogTrigger asChild>
                     <Button type='button' variant='destructive' className='flex-1'>
