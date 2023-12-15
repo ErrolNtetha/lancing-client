@@ -44,11 +44,11 @@ export const MobileMenu = ({ handleMenuToggle, isClient, auth, names, avatar, to
             {auth && (
                 <section className='bg-gray-100 p-2 mb-4 rounded-lg'>
                     <ul className='text-black divide-y divide-slate divide-opacity-10'>
-                        <Link href='/messages'><li className={`flex items-center justify-between  ${totalMessages && 'font-bold'} p-1 hover:bg-opacity-10 hover:cursor-pointer`}> Messages <DigitCounter count={totalMessages} /> </li></Link>
+                        <li className={`${totalMessages && 'font-bold'} p-1 hover:bg-opacity-10 hover:cursor-pointer`}> <Link href='/messages' className='flex items-center justify-between w-full'> Messages <DigitCounter count={totalMessages} /> </Link></li>
                         {/* <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Notifications </li> */}
-                        {isClient && <Link href='/myprojects'><li className='flex items-center justify-between p-1 hover:cursor-pointer'> My Projects </li></Link>}
-                        {!isClient && <Link href='/mylistings'> <li className='flex items-center justify-between p-1 hover:cursor-pointer'> My Lists </li> </Link>}
-                        {!isClient && <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Offers </li>}
+                        {isClient && <li className='p-1 hover:cursor-pointer'> <Link href='/myprojects' className='flex items-center justify-between w-full'> My Projects </Link></li>}
+                        {!isClient && <li className='flex items-center justify-between p-1 hover:cursor-pointer'> <Link href='/mylistings' className='flex items-center justify-between w-full'> My Lists </Link></li>}
+                        {!isClient && <li className='flex items-center justify-between p-1 hover:cursor-pointer'> <Link href='/offers' className='flex items-center justify-between w-full'> Offers </Link> </li>}
                     </ul>
                 </section>
             )}

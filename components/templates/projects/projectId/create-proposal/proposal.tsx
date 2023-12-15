@@ -1,23 +1,20 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import format from 'date-fns/format';
-import { CalendarIcon } from 'lucide-react';
+import { addDoc, collection, doc, serverTimestamp } from 'firebase/firestore';
 import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '../../../../../@/components/ui/button';
-import { Calendar } from '../../../../../@/components/ui/calendar';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../../../../../@/components/ui/form';
 import { Input } from '../../../../../@/components/ui/input';
-import { Popover, PopoverContent, PopoverTrigger } from '../../../../../@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../../../@/components/ui/select';
 import { Separator } from '../../../../../@/components/ui/separator';
 import { Textarea } from '../../../../../@/components/ui/textarea';
-import { cn } from '../../../../../@/lib/utils';
-// import { Avatar } from '../../../../molecules/image';
-// import { StarRating } from '../../../../molecules/star-rating';
+import { useToast } from '../../../../../@/components/ui/use-toast';
+import { db } from '../../../../../firebaseConfig';
+import { useAuth } from '../../../../../hooks/useAuth';
 
 const ProposalScheme = z.object({
     title: z.string({ required_error: 'This field is required.' }).min(30, 'Title is too short.'),
@@ -25,21 +22,56 @@ const ProposalScheme = z.object({
     estimatedPeriod: z.string({ required_error: 'This field is required.' }),
     additionalNotes: z.string().max(250, 'Too many characters.').optional(),
     methodology: z.string().max(1200, 'Too many characters.').optional(),
-    rate: z.string(),
-    bidAmount: z.coerce.number({ required_error: 'Bid amount is required.' }).min(200, 'Budget should be at least R200.'),
     paymentTerms: z.string({ required_error: 'This is required.' }),
 });
 
 export default function Proposal() {
+    const [loading, setLoading] = React.useState(false);
     const params = useParams();
     const router = useRouter();
+    const { toast } = useToast();
+    const { currentUser } = useAuth();
     const form = useForm<z.infer<typeof ProposalScheme>>({
-        mode: 'onChange',
+        mode: 'onSubmit',
         resolver: zodResolver(ProposalScheme),
+        defaultValues: {
+            additionalNotes: '',
+        }
     });
-    console.log('client id: ', params);
 
-    const handleSubmitProposal = (data: z.infer<typeof ProposalScheme>) => console.log(data);
+    const handleSubmitProposal = async (data: z.infer<typeof ProposalScheme>) => {
+        setLoading(true);
+        console.log(data);
+
+        try {
+            const proposalsRef = collection(db, 'proposals');
+
+            await addDoc(proposalsRef, {
+                freelancer: doc(db, `users/${currentUser.uid}`),
+                project: doc(db, `users/${params?.projectId}`),
+                createdAt: serverTimestamp(),
+                ...data
+            });
+
+            toast({
+                className: 'bg-[green]',
+                title: 'Success',
+                description: 'Proposal successfully sent.'
+            });
+
+            router.push('/feed');
+
+        } catch (error) {
+            console.log(error);
+            toast({
+                variant: 'destructive',
+                title: 'Failed',
+                description: 'Failed to send proposal.'
+            });
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <section className='md:container mb-10 flex gap-6 relative'>
@@ -110,7 +142,7 @@ export default function Proposal() {
                                         <FormLabel> Methodology </FormLabel>
                                         <Textarea {...field} placeholder='Explain steps you would take to achieve this project&apos;s goals.' />
                                         <FormDescription>
-                                             Showing how you would approach the project often increases the likelihood of getting hired.
+                                            Describe to the client what you are proposing, responsibilities, deliverables, etc..
                                         </FormDescription>
                                         <FormMessage />
                                     </FormItem>
@@ -171,7 +203,8 @@ export default function Proposal() {
                                 <h1 className='font-bold text-md'> Cost and Payment Terms </h1>
                                 <Separator />
                             </section>
-                            <FormField
+
+                        {/* <FormField
                                 control={form.control}
                                 name='rate'
                                 render={({ field }) => (
@@ -194,9 +227,9 @@ export default function Proposal() {
                                         <FormMessage />
                                     </FormItem>
                                 )}
-                            />
+                            /> */}
 
-                            <FormField
+                        {/* <FormField
                                 name='bidAmount'
                                 control={form.control}
                                 render={({ field }) => (
@@ -209,14 +242,14 @@ export default function Proposal() {
                                         <FormMessage />
                                     </FormItem>
                                 )}
-                            />
+                            /> */}
 
                         <FormField
                             control={form.control}
                             name='paymentTerms'
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel htmlFor='paymentSchedule'> Preferred Payment </FormLabel>
+                                    <FormLabel htmlFor='paymentSchedule'> Payment Terms </FormLabel>
                                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                                         <FormControl>
                                             <SelectTrigger>
@@ -230,7 +263,7 @@ export default function Proposal() {
                                         </SelectContent>
                                     </Select>
                                     <FormDescription>
-                                        Indicate how would you like the client to pay you.
+                                        Indicate the payment term would you like the client to pay you.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -268,9 +301,9 @@ export default function Proposal() {
                         </Button>
                         <Button 
                             className='font-bold flex-1'
-                            disabled={!form.formState.isValid}
+                            disabled={!form.formState.isValid || loading }
                         >
-                            Submit Proposal
+                            {loading ? 'Submitting...' : 'Submit Proposal'}
                         </Button>
                     </section>
                     </Form>
