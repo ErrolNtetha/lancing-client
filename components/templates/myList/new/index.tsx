@@ -120,12 +120,14 @@ export default function NewList() {
                 cover: coverUrl.response,
             };
 
-            await addDoc(listCollectionRef, formData);
-            router.push('/mylistings');
-            toast({
-                title: 'Success',
-                description: 'New list succefully created.'
-            });
+            if (formData.cover) {
+                await addDoc(listCollectionRef, formData);
+                router.push('/mylistings');
+                toast({
+                    title: 'Success',
+                    description: 'New list succefully created.'
+                });
+            }
 
         } catch (error) {
             console.log('error: ', error);
