@@ -34,10 +34,14 @@ export default function Proposal() {
     const form = useForm<z.infer<typeof ProposalScheme>>({
         mode: 'onSubmit',
         resolver: zodResolver(ProposalScheme),
+        defaultValues: {
+            additionalNotes: '',
+        }
     });
 
     const handleSubmitProposal = async (data: z.infer<typeof ProposalScheme>) => {
         setLoading(true);
+        console.log(data);
 
         try {
             const proposalsRef = collection(db, 'proposals');
