@@ -17,6 +17,7 @@ import { Input } from '../../../../@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../../@/components/ui/select';
 import { Switch } from '../../../../@/components/ui/switch';
 import { Textarea } from '../../../../@/components/ui/textarea';
+import { useToast } from '../../../../@/components/ui/use-toast';
 import { db } from '../../../../firebaseConfig';
 import { useAuth } from '../../../../hooks/useAuth';
 import { formatAmount } from '../../../../utilities/format';
@@ -27,12 +28,13 @@ const listSchema = z.object({
         description: z.string({ required_error: 'This field is required.' }).min(30, 'Description is too short').max(130, 'Description is too long.'),
         isActive: z.boolean({ required_error: 'This is required.'}).optional(),
         cover: z.string({ required_error: 'This is required.' }),
-        packages: z.array(z.object({ value: z.string(), tier: z.string(), price: z.coerce.number(), description: z.string() })).length(3).nonempty({ message: 'At least add one package.' }),
+        packages: z.array(z.object({ value: z.string(), tier: z.string(), price: z.coerce.number(), description: z.string() })).length(3).nonempty({ message: 'Add packages.' }),
     })
 });
 
 export default function NewList() {
-    const [loading, setLoading] = React.useState(true);
+    const [loading, setLoading] = React.useState(false);
+    const { toast } = useToast();
     const imageRef = useRef<HTMLInputElement | null>(null);
     const router = useRouter();
     const { currentUser } = useAuth();
@@ -98,6 +100,7 @@ export default function NewList() {
         const { list: { cover } } = data;
         const userRef = doc(db, 'users', currentUser.uid);
         const listCollectionRef = collection(db, 'lists');
+        setLoading(true);
 
         try {
             const res = await fetch('/api/mylistings/new', {
@@ -119,8 +122,18 @@ export default function NewList() {
 
             await addDoc(listCollectionRef, formData);
             router.push('/mylistings');
+            toast({
+                title: 'Success',
+                description: 'New list succefully created.'
+            });
+
         } catch (error) {
             console.log('error: ', error);
+            toast({
+                variant: 'destructive',
+                title: 'Failed',
+                description: 'Failed to add new list.'
+            });
         } finally {
             setLoading(false);
         }
@@ -301,10 +314,12 @@ export default function NewList() {
             </section>
 
             <section className='fixed bottom-0 left-0 p-2 bg-background w-full flex gap-2'>
-                <Button variant='outline' className='flex-1' asChild>
+                <Button variant='outline' type='button' className='flex-1' asChild>
                     <Link href='/mylistings'> Back </Link>
                 </Button>
-                <Button type='submit' className='bg-primary flex-1'> Create </Button>
+                <Button type='submit' className='bg-primary flex-1' disabled={form.formState.isValid || loading}>
+                    {loading ? 'Creating...' : 'Create'}
+                </Button>
             </section>
     </form>
 </Form>
