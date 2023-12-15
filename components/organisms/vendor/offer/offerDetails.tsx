@@ -22,7 +22,7 @@ export default function OfferDetails() {
     const foundOffers = offers?.find(({ id }) => id === params?.offerId);
 
     return (
-        <section className='mb-8 h-[90vh]'>
+        <section className='mb-8 text-sm h-[90vh]'>
             <OfferHeader client={foundOffers?.client!}  />
             <OfferContent 
                 description={foundOffers?.project_details?.description}
