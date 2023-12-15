@@ -23,7 +23,7 @@ export default function List() {
         }
 
         getLists();
-    }, []);
+    }, [currentUser?.uid]);
 
     const allLists = myLists.map((item: any) => (
         <CardList 
