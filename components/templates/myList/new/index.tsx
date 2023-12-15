@@ -317,7 +317,7 @@ export default function NewList() {
                 <Button variant='outline' type='button' className='flex-1' asChild>
                     <Link href='/mylistings'> Back </Link>
                 </Button>
-                <Button type='submit' className='bg-primary flex-1' disabled={form.formState.isValid || loading}>
+                <Button type='submit' className='bg-primary flex-1' disabled={!form.formState.isValid || loading}>
                     {loading ? 'Creating...' : 'Create'}
                 </Button>
             </section>
