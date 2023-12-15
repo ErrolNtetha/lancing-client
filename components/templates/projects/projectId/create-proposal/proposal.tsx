@@ -32,18 +32,17 @@ export default function Proposal() {
     const { toast } = useToast();
     const { currentUser } = useAuth();
     const form = useForm<z.infer<typeof ProposalScheme>>({
-        mode: 'onChange',
+        mode: 'onSubmit',
         resolver: zodResolver(ProposalScheme),
     });
-    console.log('client id: ', params);
 
-    const handleSubmitProposal = (data: z.infer<typeof ProposalScheme>) => {
+    const handleSubmitProposal = async (data: z.infer<typeof ProposalScheme>) => {
         setLoading(true);
 
         try {
-            const proposalRef = collection(db, 'proposals');
+            const proposalsRef = collection(db, 'proposals');
 
-            addDoc(proposalRef, {
+            await addDoc(proposalsRef, {
                 freelancer: doc(db, `users/${currentUser.uid}`),
                 project: doc(db, `users/${params?.projectId}`),
                 createdAt: serverTimestamp(),
@@ -54,6 +53,8 @@ export default function Proposal() {
                 title: 'Success',
                 description: 'Proposal successfully sent.'
             });
+
+            router.push('/feed');
 
         } catch (error) {
             console.log(error);
