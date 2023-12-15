@@ -48,7 +48,7 @@ export const MobileMenu = ({ handleMenuToggle, isClient, auth, names, avatar, to
                         {/* <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Notifications </li> */}
                         {isClient && <Link href='/myprojects'><li className='flex items-center justify-between p-1 hover:cursor-pointer'> My Projects </li></Link>}
                         {!isClient && <Link href='/mylistings'> <li className='flex items-center justify-between p-1 hover:cursor-pointer'> My Lists </li> </Link>}
-                        {!isClient && <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Offers </li>}
+                        {!isClient && <li className='flex items-center justify-between p-1 hover:cursor-pointer'> <Link href='/offers'> Offers </Link> </li>}
                     </ul>
                 </section>
             )}
