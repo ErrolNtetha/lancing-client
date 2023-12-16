@@ -4,7 +4,7 @@ import OfferDetails from '../../../components/organisms/vendor/offer/offerDetail
 export default function OfferPage() {
 
     return (
-        <section className='h-[90vh] p-3'>
+        <section className='mb-8 h-[90vh] p-3'>
             <OfferDetails />
         </section>
     );
