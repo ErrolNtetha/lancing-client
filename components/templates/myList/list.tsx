@@ -4,20 +4,36 @@ import { db } from '../../../firebaseConfig';
 import { useAuth } from '../../../hooks/useAuth';
 import CardList from '../../organisms/vendor/myList/cardList';
 
+type ListProps = {
+    id: string;
+    author: string;
+    description: string;
+    cover: string;
+    isActive: boolean;
+    packages: [];
+}[]
+
 export default function List() {
     const { currentUser } = useAuth();
     const [allList, setAllLists] = React.useState<any>([]);
 
     React.useEffect(() => {
-        const q = query(collection(db, 'lists'), where('author', '==', `${currentUser?.uid}`));
-
         async function getLists() {
-            const querySnapshot = await getDocs(q);
+            try {
+                const listsRef = collection(db, 'lists');
+                // const lists: ListProps = [];
 
-            querySnapshot.forEach((doc) => {
-                console.log(doc.data());
-                setAllLists([{ ...doc.data(), id: doc.id }]);
-            });
+                const q = query(listsRef, where('author', '==', `/users/${currentUser?.uid}`));
+                const querySnapshot = await getDocs(q);
+                console.log('Snapshot: ', querySnapshot);
+
+                querySnapshot.forEach((doc) => {
+                    console.log('Data: ', doc.data());
+                    // lists.push({ ...doc.data(), id: doc.id });
+                });
+            } catch (error) {
+                console.log('An error occurred: ', error);
+            }
         }
 
         getLists();
