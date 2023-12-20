@@ -1,4 +1,6 @@
-import { collection, getDocs, query, where } from 'firebase/firestore';
+/* eslint-disable react-hooks/exhaustive-deps */
+
+import { collection, doc, getDocs, query, where } from 'firebase/firestore';
 import React from 'react';
 import { db } from '../../../firebaseConfig';
 import { useAuth } from '../../../hooks/useAuth';
@@ -21,15 +23,15 @@ export default function List() {
         async function getLists() {
             try {
                 const listsRef = collection(db, 'lists');
-                // const lists: ListProps = [];
 
-                const q = query(listsRef, where('author', '==', `/users/${currentUser?.uid}`));
+                const q = query(listsRef, where('author', '==', doc(db, `/users/${currentUser?.uid}`)));
                 const querySnapshot = await getDocs(q);
-                console.log('Snapshot: ', querySnapshot);
 
                 querySnapshot.forEach((doc) => {
-                    console.log('Data: ', doc.data());
-                    // lists.push({ ...doc.data(), id: doc.id });
+                    setAllLists([
+                        ...allList,
+                        { ...doc.data(), id: doc.id }
+                    ]);
                 });
             } catch (error) {
                 console.log('An error occurred: ', error);
