@@ -1,26 +1,45 @@
-import { collection, getDocs, query } from 'firebase/firestore';
+/* eslint-disable react-hooks/exhaustive-deps */
+
+import { collection, doc, getDocs, query, where } from 'firebase/firestore';
 import React from 'react';
 import { db } from '../../../firebaseConfig';
-// import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from '../../../hooks/useAuth';
 import CardList from '../../organisms/vendor/myList/cardList';
-// import { lists } from '../../organisms/vendor/myList/lists';
+
+type ListProps = {
+    id: string;
+    author: string;
+    description: string;
+    cover: string;
+    isActive: boolean;
+    packages: [];
+}[]
 
 export default function List() {
+    const { currentUser } = useAuth();
     const [allList, setAllLists] = React.useState<any>([]);
 
     React.useEffect(() => {
-        const q = query(collection(db, 'lists'))
-
         async function getLists() {
-            const querySnapshot = await getDocs(q);
+            try {
+                const listsRef = collection(db, 'lists');
 
-            querySnapshot.forEach((doc) => {
-                setAllLists([{ ...doc.data(), id: doc.id }]);
-            });
+                const q = query(listsRef, where('author', '==', doc(db, `/users/${currentUser?.uid}`)));
+                const querySnapshot = await getDocs(q);
+
+                querySnapshot.forEach((doc) => {
+                    setAllLists((prevState: ListProps) => [
+                        ...prevState,
+                        { ...doc.data(), id: doc.id }
+                    ]);
+                });
+            } catch (error) {
+                console.log('An error occurred: ', error);
+            }
         }
 
         getLists();
-    }, []);
+    }, [currentUser?.uid]);
 
     const allLists = allList.map((item: any) => (
         <CardList 
