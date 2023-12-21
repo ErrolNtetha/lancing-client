@@ -28,8 +28,8 @@ export default function List() {
                 const querySnapshot = await getDocs(q);
 
                 querySnapshot.forEach((doc) => {
-                    setAllLists([
-                        ...allList,
+                    setAllLists((prevState: ListProps) => [
+                        ...prevState,
                         { ...doc.data(), id: doc.id }
                     ]);
                 });
