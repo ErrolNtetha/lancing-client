@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import MyList from '../../components/templates/myList';
+import Loading from './loading';
 
 export default function page() {
     return (
-        <section>
+        <Suspense fallback={<Loading />}>
             <MyList />
-        </section>
+        </Suspense>
     );
 };
