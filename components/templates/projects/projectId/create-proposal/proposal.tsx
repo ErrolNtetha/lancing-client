@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { addDoc, collection, doc, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -15,6 +15,7 @@ import { Textarea } from '../../../../../@/components/ui/textarea';
 import { useToast } from '../../../../../@/components/ui/use-toast';
 import { db } from '../../../../../firebaseConfig';
 import { useAuth } from '../../../../../hooks/useAuth';
+import ProjectPreview from '../../../../organisms/client/project/projectPreview';
 
 const ProposalScheme = z.object({
     title: z.string({ required_error: 'This field is required.' }).min(30, 'Title is too short.'),
@@ -27,6 +28,8 @@ const ProposalScheme = z.object({
 
 export default function Proposal() {
     const [loading, setLoading] = React.useState(false);
+    const [previewLoading, setPreviewLoading] = React.useState(true);
+    const [project, setProject] = React.useState({});
     const params = useParams();
     const router = useRouter();
     const { toast } = useToast();
@@ -38,6 +41,26 @@ export default function Proposal() {
             additionalNotes: '',
         }
     });
+
+    React.useEffect(() => {
+        const getProjectDetails = async () => {
+            try {
+                const projectRef = doc(db, `projects/${params?.projectId}`);
+                const document = await getDoc(projectRef);
+
+                if (document.exists()) {
+                    console.log(document.data());
+                    setProject(document.data());
+                }
+            } catch (error) {
+                console.log('Error occured: ', error);
+            } finally {
+                setPreviewLoading(false);
+            }
+        }
+
+        getProjectDetails();
+    }, [params?.projectId]);
 
     const handleSubmitProposal = async (data: z.infer<typeof ProposalScheme>) => {
         setLoading(true);
@@ -78,19 +101,7 @@ export default function Proposal() {
             <section className='md:p-3 h-max flex-[70%] rounded-md md:border border-gray-200'>
                  <section className='mb-4 gap-3'>
                     <h1 className='font-bold text-xl mb-2'> Send Proposal </h1>
-                    {/*   <section className='flex items-center gap-3'>
-                        <Avatar
-                            src={foundVendors[0].avatar}
-                            alt={`${foundVendors[0].names?.firstName}&apos;s avatar`}
-                            size='w-12 h-12'
-                        />
-                        <section>
-                            <p className='flex items-center gap-2'> To: {foundVendors[0].names?.firstName} {foundVendors[0].names?.lastName} </p>
-                            <p className=''> {foundVendors[0].service} </p>
-                            <p><StarRating value={4} /></p>
-                        </section>
-                    </section> */}
-                    <p className='mt-2 text-sm md:text-md'> It is essential to provide clear and comprehensive information to ensure a smooth collaboration. </p>
+                    <ProjectPreview />
                 </section>
                 <Separator />
                 <form onSubmit={form.handleSubmit(handleSubmitProposal)} className='mt-3 w-full md:max-w-[70%]'>
