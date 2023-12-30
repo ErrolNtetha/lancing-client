@@ -1,12 +1,12 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { addDoc, collection, getDoc, getDocs, query, where } from 'firebase/firestore';
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '../../../@/components/ui/button';
-import { toast } from '../../../@/components/ui/use-toast';
+import { useToast } from '../../../@/components/ui/use-toast';
 import { db } from '../../../firebaseConfig';
 import { FormLabel } from '../formLabel';
 
@@ -17,6 +17,7 @@ const subscribeSchema = z.object({
 export const Subscribe = () => {
     const [response, setResponse] = useState('');
     const [error, setError] = useState(false);
+    const { toast } = useToast();
     const className = 'bg-primary hover:bg-gray-100 hover:text-black hover:border-black text-white py-2 px-3 w-full mt-8 shadow-lg block';
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
         resolver: zodResolver(subscribeSchema),
