@@ -1,9 +1,9 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { addDoc, collection, doc, getDoc, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, doc, DocumentData, getDoc, serverTimestamp } from 'firebase/firestore';
 import { useParams, useRouter } from 'next/navigation';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '../../../../../@/components/ui/button';
@@ -29,7 +29,7 @@ const ProposalScheme = z.object({
 export default function Proposal() {
     const [loading, setLoading] = React.useState(false);
     const [previewLoading, setPreviewLoading] = React.useState(true);
-    const [project, setProject] = React.useState({});
+    const [project, setProject] = React.useState<DocumentData>({});
     const params = useParams();
     const router = useRouter();
     const { toast } = useToast();
@@ -49,7 +49,7 @@ export default function Proposal() {
                 const document = await getDoc(projectRef);
 
                 if (document.exists()) {
-                    console.log(document.data());
+                    console.log('Data: ', document.data());
                     setProject(document.data());
                 }
             } catch (error) {
@@ -101,7 +101,12 @@ export default function Proposal() {
             <section className='md:p-3 h-max flex-[70%] rounded-md md:border border-gray-200'>
                  <section className='mb-4 gap-3'>
                     <h1 className='font-bold text-xl mb-2'> Send Proposal </h1>
-                    <ProjectPreview />
+                    <Suspense fallback={<p>loading</p>}>
+                        <ProjectPreview
+                            title={project?.title}
+                            description={project?.description}
+                        />
+                    </Suspense>
                 </section>
                 <Separator />
                 <form onSubmit={form.handleSubmit(handleSubmitProposal)} className='mt-3 w-full md:max-w-[70%]'>
