@@ -1,11 +1,12 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, getDoc, getDocs, query, where } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '../../../@/components/ui/button';
+import { toast } from '../../../@/components/ui/use-toast';
 import { db } from '../../../firebaseConfig';
 import { FormLabel } from '../formLabel';
 
@@ -27,13 +28,34 @@ export const Subscribe = () => {
         }
 
         const subscribersCollection = collection(db, 'subscribers');
+        const q = query(subscribersCollection, where('email', '==', `${data?.email}`));
+
 
         try {
+            const querySnapshots = await getDocs(q);
+            if (querySnapshots.docs.length > 0) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Oops',
+                    description: 'You are already a subscriber.'
+                });
+                return;
+            }
+
             await addDoc(subscribersCollection, data);
             setResponse('You have subscribed successfully!')
+            toast({
+                className: 'bg-[green]',
+                title: 'Success',
+                description: 'You have successfully subscribed.'
+            });
             
         } catch (error) {
-            console.log('An erorr: ', error);   
+            toast({
+                variant: 'destructive',
+                title: 'Failed',
+                description: 'An error trying to subscribe. Try again.'
+            });
             setError(true);
         }
     };
