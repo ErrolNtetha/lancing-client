@@ -1,6 +1,9 @@
 import { Header } from '../components/organisms/header/header';
 import '../app/globals.css';
 import { Toaster } from '../@/components/ui/toaster';
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
 export default function RootLayout({
     children,
@@ -8,7 +11,7 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <html>
+        <html className={inter.className}>
             <head>
                 <title> Find Freelancers for Your Project | Tedcrunch </title>
                 <meta property='og:title' content='Find Freelancers in South Africa - Tedcrunch' />
