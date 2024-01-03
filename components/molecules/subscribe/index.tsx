@@ -1,11 +1,12 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '../../../@/components/ui/button';
+import { useToast } from '../../../@/components/ui/use-toast';
 import { db } from '../../../firebaseConfig';
 import { FormLabel } from '../formLabel';
 
@@ -16,6 +17,7 @@ const subscribeSchema = z.object({
 export const Subscribe = () => {
     const [response, setResponse] = useState('');
     const [error, setError] = useState(false);
+    const { toast } = useToast();
     const className = 'bg-primary hover:bg-gray-100 hover:text-black hover:border-black text-white py-2 px-3 w-full mt-8 shadow-lg block';
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
         resolver: zodResolver(subscribeSchema),
@@ -25,15 +27,36 @@ export const Subscribe = () => {
         if (!data.email) {
             return;
         }
-
+        setResponse('');
         const subscribersCollection = collection(db, 'subscribers');
+        const q = query(subscribersCollection, where('email', '==', `${data?.email}`));
+
 
         try {
+            const querySnapshots = await getDocs(q);
+            if (querySnapshots.docs.length > 0) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Oops',
+                    description: 'You are already a subscriber.'
+                });
+                return;
+            }
+
             await addDoc(subscribersCollection, data);
             setResponse('You have subscribed successfully!')
+            toast({
+                className: 'bg-[green] text-white',
+                title: 'Success',
+                description: 'You have successfully subscribed.'
+            });
             
         } catch (error) {
-            console.log('An erorr: ', error);   
+            toast({
+                variant: 'destructive',
+                title: 'Failed',
+                description: 'An error trying to subscribe. Try again.'
+            });
             setError(true);
         }
     };
