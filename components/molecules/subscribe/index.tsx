@@ -27,7 +27,7 @@ export const Subscribe = () => {
         if (!data.email) {
             return;
         }
-
+        setResponse('');
         const subscribersCollection = collection(db, 'subscribers');
         const q = query(subscribersCollection, where('email', '==', `${data?.email}`));
 
@@ -46,7 +46,7 @@ export const Subscribe = () => {
             await addDoc(subscribersCollection, data);
             setResponse('You have subscribed successfully!')
             toast({
-                className: 'bg-[green]',
+                className: 'bg-[green] text-white',
                 title: 'Success',
                 description: 'You have successfully subscribed.'
             });
