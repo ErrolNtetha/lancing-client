@@ -36,13 +36,16 @@ export default function ListCards() {
         <Card
             key={item.id}
             id={item.id}
+            avatar={item.avatar}
+            title={item.title}
+            packages={item.packages}
             names={item.names}
             cover={item.cover}
             description={item.description}
         />
     ))
     return (
-        <section className='grid md:grid-cols-3 gap-4'>
+        <section className='grid md:grid-cols-3 gap-4 mb-8 md:mb-0'>
             {renderCards}
         </section>
     );
