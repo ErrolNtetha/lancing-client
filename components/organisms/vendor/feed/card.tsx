@@ -14,7 +14,8 @@ type CardProps = {
     };
     description: string;
     cover: any;
-    id: number;
+    id: string;
+    uid: string;
     avatar: string;
     title: string;
     packages: {
@@ -29,6 +30,7 @@ export default function Card({
     description,
     cover,
     id,
+    uid,
     avatar,
     title,
     packages
@@ -47,7 +49,7 @@ export default function Card({
                             size='w-12 h-12'
                         />
                         <section>
-                            <Link href={`/vendors/${id}`} className='text-sm font-semibold'>{names?.firstName} {names?.lastName} </Link>
+                            <Link href={`/vendors/${uid}`} className='text-sm font-semibold'>{names?.firstName} {names?.lastName} </Link>
                             <p className='flex items-center gap-1'> {title} </p>
                             <span className='flex items-center gap-1'> <StarRating value={5} /> ({5}/5) </span>
                         </section>

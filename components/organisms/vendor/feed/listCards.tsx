@@ -11,7 +11,7 @@ export default function ListCards() {
         const doc = await getDoc(authorRef);
 
         if (doc.exists()) {
-            return doc.data();
+            return doc;
         }
     };
 
@@ -23,9 +23,11 @@ export default function ListCards() {
             const querySnapShot = await getDocs(q);
 
             for (let doc of querySnapShot.docs) {
-                const author = await getAuthor(doc?.data()?.author);
+                const authorDoc = await getAuthor(doc?.data()?.author);
+                const uid = authorDoc?.id;
+                const author = authorDoc?.data();
                 // @ts-ignore
-                setCards((prevState: any) => [ ...prevState, {  id: doc.id, ...author, ...doc.data() }]);
+                setCards((prevState: any) => [ ...prevState, {  uid, id: doc.id, ...author, ...doc.data() }]);
             }
         }
 
@@ -36,6 +38,7 @@ export default function ListCards() {
         <Card
             key={item.id}
             id={item.id}
+            uid={item.uid}
             avatar={item.avatar}
             title={item.title}
             packages={item.packages}
