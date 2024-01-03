@@ -15,6 +15,13 @@ type CardProps = {
     description: string;
     cover: any;
     id: number;
+    avatar: string;
+    title: string;
+    packages: {
+        price: number;
+        rate: string;
+        level: string;
+    }[];
 }
 
 export default function Card({
@@ -22,21 +29,26 @@ export default function Card({
     description,
     cover,
     id,
+    avatar,
+    title,
+    packages
 }: CardProps
 ) {
+    const minimumPrice: number = packages.reduce((minPrice, currentPackage) => Math.min(minPrice, currentPackage.price), Infinity);
+
     return (
         <section className='text-black text-[.8rem] md:text-sm rounded-md border border-gray bg-white shadow-md w-full md:w-[20rem] max-h-max p-2'>
             <section>
                 <section className='flex items-center justify-between mb-4'>
                     <span className='flex gap-2'>
                         <Avatar
-                            src='/assets/images/errol.png'
-                            alt={`${names.firstName}&apos;s avatar`}
+                            src={avatar}
+                            alt={`${names?.firstName}&apos;s avatar`}
                             size='w-12 h-12'
                         />
                         <section>
-                            <Link href={`/vendors/${id}`} className='text-sm font-semibold'>{names.firstName} {names.lastName} </Link>
-                            <p className='flex items-center gap-1'> Logo Designer  </p>
+                            <Link href={`/vendors/${id}`} className='text-sm font-semibold'>{names?.firstName} {names?.lastName} </Link>
+                            <p className='flex items-center gap-1'> {title} </p>
                             <span className='flex items-center gap-1'> <StarRating value={5} /> ({5}/5) </span>
                         </section>
                     </span>
@@ -56,7 +68,7 @@ export default function Card({
                             <h6 className='font-bold text-sm text-gray-600'> STARTING FROM </h6>
                             <h2 className='flex font-bold'> 
                                 <span className='text-sm'> R </span> 
-                                <span className='text-2xl'>{formatAmount(320)}<span className='text-sm'>/hr</span> </span>
+                                <span className='text-2xl'>{formatAmount(minimumPrice)}<span className='text-sm'>/hr</span> </span>
                             </h2>
                         </span>
                 </section>
