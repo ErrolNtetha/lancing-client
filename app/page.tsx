@@ -11,7 +11,7 @@ const Home = () => {
     return (
         <section className='bg-primary'>
             <Head>
-                <title> Find freelancers and get your work done in minutes | Duello </title>
+                <title> Find freelancers and get your work done in minutes | Tedcrunch </title>
                 <meta name='description' content='Finding freelancers for your work has never been easier with our platform.' />
             </Head>
 
