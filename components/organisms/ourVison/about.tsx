@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { COMPANY_NAME } from '../../../constants/companyName';
 
 export const About = () => {
     return (
@@ -11,10 +12,10 @@ export const About = () => {
                         Redefining the Freelancing Experience in South Africa
                     </h1>
                     <p className='max-w-lg text-md mb-8 md:text-md'> 
-                        Duello is a South African freelancing marketplace for highly skilled freelancers.
+                        {COMPANY_NAME} is a South African freelancing marketplace for highly skilled freelancers.
                         <br />
                         <br />
-                        Founded by Mphumeleli Ntetha, a visionary entrepreneur with a relentless drive for excellence, Duello was 
+                        Founded by Mphumeleli Ntetha, a visionary entrepreneur with a relentless drive for excellence, {COMPANY_NAME} was 
                         born out of a deep understanding of the freelancing landscape. With years of experience as both a freelancer 
                         and client, Mphumeleli recognized the need for a platform that not only connects talent but also nurtures 
                         growth, trust, and innovation.
