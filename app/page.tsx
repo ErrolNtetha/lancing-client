@@ -3,7 +3,7 @@ import React from 'react';
 import { Footer } from '../components/organisms/footer';
 import { Hero } from '../components/organisms/hero';
 import { Newsletter } from '../components/organisms/newsletter';
-import { OurTeam } from '../components/organisms/ourTeam';
+// import { OurTeam } from '../components/organisms/ourTeam';
 import { OurVision } from '../components/organisms/ourVison';
 import Showcase from '../components/organisms/showcase';
 
@@ -19,7 +19,7 @@ const Home = () => {
                 <Hero />
                 <Showcase />
                 <OurVision />
-                <OurTeam />
+                {/* <OurTeam /> */}
                 <Newsletter />
                 <Footer />
             </main>
