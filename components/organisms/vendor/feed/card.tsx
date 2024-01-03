@@ -31,11 +31,11 @@ export default function Card({
                     <span className='flex gap-2'>
                         <Avatar
                             src='/assets/images/errol.png'
-                            alt={`${names.firstName}&apos;s avatar`}
+                            alt={`${names?.firstName}&apos;s avatar`}
                             size='w-12 h-12'
                         />
                         <section>
-                            <Link href={`/vendors/${id}`} className='text-sm font-semibold'>{names.firstName} {names.lastName} </Link>
+                            <Link href={`/vendors/${id}`} className='text-sm font-semibold'>{names?.firstName} {names?.lastName} </Link>
                             <p className='flex items-center gap-1'> Logo Designer  </p>
                             <span className='flex items-center gap-1'> <StarRating value={5} /> ({5}/5) </span>
                         </section>
