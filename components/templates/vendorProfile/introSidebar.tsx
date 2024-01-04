@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ProfileHeader from '../../organisms/vendor/profile/header';
+import SendOfferButton from '../../organisms/vendor/profile/offerButton';
 import SendMessage from '../../organisms/vendor/profile/sendMessageButton';
 
 type VendorProps = {
@@ -21,6 +22,9 @@ export default function VendorSidebar({ vendor, vendorId }: VendorProps) {
             <SendMessage
                 uid={vendorId}
                 names={vendor?.names}
+            />
+            <SendOfferButton
+                id={vendorId}
             />
         </section>
     )
