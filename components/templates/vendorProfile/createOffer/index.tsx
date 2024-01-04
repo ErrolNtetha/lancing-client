@@ -31,8 +31,7 @@ const OfferScheme = z.object({
 });
 
 export default function Offer() {
-    const params = useParams();
-    const foundVendors = vendors.filter((v) => v.id === Number(params?.vendorId));
+    // const params = useParams();
     const router = useRouter();
     const form = useForm<z.infer<typeof OfferScheme>>({
         mode: 'onChange',
@@ -46,7 +45,7 @@ export default function Offer() {
             <section className='md:p-3 h-max flex-[70%] rounded-md md:border border-gray-200'>
                 <section className='mb-4 gap-3'>
                     <h1 className='font-bold text-xl mb-2'> Create an offer </h1>
-                    <section className='flex items-center gap-3'>
+                    {/* <section className='flex items-center gap-3'>
                         <Avatar
                             src={foundVendors[0].avatar}
                             alt={`${foundVendors[0].names?.firstName}&apos;s avatar`}
@@ -57,7 +56,7 @@ export default function Offer() {
                             <p className=''> {foundVendors[0].service} </p>
                             <p><StarRating value={4} /></p>
                         </section>
-                    </section>
+                    </section> */}
                     <p className='mt-2 text-sm md:text-md'> It is essential to provide clear and comprehensive information to ensure a smooth collaboration. </p>
                 </section>
                 <Separator />
@@ -308,7 +307,7 @@ export default function Offer() {
             </section>
             <aside className='hidden p-3 flex-[20%] rounded-md md:block border border-gray-200 h-max'>
                 <h1 className='font-bold text-md mb-1'>Bio</h1>
-                <p className='text-sm'>{foundVendors[0].description}</p>
+                <p className='text-sm'> description </p>
             </aside>
         </section>
     );

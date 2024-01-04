@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ProfileHeader from '../../organisms/vendor/profile/header';
+import SendOfferButton from '../../organisms/vendor/profile/offerButton';
 import SendMessage from '../../organisms/vendor/profile/sendMessageButton';
 
 type VendorProps = {
@@ -18,10 +19,15 @@ export default function VendorSidebar({ vendor, vendorId }: VendorProps) {
                 bio={vendor?.bio} 
                 avatar={vendor?.avatar}
             />
-            <SendMessage
-                uid={vendorId}
-                names={vendor?.names}
-            />
+            <section className='flex items-center gap-2'>
+                <SendOfferButton
+                    id={vendorId}
+                />
+                <SendMessage
+                    uid={vendorId}
+                    names={vendor?.names}
+                />
+            </section>
         </section>
     )
 }
