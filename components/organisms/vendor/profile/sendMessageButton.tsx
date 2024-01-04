@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { addDoc, collection, doc, serverTimestamp } from 'firebase/firestore';
 import React from 'react'
 import { useForm } from 'react-hook-form';
-import { FiSend } from 'react-icons/fi'
+import { FiMessageCircle, FiSend } from 'react-icons/fi'
 import { MoonLoader } from 'react-spinners';
 import z from 'zod';
 import { Button } from '../../../../@/components/ui/button'
@@ -65,8 +65,8 @@ export default function SendMessage({ names, uid }: MessageProps) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant='outline' className='font-semibold w-full flex items-center gap-3 mt-4'> 
-                    Direct Message
+                <Button variant='outline' className='font-semibold flex items-center gap-3 mt-4'> 
+                    <FiMessageCircle />
                 </Button>
             </DialogTrigger>
             <DialogContent>

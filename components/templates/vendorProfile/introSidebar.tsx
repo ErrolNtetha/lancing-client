@@ -19,13 +19,15 @@ export default function VendorSidebar({ vendor, vendorId }: VendorProps) {
                 bio={vendor?.bio} 
                 avatar={vendor?.avatar}
             />
-            <SendMessage
-                uid={vendorId}
-                names={vendor?.names}
-            />
-            <SendOfferButton
-                id={vendorId}
-            />
+            <section className='flex items-center gap-2'>
+                <SendOfferButton
+                    id={vendorId}
+                />
+                <SendMessage
+                    uid={vendorId}
+                    names={vendor?.names}
+                />
+            </section>
         </section>
     )
 }
