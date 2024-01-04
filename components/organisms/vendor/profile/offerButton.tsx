@@ -8,9 +8,9 @@ type SendOfferProps = {
 
 export default function SendOfferButton({ id }: SendOfferProps) {
     return (
-        <Button variant='link' className='w-full'>
+        <Button asChild className='text-bold mt-2 w-full'>
             <Link href={`vendors/${id}/create-offer`}>
-                Send Offer
+                Make Offer
             </Link>
         </Button>
     );
