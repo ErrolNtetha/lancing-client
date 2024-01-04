@@ -21,7 +21,7 @@ export default function ProfileHeader({ names, title, bio, avatar }: IProps) {
                 <Avatar
                     src={avatar}
                     alt={`${names?.firstName}&apos;s avatar`}
-                    size='w-12 h-12'
+                    size='w-14 h-14'
                 />
                 <span className='flex flex-col'>
                     <h2 className='w-full font-semibold'> {names?.firstName} {names?.lastName} </h2>
