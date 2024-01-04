@@ -19,6 +19,7 @@ export default function ProfilePage() {
                 const vendorProfile = await getDoc(userRef);
                 if (vendorProfile.exists()) {
                     setVendor(vendorProfile.data());
+                    console.log('Vendor profile: ', vendorProfile.data());
                 }
             } catch (error) {
                 console.log('an error occurred: ', error);
