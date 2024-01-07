@@ -1,6 +1,6 @@
 'use client'
 
-import { collection, doc, getDocs, query, where } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import React, { useState } from 'react'
 import { Separator } from '../../../../@/components/ui/separator';
 import { db } from '../../../../firebaseConfig';
@@ -11,21 +11,37 @@ import OfferCard from './offerCard';
 export default function ListOffersCards() {
     const { currentUser } = useAuth();
     const [offers, setOffers] = useState<any>([]);
+    const [author, setAuthor] = useState<any>({});
 
     React.useEffect(() => {
         const getOffers = async () => {
             const offersRef = collection(db, 'offers');
             const q = query(offersRef, where('to', '==', doc(db, `users/${currentUser?.uid}`)));
 
+            const getAuthor = async (authorId: any) => {
+                const authorRef = doc(db, authorId);
+                const authorDoc = await getDoc(authorRef);
+
+                if (authorDoc.exists()) {
+                    setAuthor(author.data());
+                }
+            }
+
             const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
+            for (let doc of querySnapshot.docs) {
                 console.log(doc.data());
-                setOffers((prevState: any) => [...prevState, { id: doc.id, ...doc.data() }]);
+                getAuthor(doc.data()?.to);
+                setOffers((prevState: any) => [...prevState, { id: doc.id, ...author, ...doc.data() }]);
+            }
+
+            querySnapshot.forEach((doc) => {
+
+
             });
         };
 
         getOffers();
-    }, [currentUser]);
+    }, [currentUser, author]);
 
     const listOffers = offers.map((item: any) => <OfferCard key={item.id} {...item} />);
 
