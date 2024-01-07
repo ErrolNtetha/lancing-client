@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import format from 'date-fns/format';
-import { addDoc, collection, doc } from 'firebase/firestore';
+import { addDoc, collection, doc, serverTimestamp } from 'firebase/firestore';
 import { CalendarIcon } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
@@ -57,8 +57,8 @@ export default function Offer() {
                 from: doc(db, `users/${currentUser?.uid}`),
                 to: doc(db, `users/${params?.vendorId}`),
                 comment: null,
-                updatedAt: new Date(),
-                createdAt: new Date(),
+                updatedAt: serverTimestamp(),
+                createdAt: serverTimestamp(),
             });
             toast({
                 title: 'Success',
