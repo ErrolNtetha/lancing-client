@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import format from 'date-fns/format';
+import { addDoc, collection, doc, serverTimestamp } from 'firebase/firestore';
 import { CalendarIcon } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
@@ -15,7 +16,10 @@ import { Popover, PopoverContent, PopoverTrigger } from '../../../../@/component
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../../@/components/ui/select';
 import { Separator } from '../../../../@/components/ui/separator';
 import { Textarea } from '../../../../@/components/ui/textarea';
+import { useToast } from '../../../../@/components/ui/use-toast';
 import { cn } from '../../../../@/lib/utils';
+import { db } from '../../../../firebaseConfig';
+import { useAuth } from '../../../../hooks/useAuth';
 import { Avatar } from '../../../molecules/image';
 import { StarRating } from '../../../molecules/star-rating';
 import { vendors } from '../../../organisms/vendor/vendors';
@@ -32,13 +36,46 @@ const OfferScheme = z.object({
 
 export default function Offer() {
     // const params = useParams();
+    const [loading, setLoading] = React.useState(false);
+    const params = useParams();
+    const { currentUser } = useAuth();
+    const { toast } = useToast();
     const router = useRouter();
     const form = useForm<z.infer<typeof OfferScheme>>({
         mode: 'onChange',
         resolver: zodResolver(OfferScheme),
     });
 
-    const handleSubmitOffer = (data: z.infer<typeof OfferScheme>) => console.log(data);
+    const handleSubmitOffer = async (data: z.infer<typeof OfferScheme>) => {
+        setLoading(true);
+        try {
+            const offersRef = collection(db, 'offers');
+
+            await addDoc(offersRef, {
+                ...data,
+                status: 'pending', // accepted, declined, pending, cencelled
+                from: doc(db, `users/${currentUser?.uid}`),
+                to: doc(db, `users/${params?.vendorId}`),
+                comment: null,
+                updatedAt: serverTimestamp(),
+                createdAt: serverTimestamp(),
+            });
+            toast({
+                title: 'Success',
+                description: 'Offer submitted successfully.'
+            });
+            router.push('/feed');
+        } catch (error) {
+            console.log(error);
+            toast({
+                variant: 'destructive',
+                title: 'Failed',
+                description: 'There was an error.',
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <section className='md:container mb-10 flex gap-6 relative'>
