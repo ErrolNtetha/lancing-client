@@ -19,8 +19,7 @@ export default function ListOffersCards() {
             const q = query(offersRef, where('to', '==', doc(db, `users/${currentUser?.uid}`)));
 
             const getAuthor = async (authorId: any) => {
-                const authorRef = doc(db, authorId);
-                const authorDoc = await getDoc(authorRef);
+                const authorDoc = await getDoc(authorId);
 
                 if (authorDoc.exists()) {
                     setAuthor(author.data());
@@ -33,11 +32,6 @@ export default function ListOffersCards() {
                 getAuthor(doc.data()?.to);
                 setOffers((prevState: any) => [...prevState, { id: doc.id, ...author, ...doc.data() }]);
             }
-
-            querySnapshot.forEach((doc) => {
-
-
-            });
         };
 
         getOffers();
