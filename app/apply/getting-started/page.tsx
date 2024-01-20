@@ -4,49 +4,44 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FiCheck } from 'react-icons/fi';
+import { Button } from '../../../@/components/ui/button';
 
 export default function GettingStarted() {
     const router = useRouter();
     const handleNextStep = () => router.push('/apply/personal');
 
   return (
-      <section className='container'>
-        <h3 className='font-semibold text-md text-gray'> Get Started </h3>
+      <>
+        <h3 className='font-semibold text-md text-gray-400'> Get Started </h3>
         <h3 className='font-semibold text-2xl'>
-            Hey, are you ready to take on new oppportunities? It takes about 10 minutes.
+            Before starting an application, please take note of the following checklist...
         </h3>
-        <p className='text-md mb-4'> 
-            To be able to apply for jobs, we require that you apply for an application.
-        </p>
         <section>
+            <br />
+            <h2 className='font-bold'> You must: </h2>
             <ul>
-                <li className='flex items-center gap-2'> <FiCheck className='font-lg font-bold text-[green]' /> Project milestones </li>
-                <li className='flex items-center gap-2'> <FiCheck className='font-lg font-bold text-[green]' /> Safe payment system </li>
-                <li className='flex items-center gap-2'> <FiCheck className='font-bold text-[green]' /> Customer Support </li>
-                <li className='flex items-center gap-2'> <FiCheck className='font-bold text-[green]' /> Fast payments </li>
-                <li className='flex items-center gap-2'> <FiCheck className='font-bold text-[green]' /> Enhanced communication tools </li>
-                <li className='flex items-center gap-2'> <FiCheck className='font-bold text-[green]' /> and more... </li>
+                <li className='flex items-center gap-2'> <FiCheck className='font-bold text-[green]' /> Be a South African citizen </li>
+                <li className='flex items-center gap-2'> <FiCheck className='font-bold text-[green]' /> <strong>Not</strong> be an Agency </li>
+                <li className='flex items-center gap-2'> <FiCheck className='font-lg font-bold text-[green]' /> Have a South African bank account </li>
+                <li className='flex items-center gap-2'> <FiCheck className='font-lg font-bold text-[green]' /> Provide a clear profile picture </li>
+                <li className='flex items-center gap-2'> <FiCheck className='font-lg font-bold text-[green]' /> Have at least a portfolio </li>
             </ul>
             <br />
             <br />
-            <h2 className='font-bold'> Please note </h2>
+            <h2 className='font-bold'> Please note: </h2>
             <p>
-                Creating an application on this platform does not guarantee approval. 
-                Part of our mission is to make sure we are the only hope for the best talents. 
+                Creating an application on this platform does not guarantee approval. {" "}
                 <Link className='text-[blue] underline' href='/guides'>
                     Learn more
                 </Link>. 
             </p>
         </section>
 
-        <section className='flex item-center justify-right w-full'>
-            <button
-                className='bg-slate-900 text-white px-3 py-2'
-                onClick={handleNextStep}
-            >
-                Get Started 
-            </button>
+        <section className='fixed bottom-0 left-0 w-full p-2 bg-background'>
+            <Button className='w-full' type='button' onClick={handleNextStep}>
+                Get Started
+            </Button>
         </section>
-      </section>
+      </>
   );
 };
