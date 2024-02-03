@@ -45,6 +45,7 @@ export default function Preview() {
                 const data = await res.json();
                 const formData = {
                     application: {
+                        hasApplied: true,
                         isApproved: false,
                         status: 'pending', //  'pending' | 'declined' | 'approved'
                         createdAt: new Date(),
