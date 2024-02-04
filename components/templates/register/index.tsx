@@ -78,16 +78,33 @@ export const Registration = () => {
 
             if (user && auth.currentUser) {
                 await updateProfile(auth.currentUser, { displayName: `${firstName} ${lastName}`});
-                await setDoc(userRef, {
-                    email: user.email,
-                    emailVerified: user.emailVerified,
-                    avatar: user.photoURL,
-                    isClient: accountType === 'client',
-                    names: {
-                        firstName,
-                        lastName
-                    }
-                });
+
+                if (accountType === 'client') {
+                    await setDoc(userRef, {
+                        email: user.email,
+                        emailVerified: user.emailVerified,
+                        avatar: user.photoURL,
+                        isClient: true,
+                        names: {
+                            firstName,
+                            lastName
+                        },
+                    });
+                } else {
+                    await setDoc(userRef, {
+                        email: user.email,
+                        emailVerified: user.emailVerified,
+                        avatar: user.photoURL,
+                        isClient: false,
+                        names: {
+                            firstName,
+                            lastName
+                        },
+                        application: {
+                            hasApplied: false,
+                        },
+                    });
+                }
             }
             router.push('/feed');
 
