@@ -92,7 +92,14 @@ export default function Milestone() {
                                         Milestone {index + 1}: {item?.title}
                                     </AccordionTrigger>
                                     <AccordionContent>
-                                        <span className='font-bold'> Description: </span> {item?.description}
+                                        <section>
+                                            <span className='font-bold'> Description: </span> {item?.description}
+                                        </section>
+                                        <Separator />
+                                        <section className='flex justify-between items-center py-2'>
+                                            <span> Deadline: 30 May 2024 </span>
+                                            <span> Payment: 30% </span>
+                                        </section>
                                     </AccordionContent>
                                 </AccordionItem>
                             </Accordion>
