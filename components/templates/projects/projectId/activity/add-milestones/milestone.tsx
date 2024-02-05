@@ -9,7 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '..
 import { Button } from '../../../../../../@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../../../../../../@/components/ui/form';
 import { Input } from '../../../../../../@/components/ui/input';
-// import { Separator } from '../../../../../../@/components/ui/separator';
+import { Separator } from '../../../../../../@/components/ui/separator';
 import { Textarea } from '../../../../../../@/components/ui/textarea';
 
 const milestonesSchema = z.object({
@@ -40,7 +40,9 @@ export default function Milestone() {
                     Milestones are essential for breaking down a larger project into manageable phases, tracking progress and ensuring a smooth collaboration.
                 </p>
             </section>
-            <section className='flex-[0.5]'>
+            <Separator />
+
+            <section className='mt-4 flex-[0.5]'>
                 <Form {...useForm()}>
                     <section>
                         <FormField
@@ -79,7 +81,7 @@ export default function Milestone() {
             </section>
             </form>
 
-            <section className='flex-1 h-max border border-md rounded-md bg-gray-100 px-2 py-0'>
+            <section className='flex-1 mt-6 md:mt-0 h-max border border-md rounded-md bg-gray-100 px-2 py-0'>
                 {!fields.length 
                     ? <section className='font-bold flex items-center justify-center h-20'> No milestones added yet. </section>
                     : fields.map((item: any, index) => (
@@ -90,7 +92,7 @@ export default function Milestone() {
                                         Milestone {index + 1}: {item?.title}
                                     </AccordionTrigger>
                                     <AccordionContent>
-                                        {item?.description}
+                                        <span className='font-bold'> Description: </span> {item?.description}
                                     </AccordionContent>
                                 </AccordionItem>
                             </Accordion>
