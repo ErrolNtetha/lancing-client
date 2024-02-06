@@ -14,7 +14,9 @@ type OfferProps = {
         amountSpent: number | null;
         rating: number;
     };
-    createdAt: Date | string;
+    createdAt: {
+        seconds: number | Date;
+    }
 }
 
 export default function OfferCard({ client, id, createdAt }: OfferProps) {
@@ -24,11 +26,11 @@ export default function OfferCard({ client, id, createdAt }: OfferProps) {
         <Link className='flex justify-between hover:bg-gray-100 p-2' href={`offers/${id}`}>
             <span>
                 <h3 className='font-medium text-sm'> {names?.firstName} {names?.lastName} </h3>
-                <p className='text-sm'> <StarRating value={rating} /> </p>
-                <p className='text-sm'> Spent: <span className='font-bold text-[green]'> R{formatAmountSuffix(amountSpent)} </span> </p>
+                <p className='text-sm'> <StarRating value={rating || 0} /> </p>
+                <p className='text-sm'> Spent: <span className='font-bold text-[green]'> R{formatAmountSuffix(amountSpent || 0)} </span> </p>
             </span>
             <span className='flex flex-col gap-2'>
-                <p className='text-xs mb-1'> {formatDistance(new Date(createdAt), new Date(), { addSuffix: true, includeSeconds: true })} </p>
+                <p className='text-xs mb-1'> {formatDistance(new Date(createdAt.seconds), new Date(), { addSuffix: true, includeSeconds: true })} </p>
             </span>
         </Link>
     );
