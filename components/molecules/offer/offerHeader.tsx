@@ -23,11 +23,11 @@ export default function OfferHeader({ client }: OProps) {
                 <span 
                     className='flex items-center gap-2'
                 > 
-                    <StarRating value={client?.rating} /> 
+                    <StarRating value={client?.rating || 0} /> 
                     <span className='text-sm'> 
-                        ({client?.rating}/5) 
+                        ({client?.rating || 0}/5) 
                     </span> -
-                    Spent: <span className='text-[green] text-sm font-semibold'> R{formatAmountSuffix(client?.amountSpent)} </span>
+                    Spent: <span className='text-[green] text-sm font-semibold'> R{formatAmountSuffix(client?.amountSpent || 0)} </span>
                 </span>
             </span>
         </section>
