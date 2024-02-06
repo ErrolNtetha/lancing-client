@@ -37,6 +37,7 @@ export default function ListOffersCards() {
         getOffers();
     }, [currentUser?.uid]);
 
+
     const listOffers = offers.map((item: any) => <OfferCard key={item.id} {...item} />);
 
     return (

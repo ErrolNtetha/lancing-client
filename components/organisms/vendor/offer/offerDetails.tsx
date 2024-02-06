@@ -21,6 +21,10 @@ export default function OfferDetails() {
     const params = useParams();
     const foundOffers = offers?.find(({ id }) => id === params?.offerId);
 
+    React.useEffect(() => {
+
+    }, []);
+
     return (
         <section className='text-sm h-[90vh]'>
             <OfferHeader client={foundOffers?.client!}  />
