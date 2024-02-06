@@ -1,41 +1,42 @@
 'use client'
 
-import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
-import React, { useState } from 'react'
+import { collection, doc, DocumentReference, getDoc, getDocs, query, where } from 'firebase/firestore';
+import React from 'react'
 import { Separator } from '../../../../@/components/ui/separator';
 import { db } from '../../../../firebaseConfig';
 import { useAuth } from '../../../../hooks/useAuth';
 import OfferCard from './offerCard';
-// import { offers } from './offers';
+import OffersNotFound from './offersNotFound';
 
 export default function ListOffersCards() {
+    const [offers, setOffers] = React.useState<any>([]);
     const { currentUser } = useAuth();
-    const [offers, setOffers] = useState<any>([]);
-    const [author, setAuthor] = useState<any>({});
+
+    async function getAuthor(uid: DocumentReference) {
+        const author = await getDoc(uid);
+
+        if (author.exists()) {
+            return author;
+        }
+    }
 
     React.useEffect(() => {
-        const getOffers = async () => {
+        async function getOffers() {
             const offersRef = collection(db, 'offers');
             const q = query(offersRef, where('to', '==', doc(db, `users/${currentUser?.uid}`)));
 
-            const getAuthor = async (authorId: any) => {
-                const authorDoc = await getDoc(authorId);
-
-                if (authorDoc.exists()) {
-                    setAuthor(author.data());
-                }
-            }
-
             const querySnapshot = await getDocs(q);
             for (let doc of querySnapshot.docs) {
-                console.log(doc.data());
-                getAuthor(doc.data()?.to);
-                setOffers((prevState: any) => [...prevState, { id: doc.id, ...author, ...doc.data() }]);
+                const { from, createdAt } = doc.data();
+                const client = await getAuthor(from);
+
+                setOffers((prevState: any) => [...prevState, { id: doc.id, createdAt, client: client?.data() }]);
             }
-        };
+        }
 
         getOffers();
-    }, [currentUser, author]);
+    }, [currentUser?.uid]);
+
 
     const listOffers = offers.map((item: any) => <OfferCard key={item.id} {...item} />);
 
@@ -47,7 +48,7 @@ export default function ListOffersCards() {
             </section>
             <section className='divide-y divide-gray-200'>
                 {!offers.length 
-                    ? <p className='p-3'> You have no offers yet. </p>
+                    ? <OffersNotFound />
                     : listOffers
                 }
             </section>
