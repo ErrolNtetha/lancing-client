@@ -18,8 +18,8 @@ export default function OfferContent({ description, startDate, deadline }: Offer
           <section>
               <Separator />
               <span className='my-4'>
-                  <h3 className='font-semibold'> Client Brief </h3>
-                  <p className='line-clamp-3'> {description} </p>
+                  <h3 className='font-semibold'> Description </h3>
+                  <p className='whitespace-pre-line'> {description} </p>
               </span>
           </section>
 
