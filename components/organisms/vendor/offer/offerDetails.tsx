@@ -57,8 +57,34 @@ export default function OfferDetails() {
         }
     };
 
-const handleDeclineOffer = () => {
-    console.log('offer declined');
+const handleDeclineOffer = async () => {
+    setLoading(true);
+    const offerRef = doc(db, `offers/${params?.offerId}`)
+
+    try {
+        await updateDoc(offerRef, {
+            status: 'declined',
+            declined: true,
+            updatedAt: serverTimestamp()
+        });
+
+        toast({
+            title: 'Offer Accepted',
+            description: 'You have successfully declined the offer'
+        });
+
+        router.push('/offers');
+
+    } catch(error) {
+        toast({
+            title: 'An error occured',
+            description: 'There was an error declining an offer.',
+            variant: 'destructive'
+        });
+
+    } finally {
+        setLoading(false);
+    }
 };
 
     React.useEffect(() => {

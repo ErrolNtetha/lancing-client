@@ -14,7 +14,7 @@ export default function OfferFooter({ handleAcceptOffer, handleDeclineOffer, loa
             <AlertDialog>
                 <AlertDialogTrigger asChild>
                     <Button type='button' variant='destructive' className='flex-1'>
-                        Decline
+                        {loading ? 'Declining...' : 'Decline'}
                     </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
