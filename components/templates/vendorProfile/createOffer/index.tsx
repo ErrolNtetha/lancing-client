@@ -54,6 +54,8 @@ export default function Offer() {
             await addDoc(offersRef, {
                 ...data,
                 status: 'pending', // accepted, declined, pending, cencelled
+                accepted: null,
+                declined: null,
                 from: doc(db, `users/${currentUser?.uid}`),
                 to: doc(db, `users/${params?.vendorId}`),
                 comment: null,
