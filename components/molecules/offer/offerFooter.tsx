@@ -28,8 +28,10 @@ export default function OfferFooter({ handleAcceptOffer, handleDeclineOffer }: F
                         <AlertDialogCancel>
                             Cancel
                         </AlertDialogCancel>
-                        <AlertDialogAction onClick={handleDeclineOffer}>
-                            Yes, decline
+                        <AlertDialogAction asChild>
+                            <Button variant='destructive' onClick={handleDeclineOffer}>
+                                Yes, decline
+                            </Button>
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
