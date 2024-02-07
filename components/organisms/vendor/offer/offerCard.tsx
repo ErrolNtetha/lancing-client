@@ -30,7 +30,7 @@ export default function OfferCard({ client, id, createdAt }: OfferProps) {
                 <p className='text-sm'> Spent: <span className='font-bold text-[green]'> R{formatAmountSuffix(amountSpent || 0)} </span> </p>
             </span>
             <span className='flex flex-col gap-2'>
-                <p className='text-xs mb-1'> {formatDistance(new Date(createdAt.seconds), new Date(), { addSuffix: true, includeSeconds: true })} </p>
+                <p className='text-xs mb-1'> {formatDistance(new Date(createdAt.seconds.toString()), new Date(), { addSuffix: true, includeSeconds: true })} </p>
             </span>
         </Link>
     );
