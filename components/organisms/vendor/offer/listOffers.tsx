@@ -23,7 +23,7 @@ export default function ListOffersCards() {
     React.useEffect(() => {
         async function getOffers() {
             const offersRef = collection(db, 'offers');
-            const q = query(offersRef, where('to', '==', doc(db, `users/${currentUser?.uid}`)));
+            const q = query(offersRef, where('to', '==', doc(db, `users/${currentUser?.uid}`)), where('status', '==', 'pending'));
 
             const querySnapshot = await getDocs(q);
             for (let doc of querySnapshot.docs) {
