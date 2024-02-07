@@ -3,7 +3,7 @@ import AddMilestone from './add-milestones';
 
 export default function AddMilestones() {
     return (
-        <div>
+        <div className='mb-8'>
             <AddMilestone />
         </div>
     );

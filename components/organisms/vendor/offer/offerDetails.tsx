@@ -32,6 +32,7 @@ export default function OfferDetails() {
 
         try {
             await updateDoc(offerRef, {
+                status: 'accepted',
                 accepted: true,
                 updatedAt: serverTimestamp()
             });
@@ -86,6 +87,7 @@ const handleDeclineOffer = () => {
             <OfferFooter
                 handleAcceptOffer={handleAcceptOffer}
                 handleDeclineOffer={handleDeclineOffer}
+                loading={loading}
             />
         </section>
     );
