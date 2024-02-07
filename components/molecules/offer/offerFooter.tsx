@@ -5,9 +5,10 @@ import { Button } from '../../../@/components/ui/button';
 type FProps = {
     handleAcceptOffer: React.MouseEventHandler<HTMLButtonElement>;
     handleDeclineOffer: React.MouseEventHandler<HTMLButtonElement>;
+    loading: boolean;
 };
 
-export default function OfferFooter({ handleAcceptOffer, handleDeclineOffer }: FProps) {
+export default function OfferFooter({ handleAcceptOffer, handleDeclineOffer, loading }: FProps) {
     return (
         <div className='fixed flex items-center p-2 bg-background gap-2 w-full bottom-0 left-0'>
             <AlertDialog>
@@ -39,8 +40,8 @@ export default function OfferFooter({ handleAcceptOffer, handleDeclineOffer }: F
 
             <AlertDialog>
                 <AlertDialogTrigger asChild>
-                    <Button type='button' className='flex-1'>
-                        Accept
+                    <Button type='button' className='flex-1' disabled={loading}>
+                        {loading ? 'Accepting...' : 'Accept'}
                     </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>

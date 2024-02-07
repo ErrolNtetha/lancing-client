@@ -60,7 +60,7 @@ export default function Offer() {
                 to: doc(db, `users/${params?.vendorId}`),
                 comment: null,
                 updatedAt: serverTimestamp(),
-                createdAt: serverTimestamp(),
+                createdAt: new Date(),
             });
             toast({
                 title: 'Success',
