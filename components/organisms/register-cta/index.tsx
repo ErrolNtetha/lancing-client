@@ -8,8 +8,8 @@ export default function RegisterCTA() {
     const router = useRouter();
 
     return (
-        <section className='container flex justify-center gap-4 bg-gray-100 h-96 w-full'>
-            <section className='w-full text-center py-20'>
+        <section className='container flex justify-center items-center gap-4 bg-gray-100 h-72 w-full'>
+            <section className='w-full text-center'>
                 <h1 className='text-2xl text-center font-bold'> 
                     Got a project in mind? Hire a freelancer now.
                 </h1>
