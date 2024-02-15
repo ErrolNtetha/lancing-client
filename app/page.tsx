@@ -5,6 +5,7 @@ import { Hero } from '../components/organisms/hero';
 import { Newsletter } from '../components/organisms/newsletter';
 // import { OurTeam } from '../components/organisms/ourTeam';
 import { OurVision } from '../components/organisms/ourVison';
+import RegisterCTA from '../components/organisms/register-cta';
 import Showcase from '../components/organisms/showcase';
 
 const Home = () => {
@@ -20,6 +21,7 @@ const Home = () => {
                 <Showcase />
                 <OurVision />
                 {/* <OurTeam /> */}
+                <RegisterCTA />
                 <Newsletter />
                 <Footer />
             </main>
