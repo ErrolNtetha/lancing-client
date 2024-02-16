@@ -1,6 +1,6 @@
 'use client'
 
-import VendorRoute from '../../components/auth/vendor/vendorRoute';
+import VendorRoute from '../../auth/vendor/vendorRoute';
 import { useProfileStore } from '../../hooks/useGlobalStore';
 import '../../styles/globals.css';
 

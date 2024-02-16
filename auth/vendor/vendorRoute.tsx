@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
-import { useAuth } from '../../../hooks/useAuth';
-import { useProfileStore } from '../../../hooks/useGlobalStore';
+import { useAuth } from '../../hooks/useAuth';
+import { useProfileStore } from '../../hooks/useGlobalStore';
 
 type AuthProps = {
     isClient: boolean;
@@ -14,13 +14,12 @@ export default function VendorRoute({ isClient, children }: AuthProps) {
     const { currentUser } = useAuth();
     const router = useRouter();
     const user = useProfileStore(((state: any) => state.profile));
-    console.log('Current user: ', currentUser);
 
     useEffect(() => {
-        if (!user || isClient) {
-            router.push('/');
+        if (!user || !currentUser || isClient) {
+            router.back();
         }
-    }, [user, router, isClient]);
+    }, [user, currentUser, router, isClient]);
 
     return user && !isClient ? <> {children} </> : null;
-};
+}
