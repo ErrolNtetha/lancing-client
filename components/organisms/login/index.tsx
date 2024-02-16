@@ -85,8 +85,8 @@ export const LoginForm = () => {
                     </section>
                     <FormLabel
                         type='text'
-                        placeholder='Enter username'
-                        labelName='Username'
+                        placeholder='Enter email'
+                        labelName='Email'
                         name='username'
                         register={register}
                         required={true}
