@@ -6,7 +6,7 @@ import { FormLabel } from '../../molecules/formLabel';
 interface IProps {
     register: Function;
     component: React.ReactNode;
-    watch: Function;
+    watch: Function | string;
     errorMessage: FieldErrors<FieldValues>;
 }
 

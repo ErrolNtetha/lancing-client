@@ -14,7 +14,7 @@ export default function RegisterCTA() {
                     Got a project in mind? Hire a freelancer now.
                 </h1>
                 <section className='mt-8'>
-                    <Button className='font-bold uppercase' onClick={() => router.push('/regiser')}>
+                    <Button className='font-bold uppercase' onClick={() => router.push('/register?accountType=client')}>
                         Regiser Now
                     </Button>
                     <p className='mt-2'> It takes 7 seconds. </p>
