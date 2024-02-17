@@ -1,11 +1,12 @@
 import React from 'react';
 import ListOffersCards from '../../components/organisms/vendor/offer/listOffers';
+import { COMPANY_NAME } from '../../constants/companyName';
 
 export default function OffersPage() {
   return (
       <section className='flex flex-col md:flex-row gap-3 p-3 md:container'>
           <head>
-              <title> My Offers | Tedcrunch </title>
+              <title> My Offers | {COMPANY_NAME} </title>
           </head>
           {/* Left column */}
           <ListOffersCards />

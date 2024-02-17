@@ -1,10 +1,15 @@
+// import Head from 'next/head';
 import React from 'react';
 import ProposalLayout from '../../../../components/templates/projects/projectId/create-proposal';
+import { COMPANY_NAME } from '../../../../constants/companyName';
 
 export default function CreateProposalPage() {
     return (
-        <section>
+        <React.Fragment>
+            <head>
+                <title> Create Proposal | {COMPANY_NAME} </title>
+            </head>
             <ProposalLayout />
-        </section>
+        </React.Fragment>
     );
-};
+}
