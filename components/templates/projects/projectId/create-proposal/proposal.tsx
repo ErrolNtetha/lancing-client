@@ -64,7 +64,6 @@ export default function Proposal() {
 
     const handleSubmitProposal = async (data: z.infer<typeof ProposalScheme>) => {
         setLoading(true);
-        console.log(data);
 
         try {
             const proposalsRef = collection(db, 'proposals');
@@ -97,19 +96,19 @@ export default function Proposal() {
     }
 
     return (
-        <section className='md:container mb-10 flex gap-6 relative'>
-            <section className='md:p-3 h-max flex-[70%] rounded-md md:border border-gray-200'>
+        <section className='md:container max-md:mb-10 flex gap-6 relative'>
+            <section className='md:p-3 h-max flex-[40%] rounded-md md:border border-gray-200'>
                  <section className='mb-4 gap-3'>
                     <h1 className='font-bold text-xl mb-2'> Send Proposal </h1>
-                    <Suspense fallback={<p>loading</p>}>
+                    <section className='md:hidden'>
                         <ProjectPreview
                             title={project?.title}
                             description={project?.description}
                         />
-                    </Suspense>
+                    </section>
                 </section>
                 <Separator />
-                <form onSubmit={form.handleSubmit(handleSubmitProposal)} className='mt-3 w-full md:max-w-[70%]'>
+                <form onSubmit={form.handleSubmit(handleSubmitProposal)} className='mt-3 w-full'>
                     <Form {...form}>
                         <section className='border border-gray-600 rounded-md p-3 mb-3'>
                             <section className='mb-2'>
@@ -306,7 +305,7 @@ export default function Proposal() {
                             </section>
                         </section> */}
 
-                    <section className='fixed w-full p-2 bg-background bottom-0 left-0 flex items-center md:mt-3 gap-3 md:justify-end'>
+                    <section className='max-md:fixed w-full p-2 bg-background bottom-0 left-0 flex items-center md:mt-3 gap-3 md:justify-end'>
                         <Button
                             variant='outline'
                             type='button'
@@ -325,9 +324,14 @@ export default function Proposal() {
                     </Form>
                 </form>
             </section>
-            <aside className='hidden p-3 flex-[20%] rounded-md md:block border border-gray-200 h-max'>
-                <h1 className='font-bold text-md mb-1'>Bio</h1>
-                <p className='text-sm' />
+            <aside className='max-md:hidden p-3 flex-[20%] rounded-md h-max'>
+                <h1 className='font-bold text-md'> Project Overview </h1>
+                <section className='mt-4 max-md:hidden'>
+                    <ProjectPreview
+                        title={project?.title}
+                        description={project?.description}
+                    />
+                </section>
             </aside>
         </section>
     );
