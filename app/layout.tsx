@@ -2,6 +2,7 @@ import { Header } from '../components/organisms/header/header';
 import '../app/globals.css';
 import { Toaster } from '../@/components/ui/toaster';
 import { Inter } from 'next/font/google'
+import { ThemeProvider } from '../components/organisms/theme-provider';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -23,6 +24,14 @@ export default function RootLayout({
             </head>
             <body>
                 <Header />
+                <ThemeProvider 
+                    attribute='class'
+                    defaultTheme='system'
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    {children}
+                </ThemeProvider>
                 {children}
                 <Toaster />
             </body>
