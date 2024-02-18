@@ -16,6 +16,7 @@ import { useToast } from '../../../../../@/components/ui/use-toast';
 import { db } from '../../../../../firebaseConfig';
 import { useAuth } from '../../../../../hooks/useAuth';
 import ProjectPreview from '../../../../organisms/client/project/projectPreview';
+import PaymentCard from '../../../../organisms/paystack/paymentCard';
 
 const ProposalScheme = z.object({
     title: z.string({ required_error: 'This field is required.' }).min(30, 'Title is too short.'),
@@ -335,4 +336,4 @@ export default function Proposal() {
             </aside>
         </section>
     );
-};
+}
