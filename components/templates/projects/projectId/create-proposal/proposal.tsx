@@ -105,6 +105,7 @@ export default function Proposal() {
                         <ProjectPreview
                             title={project?.title}
                             description={project?.description}
+                            loading={previewLoading}
                         />
                     </section>
                 </section>
@@ -331,6 +332,7 @@ export default function Proposal() {
                     <ProjectPreview
                         title={project?.title}
                         description={project?.description}
+                        loading={previewLoading}
                     />
                 </section>
             </aside>
