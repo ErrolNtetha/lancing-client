@@ -70,7 +70,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
         : 'Not Applicable';
 
     return (
-        <section className='text-black text-[.8rem] md:text-sm my-3 border-2 border-gray bg-white shadow-md w-full md:w-full max-h-max p-2'>
+        <section className='text-black md:text-sm my-3 border-2 border-gray bg-white shadow-md w-full md:w-full max-h-max p-2'>
             <section>
                 <section className='flex items-center justify-between mb-4'>
                     <span className='flex gap-3'>
