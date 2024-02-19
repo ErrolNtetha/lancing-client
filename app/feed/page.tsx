@@ -7,7 +7,6 @@ const Feed = () => {
             <head>
                 <title> Feed | Tedcrunch </title>
                 <meta property='og:title' content='Feed | Tedcrunch' />
-                <meta property='og:description' content='Swift through a list of freelancer to find your perfect freelancer for your project.' />
                 <meta property='og:type' content='website' />
                 <meta property='og:url' content='https://www.tedcrunch.co.za' />
             </head>

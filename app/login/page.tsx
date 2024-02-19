@@ -1,6 +1,5 @@
 'use client'
 
-import Head from 'next/head';
 import React from 'react';
 import { Login } from '../../components/templates/login';
 
