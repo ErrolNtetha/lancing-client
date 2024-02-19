@@ -5,6 +5,7 @@ import React from 'react';
 import { db } from '../../../firebaseConfig';
 import { useAuth } from '../../../hooks/useAuth';
 import CardList from '../../organisms/vendor/myList/cardList';
+import ListLoader from '../../organisms/vendor/myList/skeleton';
 
 type ListProps = {
     id: string;
@@ -18,6 +19,7 @@ type ListProps = {
 export default function List() {
     const { currentUser } = useAuth();
     const [allList, setAllLists] = React.useState<any>([]);
+    const [loading, setLoading] = React.useState(true);
 
     React.useEffect(() => {
         async function getLists() {
@@ -35,6 +37,8 @@ export default function List() {
                 });
             } catch (error) {
                 console.log('An error occurred: ', error);
+            } finally {
+                setLoading(false);
             }
         }
 
@@ -52,5 +56,12 @@ export default function List() {
         />
     ));
 
-    return <section className='flex flex-col gap-4'>{allLists}</section>
+    return (
+        <section className='flex flex-col gap-4'>
+            {loading 
+                ? <ListLoader />
+                : allLists
+            }
+        </section>
+    )
 };
