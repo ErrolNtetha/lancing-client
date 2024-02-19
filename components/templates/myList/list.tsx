@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { collection, doc, getDocs, query, where } from 'firebase/firestore';
-import React from 'react';
+import React, { Suspense } from 'react';
+// import Loading from '../../../app/mylistings/loading';
 import { db } from '../../../firebaseConfig';
 import { useAuth } from '../../../hooks/useAuth';
 import CardList from '../../organisms/vendor/myList/cardList';
