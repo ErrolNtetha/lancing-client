@@ -1,5 +1,5 @@
 import { format, formatDefaultLocale } from 'd3-format';
-import US from '../node_modules/d3-format/locale/en-ZA.json';
+import ZA from './en-ZA.json';
 
 export const formatNumber = (number: number) => {
     const f = format(',.2r')(number);
@@ -7,7 +7,7 @@ export const formatNumber = (number: number) => {
 }
 
 export const formatAmount = (amount: number | null, formatType = '$,') => {
-        formatDefaultLocale(US);
+        formatDefaultLocale(ZA);
         const f = format(formatType);
         return f(amount);
 }
