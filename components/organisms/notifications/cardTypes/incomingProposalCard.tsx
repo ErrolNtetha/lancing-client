@@ -17,7 +17,7 @@ type IncomingProposalCardProps = {
 
 export default function IncomingProposalCard({ user, href, iconsClassName, createdAt }: IncomingProposalCardProps) {
     const username = <span className='font-bold'>{user?.firstName} {user?.lastName}</span>;
-    const title = <span className='font-bold'> Urgently seeking a Graphic Designer </span>;
+    const title = <span className='font-bold'>Urgently seeking a Graphic Designer</span>;
 
     return (
         <CardContainer
@@ -30,7 +30,7 @@ export default function IncomingProposalCard({ user, href, iconsClassName, creat
                     You have received a new proposal.
                 </h6>
                 <section className='p-2 border border-gray-200 bg-gray-100 rounded-md'>
-                    <p className='text-xs'> {username} has sent you a new proposal for {title}. Check it now. </p>
+                    <p className='text-xs'> {username} has sent you a new proposal for &apos;{title}&apos;. Check it now. </p>
                 </section>
             </section>
         </CardContainer>

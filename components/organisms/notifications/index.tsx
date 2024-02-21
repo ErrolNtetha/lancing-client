@@ -33,7 +33,7 @@ const n = [
             lastName: 'Smith'
         },
         createdAt: {
-            nanoseconds: '2 minutes ago',
+            nanoseconds: '19 minutes ago',
         },
         href: '/projects/32fakdjfh4jaw3-djalj234fad45'
     },
@@ -59,7 +59,7 @@ const n = [
             lastName: 'Dlamini'
         },
         createdAt: {
-            nanoseconds: '1 hour ago',
+            nanoseconds: '7 hour ago',
         },
         href: '/offers/xwZlas32M23OFdafjw1-ad34jaKs'
     },
@@ -73,7 +73,7 @@ const n = [
             lastName: 'Khuzwayo'
         },
         createdAt: {
-            nanoseconds: '1 hour ago',
+            nanoseconds: '12 hour ago',
         },
         href: '/proposals/xwZlas32M23OFdafjw1-ad34jaKs'
     },
@@ -115,7 +115,7 @@ export default function AllNotification() {
     const notificationCards = n.map((item: any) => renderCard(item));
 
     return (
-        <section className='divide divide-y space-y-1'>
+        <section className='max-w-lg divide divide-y space-y-1'>
             {notificationCards}
         </section>
     );
