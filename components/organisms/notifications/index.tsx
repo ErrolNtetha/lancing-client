@@ -2,7 +2,7 @@ import React from 'react';
 import AcceptedOfferCard from './cardTypes/acceptedOfferCard';
 import DefaultCard from './cardTypes/defaultCard';
 import IncomingOfferCard from './cardTypes/incomingOfferCard';
-import DeclinedOfferCard from './cardTypes/incomingOfferCard';
+import DeclinedOfferCard from './cardTypes/declinedOfferCard';
 import IncomingProposalCard from './cardTypes/incomingProposalCard';
 
 const NOTIFICATION_TYPES = {
@@ -16,7 +16,6 @@ const n = [
     {
         id: 2,
         type: NOTIFICATION_TYPES.ACCEPTED_OFFER,
-        offerDescription: 'Thank you',
         user: {
             firstName: 'Sibusiso',
             lastName: 'Radebe'
@@ -53,7 +52,7 @@ const n = [
     },
     {
         id: 3,
-        type: NOTIFICATION_TYPES.DECLINED_OFFER,
+        type: '',
         title: 'Graphic Design and Logo Design',
         user: {
             firstName: 'Snenhlanhla',
@@ -70,13 +69,13 @@ const n = [
         type: NOTIFICATION_TYPES.INCOMING_PROPOSAL,
         title: 'Graphic Design and Logo Design',
         user: {
-            firstName: 'Mphumeleli',
-            lastName: 'Ntetha'
+            firstName: 'Syabonga',
+            lastName: 'Khuzwayo'
         },
         createdAt: {
             nanoseconds: '1 hour ago',
         },
-        href: '/offers/xwZlas32M23OFdafjw1-ad34jaKs'
+        href: '/proposals/xwZlas32M23OFdafjw1-ad34jaKs'
     },
     {
         id: 5,
@@ -99,8 +98,6 @@ export default function AllNotification() {
     const iconClassName = 'text-2xl';
 
     const renderCard = (props: any) => {
-        console.log(props.type);
-
         switch (props.type) {
             case NOTIFICATION_TYPES.ACCEPTED_OFFER:
                 return <AcceptedOfferCard iconsClassName={iconClassName} {...props} />;
@@ -118,7 +115,7 @@ export default function AllNotification() {
     const notificationCards = n.map((item: any) => renderCard(item));
 
     return (
-        <section className='space-y-1'>
+        <section className='divide divide-y space-y-1'>
             {notificationCards}
         </section>
     );
