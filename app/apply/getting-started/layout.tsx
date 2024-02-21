@@ -1,8 +1,8 @@
 'use client'
 
-import VendorRoute from '../../auth/vendor/vendorRoute';
-import { useProfileStore } from '../../hooks/useGlobalStore';
-import '../../styles/globals.css';
+// import VendorRoute from '../../../auth/vendor/vendorRoute';
+import { useProfileStore } from '../../../hooks/useGlobalStore';
+import '../../../styles/globals.css';
 
 export default function RootLayout({
     children,
@@ -13,7 +13,7 @@ export default function RootLayout({
 
     return (
         <html>
-            <VendorRoute isClient={user?.isClient}>
+            {/* <VendorRoute isClient={user?.isClient}> */}
                 <head>
                     <title> Apply | Tedcrunch </title>
                     <meta property='og:title' content='Apply Now - Tedcrunch' />
@@ -29,7 +29,7 @@ export default function RootLayout({
                         {children}
                     </main>
                 </body>
-            </VendorRoute>
+                {/* </VendorRoute> */}
         </html>
     )
 }
