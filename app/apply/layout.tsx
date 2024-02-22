@@ -1,8 +1,9 @@
 'use client'
 
+import ApplyHeader from '../../components/organisms/vendor/apply/header';
 // import VendorRoute from '../../../auth/vendor/vendorRoute';
-import { useProfileStore } from '../../../hooks/useGlobalStore';
-import '../../../styles/globals.css';
+import { useProfileStore } from '../../hooks/useGlobalStore';
+import '../../styles/globals.css';
 
 export default function RootLayout({
     children,
@@ -25,6 +26,7 @@ export default function RootLayout({
                     <meta property='og:site_name' content='Tedcrunch South Africa' />
                 </head>
                 <body>
+                    <ApplyHeader />
                     <main className='p-3'>
                         {children}
                     </main>
