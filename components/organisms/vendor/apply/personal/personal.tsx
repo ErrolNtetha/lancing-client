@@ -11,6 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '../../../../../@/components/ui/input';
 import { Textarea } from '../../../../../@/components/ui/textarea';
 import { usePersonalStore } from '../../../../../hooks/useGlobalStore';
+import { ApplyCard, ApplyContent, ApplyDescription, ApplyFooter, ApplySubTitle, ApplyTitle } from '../applyCard';
 
 const personalSchema = z.object({
     avatar: z 
@@ -85,63 +86,65 @@ export default function Personal() {
 return (
     <section className='max-w-xl p-3'>
         <Form {...form}>
-            <section>
-                <h3 className='font-semibold text-2xl'>
+            <ApplyCard>
+                <ApplyTitle> Personal Details </ApplyTitle>
+                <ApplySubTitle>
                     To start off, tell us a bit about yourself.
-                </h3>
-                <p className='text-md mb-4'> 
+                </ApplySubTitle>
+                <ApplyDescription>
                     It is important that you check your grammar, punctuations and spellings.
-                </p>
-            </section>
-            <section>
-                <input
-                    type='file'
-                    onChange={handleAvatarChange}
-                    ref={imageRef}
-                    hidden
-                />
-                <section className='border border-gray rounded-md p-3 flex justify-center my-4'> 
-                    {avatarComp} 
-                </section>
-            </section>
-            <form onSubmit={form.handleSubmit(handlePersonalSubmit)}>
-                <FormField
-                    control={form.control}
-                    name='title'
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel htmlFor='title'> Title </FormLabel>
-                            <FormControl>
-                                <Input {...field} placeholder='Eg. Software Engineer' />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <section className='mt-4'>
-                    <FormField
-                        control={form.control}
-                        name='bio'
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel htmlFor='bio'> Bio </FormLabel>
-                                <FormControl>
-                                    <Textarea {...field} placeholder='Write your bio explaining yourself and your skills' />
-                                </FormControl>
-                                <p className='text-sm text-muted-foreground'>
-                                    This is what is going to appear on your profile when clients view your profile.
-                                </p>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                </section>
-                <section className='bg-background max-md:fixed left-0 bottom-0 gap-3 max-md:p-2 md:mt-4 w-full flex'>
-                    <Button type='button' onClick={() => router.push('/apply/getting-started')} className='bg-white flex-1' variant='outline'> Back </Button>
-                    <Button type='submit' className='flex-1 bg-primary' disabled={!form.formState.isValid}> Next Step </Button>
-                </section>
-
-            </form>
+                </ApplyDescription>
+                <ApplyContent>
+                    <section>
+                        <input
+                            type='file'
+                            onChange={handleAvatarChange}
+                            ref={imageRef}
+                            hidden
+                        />
+                        <section className='border border-gray rounded-md p-3 flex justify-center my-4'> 
+                            {avatarComp} 
+                        </section>
+                    </section>
+                    <form onSubmit={form.handleSubmit(handlePersonalSubmit)}>
+                        <FormField
+                            control={form.control}
+                            name='title'
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor='title'> Title </FormLabel>
+                                    <FormControl>
+                                        <Input {...field} placeholder='Eg. Software Engineer' />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <section className='mt-4'>
+                            <FormField
+                                control={form.control}
+                                name='bio'
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel htmlFor='bio'> Bio </FormLabel>
+                                        <FormControl>
+                                            <Textarea {...field} placeholder='Write your bio explaining yourself and your skills' />
+                                        </FormControl>
+                                        <p className='text-sm text-muted-foreground'>
+                                            This is what is going to appear on your profile when clients view your profile.
+                                        </p>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </section>
+                        <ApplyFooter>
+                            <Button type='button' onClick={() => router.push('/apply/getting-started')} className='bg-white flex-1' variant='outline'> Back </Button>
+                            <Button type='submit' className='flex-1 bg-primary' disabled={!form.formState.isValid}> Next Step </Button>
+                        </ApplyFooter>
+                    </form>
+                </ApplyContent>
+            </ApplyCard>
         </Form>
     </section>
 );
