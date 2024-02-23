@@ -7,7 +7,7 @@ import Welcome from './welcome';
 export default function GettingStarted() {
     return (
         <section className='container flex justify-between'>
-            <section className='flex-[0.6]'>
+            <section className='md:flex-[0.6]'>
                 <Welcome />
             </section>
             <section className='flex-[0.3] rounded-md p-3 max-md:hidden' />

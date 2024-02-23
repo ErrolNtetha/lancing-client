@@ -96,8 +96,8 @@ const Education = () => {
                                 <DialogTrigger className='h-full' disabled={checked}>
                                     <section className='flex flex-col py-10 justify-center items-center'>
                                         <FiPlus className='text-4xl font-extrabold' />
-                                        <h2 className='font-extrabold mt-3 text-md'> Add school or course </h2>
-                                        <p className='text-center'> Show clients the courses or certifications you have under your belt. </p>
+                                        <h2 className='font-extrabold mt-3 text-md'> Add a qualification </h2>
+                                        <p className='text-center'> Show clients any certifications that you have under your belt. </p>
                                     </section>
                                 </DialogTrigger>
                             </Button>

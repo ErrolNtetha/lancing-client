@@ -74,18 +74,9 @@ const WorkExperience = () => {
     const handleNextStep = () => {
         router.push('/apply/preview');
     };
-
-    const formatTheDistance = (item: any) => {
-        // const d = item?.to ? new Date(item?.to) : new Date();
-
-        if (item?.from) {
-            console.log(formatDistance(new Date(item?.from), new Date()));
-            return formatDistance(new Date(item?.from), new Date());
-        }
-    };
  
     const listOfWorkExperience = experience.map((item: any, index: number) => (
-            <section className='border border-dashed border-gray p-2' key={index}>
+            <section className='container border border-dashed border-gray p-2' key={index}>
                 <p className='font-semibold text-md'> {item.company} </p>
                 <p className='text-[darkgray]'> {item.position} </p>
                 <p className='text-[darkgray]'> 

@@ -86,7 +86,7 @@ export default function Personal() {
     </Button>
 </section>);
 return (
-    <section className='max-w-xl p-3'>
+    <section className='md:max-w-xl'>
         <Form {...form}>
             <ApplyCard>
                 <ApplyTitle> Personal Details </ApplyTitle>

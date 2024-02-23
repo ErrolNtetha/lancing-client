@@ -3,7 +3,7 @@ import Education from './education';
 
 export default function EducationPage() {
     return (
-        <section className='container divide divide-x-2 flex justify-between'>
+        <section className='container px-md divide divide-x-2 flex justify-between'>
             <section className='md:flex-[0.6]'>
                 <Education />
             </section>
