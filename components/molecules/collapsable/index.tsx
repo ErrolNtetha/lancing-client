@@ -24,8 +24,8 @@ export const Collapsable = ({
             { seeMore && (text?.length > end) ? text.slice(0, end).concat('...') : text }
             { text?.length > end
                 && (
-                    <button onClick={() => setSeeMore(!seeMore)} style={{ borderBottom: '.6px solid white', marginLeft: '.4em' }}>
-                        {seeMore ? 'see more' : showLess}
+                    <button onClick={() => setSeeMore(!seeMore)} className='border-b text-foreground'>
+                        {seeMore ? ' see more' : showLess}
                     </button>
                 )}
         </span>

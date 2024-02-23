@@ -11,11 +11,11 @@ export default function ApplyHeader() {
 
     return (
         <header className='flex shadow divide-solid divide-gray bg-background sticky top-0 z-10 justify-between transition-all duration-200 items-center w-full h-[8vh]'>
-            <section className='md:container  px-4 w-full h-full flex z-10 justify-between items-center'>
+            <section className='container px-4 w-full h-full flex z-10 justify-between items-center'>
                 <Link href='/' className='max-w-full'>
                     <Image src='/assets/images/svg/blackLogo.svg' alt='Company logo' className='fill-current text-white' width={120} height={120} />
                 </Link>
-                <section className='relative hidden md:flex items-center justify-center gap-3'>
+                <section className='relative flex items-center justify-center gap-3'>
                     <Avatar
                         src={profile?.avatar}
                         size='w-8 h-8'

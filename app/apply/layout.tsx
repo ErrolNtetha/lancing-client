@@ -13,7 +13,7 @@ export default function RootLayout({
     const user = useProfileStore((state: any) => state.profile);
 
     return (
-        <html>
+        <section>
             {/* <VendorRoute isClient={user?.isClient}> */}
                 <head>
                     <title> Apply | Tedcrunch </title>
@@ -25,13 +25,13 @@ export default function RootLayout({
                     <meta property='twitter:card' content='summary_large_image' />
                     <meta property='og:site_name' content='Tedcrunch South Africa' />
                 </head>
-                <body>
+                <section>
                     <ApplyHeader />
-                    <main className='p-3'>
+                    <main className='container'>
                         {children}
                     </main>
-                </body>
+                </section>
                 {/* </VendorRoute> */}
-        </html>
-    )
+        </section>
+    );
 }

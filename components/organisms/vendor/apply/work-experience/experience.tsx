@@ -2,9 +2,9 @@
 'use client'
 
 // import { format } from 'date-fns';
-import { format, isPast } from 'date-fns';
+import { format, formatDistance, isPast } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { FiPlus } from 'react-icons/fi';
 import { Button } from '../../../../../@/components/ui/button';
@@ -25,29 +25,37 @@ import { useExperienceStore } from '../../../../../hooks/useGlobalStore';
 import { useRouter } from 'next/navigation';
 import { Textarea } from '../../../../../@/components/ui/textarea';
 import { ApplyCard, ApplyContent, ApplyDescription, ApplyFooter, ApplySubTitle, ApplyTitle } from '../applyCard';
+import { Collapsable } from '../../../../molecules/collapsable';
+import { DialogClose } from '@radix-ui/react-dialog';
 
 const experienceSchema = z.object({
     experience: z.object({
         position: z.string({ required_error: 'This field is required.' }).min(2, 'Position must be at least 2 characters long.'),
-        company: z.string().min(2, 'Company name must be at least 2 characters long.'),
-        responsibilities: z.string().min(5, 'Responsibilities must be at least 5 characters long.').optional(),
-        startDate: z.date(),
-        endDate: z.date().optional(),
-        isStillWorking: z.boolean().optional(),
+        company: z.string({ required_error: 'This field is required.' }).min(2, 'Company name must be at least 2 characters long.'),
+        responsibilities: z.string().min(30, 'Responsibilities must be at least 30 characters long.').optional(),
+        startDate: z.date({ required_error: 'This field is required.' }),
+        endDate: z.date({ required_error: 'This field is required.' }).optional(),
+        isStillWorking: z.boolean({ required_error: 'This field is required.' }).optional(),
     }),
-}).required()
+}).refine(({ experience }) => {
+    return experience.endDate || experience.isStillWorking;
+},
+    {
+        message: 'End date is required.',
+    });
 
 const WorkExperience = () => {
     const { experience, addExperience } = useExperienceStore();
     const [checked, setChecked] = React.useState(false);
     const form = useForm({
-        mode: 'onSubmit',
+        mode: 'onChange',
         resolver: zodResolver(experienceSchema),
         defaultValues: {
             work: experience,
         }
     });
-    const { control } = form;
+    const { control, getValues } = form;
+    const formValues = getValues('experience');
     const router = useRouter();
 
     const { fields, append } = useFieldArray({
@@ -60,16 +68,19 @@ const WorkExperience = () => {
 
         append(experience);
         addExperience(experience);
+        form.reset();
     };
 
     const handleNextStep = () => {
-        /* Save data to database before moving to the next step */
         router.push('/apply/preview');
     };
 
     const formatTheDistance = (item: any) => {
-        if (item.from && item.to) {
-            return formatDistance(new Date(item?.from), new Date(item?.to));
+        // const d = item?.to ? new Date(item?.to) : new Date();
+
+        if (item?.from) {
+            console.log(formatDistance(new Date(item?.from), new Date()));
+            return formatDistance(new Date(item?.from), new Date());
         }
     };
  
@@ -78,13 +89,15 @@ const WorkExperience = () => {
                 <p className='font-semibold text-md'> {item.company} </p>
                 <p className='text-[darkgray]'> {item.position} </p>
                 <p className='text-[darkgray]'> 
-                    {item?.startDate && format(new Date(item?.startDate), 'MMM y')} - {item?.endDate ? format(new Date(item?.endDate), 'MMM y') : 'Present'} - {formatTheDistance(item)}
+                    {item?.startDate && format(new Date(item?.startDate), 'MMM y')} - {item?.endDate ? format(new Date(item?.endDate), 'MMM y') : 'Present'} - ({formatDistance(item?.startDate, new Date())})
                 </p>
                 <br />
                 {item.responsibilities && (
                     <section>
                         <h3 className='font-semibold text-md'> Responsibilities </h3> 
-                        <p> {item.responsibilities} </p>
+                        <Collapsable end={180} className='whitespace-pre-line text-sm'> 
+                            {item.responsibilities} 
+                        </Collapsable>
                     </section>
                 )}
             </section>
@@ -117,19 +130,17 @@ const WorkExperience = () => {
                                 </DialogTrigger>
                             </Button>
                         )
-                        : listOfWorkExperience}
+                        : <section className='space-y-3'> {listOfWorkExperience} </section>}
 
                     {fields.length > 0 && (
-                        <DialogTrigger
-                            className='w-full my-2 hover:opacity-80 px-4 py-2 text-white bg-primary hover:cursor-pointer'
-                        > 
-                        Add More
-                    </DialogTrigger>
+                        <DialogTrigger className='w-full' asChild> 
+                            <Button variant='secondary' className='mt-4 font-bold border border-primary'> Add More </Button>
+                        </DialogTrigger>
                     )}
                     <DialogContent>
                         <DialogHeader>
-                            <DialogTitle> Add Qualification </DialogTitle>
-                            <DialogDescription> Add your previously completed courses or certifications to show case your skills to clients. </DialogDescription>
+                            <DialogTitle> Add Work Experience </DialogTitle>
+                            <DialogDescription> Add your past or current work experience. </DialogDescription>
                         </DialogHeader>
                         <section className='py-4'>
                             <Form {...form}>
@@ -228,6 +239,7 @@ const WorkExperience = () => {
                                                         <FormControl>
                                                             <Button
                                                                 variant={"outline"}
+                                                                disabled={formValues?.isStillWorking}
                                                                 className={cn(
                                                                     "w-full pl-3 text-left font-normal",
                                                                     !field.value && "text-muted-foreground"
@@ -236,7 +248,7 @@ const WorkExperience = () => {
                                                                 {field.value ? (
                                                                     format(field.value, "PPP")
                                                                 ) : (
-                                                                    <span> Graduated date </span>
+                                                                    <span> End date </span>
                                                                 )}
                                                                 <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                                                             </Button>
@@ -265,16 +277,20 @@ const WorkExperience = () => {
                                     name='experience.isStillWorking'
                                     defaultValue={false}
                                     render={({ field }) => (
-                                        <FormItem className='flex items-center justify-between'>
-                                            <section>
-                                                <FormLabel className='text-base'> I am still studying </FormLabel>
+                                        <FormItem>
+                                            <section className='flex items-center justify-between'>
+                                                <section>
+                                                    <FormLabel className='text-base'> I am still working here </FormLabel>
+                                                </section>
+                                                <FormControl>
+                                                    <Switch
+                                                        checked={field.value}
+                                                        onCheckedChange={field.onChange}
+                                                        disabled={formValues?.endDate}
+                                                    />
+                                                </FormControl>
                                             </section>
-                                            <FormControl>
-                                                <Switch
-                                                    checked={field.value}
-                                                    onCheckedChange={field.onChange}
-                                                />
-                                            </FormControl>
+                                            <FormMessage />
                                         </FormItem>
                                     )}
                                 />
@@ -284,7 +300,9 @@ const WorkExperience = () => {
                                     <DialogTrigger className='bg-white flex-1' asChild>
                                         <Button className='flex-1' variant='outline'> Cancel </Button>
                                     </DialogTrigger>
-                                    <Button type='submit' className='bg-primary flex-1'> Save </Button>
+                                    <DialogClose asChild>
+                                        <Button type='submit' disabled={!form.formState.isValid} className='bg-primary flex-1'> Save </Button>
+                                    </DialogClose>
                                 </DialogFooter>
                             </form>
                             </Form>
@@ -306,7 +324,7 @@ const WorkExperience = () => {
                 type='button' 
                 onClick={handleNextStep} 
                 className='bg-primary flex-1' 
-                disabled={!form.formState.isValid && !checked}
+                disabled={!experience.length && !checked}
             > 
             Next Step 
         </Button>
