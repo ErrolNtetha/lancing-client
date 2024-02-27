@@ -9,7 +9,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { FiPlus } from 'react-icons/fi';
 import { Button } from '../../../../../@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../../../../../@/components/ui/dialog';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../../../../../@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../../../../@/components/ui/form';
 import { Input } from '../../../../../@/components/ui/input';
 import { Calendar } from '../../../../../@/components/ui/calendar';
 import {
@@ -24,6 +24,7 @@ import { z } from 'zod';
 import { useEducationStore } from '../../../../../hooks/useGlobalStore';
 import { useRouter } from 'next/navigation';
 import { ApplyCard, ApplyContent, ApplyDescription, ApplyFooter, ApplySubTitle, ApplyTitle } from '../applyCard';
+import { DialogClose } from '@radix-ui/react-dialog';
 
 const educationSchema = z.object({
     education: z.object({
@@ -33,11 +34,17 @@ const educationSchema = z.object({
         endDate: z.date().optional(),
         isStillStudying: z.boolean().optional(),
     }),
-})
+}).refine(({ education }) => {
+    return education.endDate || education.isStillStudying;
+},
+    {
+        message: 'Graduation date is required.',
+    });
 
 const Education = () => {
     const { education, addEducation } = useEducationStore();
     const [checked, setChecked] = React.useState(false);
+
     const form = useForm({
         mode: 'onSubmit',
         resolver: zodResolver(educationSchema),
@@ -45,7 +52,8 @@ const Education = () => {
             qualification: education,
         }
     });
-    const { control } = form;
+    const { control, getValues } = form;
+    const formValues = getValues('education');
     const router = useRouter();
 
     const { fields, append } = useFieldArray({
@@ -61,7 +69,6 @@ const Education = () => {
     };
 
     const handleNextStep = () => {
-        /* Save data to database before moving to the next step */
         router.push('/apply/work-experience');
     };
  
@@ -97,7 +104,7 @@ const Education = () => {
                                     <section className='flex flex-col py-10 justify-center items-center'>
                                         <FiPlus className='text-4xl font-extrabold' />
                                         <h2 className='font-extrabold mt-3 text-md'> Add a qualification </h2>
-                                        <p className='text-center'> Show clients any certifications that you have under your belt. </p>
+                                        <p className='text-center'> Show clients any certification that you have under your belt. </p>
                                     </section>
                                 </DialogTrigger>
                             </Button>
@@ -105,16 +112,14 @@ const Education = () => {
                         : listOfQualifications}
 
                     {fields.length > 0 && (
-                        <DialogTrigger
-                            className='w-full my-2 hover:opacity-80 px-4 py-2 text-white bg-primary hover:cursor-pointer'
-                        > 
-                        Add More
-                    </DialogTrigger>
+                        <DialogTrigger className='w-full' asChild> 
+                            <Button variant='secondary' className='mt-4 font-bold border border-primary'> Add More </Button>
+                        </DialogTrigger>
                     )}
                     <DialogContent>
                         <DialogHeader>
                             <DialogTitle> Add Qualification </DialogTitle>
-                            <DialogDescription> Add your previously completed courses or certifications to show case your skills to clients. </DialogDescription>
+                            <DialogDescription> Add your previously completed course or certification. </DialogDescription>
                         </DialogHeader>
                         <section className='py-4'>
                             <Form {...form}>
@@ -126,7 +131,7 @@ const Education = () => {
                                         <FormItem>
                                             <FormLabel htmlFor='fieldOfStudy'> Field of Study </FormLabel>
                                             <FormControl>
-                                                <Input {...field} placeholder='Eg. Business Administration' />
+                                                <Input {...field} placeholder='Eg. Diploma in Business Administration' />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -199,6 +204,7 @@ const Education = () => {
                                                         <FormControl>
                                                             <Button
                                                                 variant={"outline"}
+                                                                disabled={formValues?.isStillStudying}
                                                                 className={cn(
                                                                     "w-full pl-3 text-left font-normal",
                                                                     !field.value && "text-muted-foreground"
@@ -244,6 +250,7 @@ const Education = () => {
                                                 <Switch
                                                     checked={field.value}
                                                     onCheckedChange={field.onChange}
+                                                    disabled={formValues?.endDate}
                                                 />
                                             </FormControl>
                                         </FormItem>
@@ -255,7 +262,9 @@ const Education = () => {
                                     <DialogTrigger className='bg-white flex-1' asChild>
                                         <Button className='flex-1' variant='outline'> Cancel </Button>
                                     </DialogTrigger>
-                                    <Button type='submit' className='bg-primary flex-1'> Save </Button>
+                                    <DialogClose asChild>
+                                        <Button type='submit' disabled={!form.formState.isValid} className='bg-primary flex-1'> Save </Button>
+                                    </DialogClose>
                                 </DialogFooter>
                             </form>
                             </Form>
@@ -277,7 +286,7 @@ const Education = () => {
                     type='button' 
                     onClick={handleNextStep} 
                     className='bg-primary flex-1' 
-                    disabled={!form.formState.isValid && !checked}
+                    disabled={!education.length && !checked}
                 > 
                 Next Step 
             </Button>
