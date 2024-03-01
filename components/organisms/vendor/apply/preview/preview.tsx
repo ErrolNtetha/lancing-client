@@ -13,7 +13,7 @@ import { useAuth } from '../../../../../hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import { FcBriefcase, FcGraduationCap } from 'react-icons/fc';
 import { ApplyCard, ApplySubTitle, ApplyTitle, ApplyContent, ApplyFooter } from '../applyCard';
-// import { Separator } from '../../../@/components/ui/separator';
+import { Separator } from '../../../../../@/components/ui/separator';
 
 export default function Preview() {
     const [loading, setLoading] = React.useState(false);
@@ -90,7 +90,7 @@ export default function Preview() {
                 {item.responsibilities && (
                     <section>
                         <h3 className='font-semibold text-md'> Responsibilities </h3> 
-                        <p className='text-sm'> {item.responsibilities} </p>
+                        <p className='text-sm whitespace-pre-line'> {item.responsibilities} </p>
                     </section>
                 )}
             </section>
@@ -103,14 +103,14 @@ export default function Preview() {
                 Preview Profile
             </ApplyTitle>
             <ApplySubTitle>
-                    Confirm if everything is correct and submit.
+                Now just one more last step. <br /> Confirm if everything is correct and submit your profile.
             </ApplySubTitle>
             <ApplyContent>
                 <section className='my-4'>
-                    <section className='flex gap-3'>
+                    <section className='flex space-x-3'>
                         <section className='relative border border-gray-100 rounded-full w-[80px] h-[80px]'>
                             <Avatar className='w-full h-full'>
-                                <AvatarImage src={personal.avatar} alt='My avatar' />
+                                <AvatarImage src={personal.avatar} className='object-cover' alt='My avatar' />
                                 <AvatarFallback>
                                     <Image
                                         src='/assets/images/svg/profileIcon.svg'
@@ -123,17 +123,18 @@ export default function Preview() {
                             </Avatar>
                         </section>
                         <section>
-                            <h3 className='font-bold'> {profile?.names?.firstName} {profile?.names?.lastName} </h3>
-                            <p className=''> {personal.title || 'No title to show.'} </p>
+                                <h3 className='font-semibold'> {profile?.names?.firstName} {profile?.names?.lastName} </h3>
+                                <p className=''> {personal.title || 'No title to show.'} </p>
                         </section>
                     </section>
                     <section className='mt-3'>
-                        <p className='text-sm'> {personal.bio || 'No bio to show.'} </p>
+                        <p className='text-sm whitespace-pre-line'> {personal.bio || 'No bio to show.'} </p>
                     </section>
                 </section>
+                <Separator />
 
                 { /********* ANOTHER SECTION ***********/ }
-                <section className='my-4 p-2 border border-gray-100 rounded-md'>
+                <section className='my-4'>
                     <h3 className='font-bold pb-2'> Education </h3>
                     <section className=' max-h-[320px] overflow-auto'>
                         {education.length === 0
@@ -148,9 +149,10 @@ export default function Preview() {
                             : listOfQualifications}
                         </section>
                     </section>
+                    <Separator />
 
                     { /********* ANOTHER SECTION ***********/ }
-                    <section className='my-4 p-2 border border-gray-100 rounded-md'>
+                    <section className='my-4'>
                         <h3 className='font-bold pb-2'> Work Experience </h3>
                         <section className='max-h-[320px] overflow-auto'>
                             {experience.length === 0
@@ -172,4 +174,4 @@ export default function Preview() {
                     </ApplyFooter>
         </ApplyCard>
     );
-};
+}
