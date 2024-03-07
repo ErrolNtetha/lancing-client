@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { addDoc, collection, doc, DocumentData, getDoc, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, doc, DocumentData, DocumentReference, getDoc, serverTimestamp } from 'firebase/firestore';
 import { useParams, useRouter } from 'next/navigation';
 import React, { Suspense } from 'react';
 import { useForm } from 'react-hook-form';
@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Separator } from '../../../../../@/components/ui/separator';
 import { Textarea } from '../../../../../@/components/ui/textarea';
 import { useToast } from '../../../../../@/components/ui/use-toast';
+import { NOTIFICATION_TYPES } from '../../../../../constants/notifications_types';
 import { db } from '../../../../../firebaseConfig';
 import { useAuth } from '../../../../../hooks/useAuth';
 import ProjectPreview from '../../../../organisms/client/project/projectPreview';
@@ -29,6 +30,7 @@ const ProposalScheme = z.object({
 
 export default function Proposal() {
     const [loading, setLoading] = React.useState(false);
+    const [clientId, setClientId] = React.useState<DocumentReference>();
     const [previewLoading, setPreviewLoading] = React.useState(true);
     const [project, setProject] = React.useState<DocumentData>({});
     const params = useParams();
@@ -52,6 +54,7 @@ export default function Proposal() {
                 if (document.exists()) {
                     console.log('Data: ', document.data());
                     setProject(document.data());
+                    setClientId(document.data().postedBy);
                 }
             } catch (error) {
                 console.log('Error occured: ', error);
@@ -68,11 +71,21 @@ export default function Proposal() {
 
         try {
             const proposalsRef = collection(db, 'proposals');
+            const notificationsRef = collection(db, 'notifications');
 
             await addDoc(proposalsRef, {
                 freelancer: doc(db, `users/${currentUser.uid}`),
                 project: doc(db, `users/${params?.projectId}`),
                 createdAt: serverTimestamp(),
+                ...data
+            });
+
+            await addDoc(notificationsRef, {
+                from: doc(db, `users/${currentUser.uid}`),
+                to: doc(db, `users/${clientId}`),
+                createdAt: serverTimestamp(),
+                type: NOTIFICATION_TYPES.INCOMING_PROPOSAL,
+                read: false,
                 ...data
             });
 

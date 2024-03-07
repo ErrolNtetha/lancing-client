@@ -5,7 +5,7 @@ import IncomingOfferCard from './cardTypes/incomingOfferCard';
 import DeclinedOfferCard from './cardTypes/declinedOfferCard';
 import IncomingProposalCard from './cardTypes/incomingProposalCard';
 
-export const NOTIFICATION_TYPES = {
+const NOTIFICATION_TYPES = {
     INCOMING_OFFER: 'incomingOffer',
     INCOMING_PROPOSAL: 'incomingProposal',
     ACCEPTED_OFFER: 'acceptedOffer',
