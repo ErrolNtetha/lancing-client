@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { addDoc, collection, doc, DocumentData, DocumentReference, getDoc, serverTimestamp } from 'firebase/firestore';
 import { useParams, useRouter } from 'next/navigation';
-import React, { Suspense } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '../../../../../@/components/ui/button';
@@ -17,7 +17,6 @@ import { NOTIFICATION_TYPES } from '../../../../../constants/notifications_types
 import { db } from '../../../../../firebaseConfig';
 import { useAuth } from '../../../../../hooks/useAuth';
 import ProjectPreview from '../../../../organisms/client/project/projectPreview';
-import PaymentCard from '../../../../organisms/paystack/paymentCard';
 
 const ProposalScheme = z.object({
     title: z.string({ required_error: 'This field is required.' }).min(30, 'Title is too short.'),
@@ -79,6 +78,13 @@ export default function Proposal() {
                 ...data
             });
 
+            toast({
+                title: 'Success',
+                description: 'Proposal successfully sent.'
+            });
+
+            // Send notification to alert the client of a new 
+            // proposal coming in
             await addDoc(notificationsRef, {
                 from: doc(db, `users/${currentUser.uid}`),
                 to: doc(db, `users/${clientId}`),
@@ -88,16 +94,9 @@ export default function Proposal() {
                 ...data
             });
 
-            toast({
-                className: 'bg-[green]',
-                title: 'Success',
-                description: 'Proposal successfully sent.'
-            });
-
             router.push('/feed');
 
         } catch (error) {
-            console.log(error);
             toast({
                 variant: 'destructive',
                 title: 'Failed',
