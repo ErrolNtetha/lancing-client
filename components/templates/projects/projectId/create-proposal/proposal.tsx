@@ -52,7 +52,6 @@ export default function Proposal() {
                 const document = await getDoc(projectRef);
 
                 if (document.exists()) {
-                    console.log('Data: ', document.data());
                     setProject(document.data());
                     setClientId(document.data().postedBy);
                 }
