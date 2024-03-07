@@ -79,6 +79,7 @@ export default function Proposal() {
             });
 
             toast({
+                className: '',
                 title: 'Success',
                 description: 'Proposal successfully sent.'
             });
