@@ -13,7 +13,7 @@ import { useAuth } from '../../../hooks/useAuth';
 import { signOut } from 'firebase/auth';
 import { auth, db } from '../../../firebaseConfig';
 import { DigitCounter } from '../../molecules/digitCounter';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, doc, getDocs, query, where } from 'firebase/firestore';
 import { useProfileStore } from '../../../hooks/useGlobalStore';
 import { FiAlignRight, FiBell } from 'react-icons/fi';
 import { Button } from '../../../@/components/ui/button';
@@ -21,6 +21,7 @@ import { Button } from '../../../@/components/ui/button';
 export const Header = () => {
     const [nav, setNav] = useState(false);
     const [proposals, setProposals] = useState([]);
+    const [notifications, setNotifications] = useState<any>([]);
     const p: any = [];
     const { profile, clearProfile } = useProfileStore();
     const router = useRouter();
@@ -40,6 +41,26 @@ export const Header = () => {
             console.log(error);
         }
     };
+
+    useEffect(() => {
+        async function getNotifications() {
+            const uid = doc(db, `users/${currentUser?.uid}`);
+
+            try {
+                const notificationsRef = collection(db, 'notifications');
+                const q = query(notificationsRef, where('to', '==', uid));
+
+                const querySnapshots = await getDocs(q);
+                querySnapshots.forEach(document => {
+                    setNotifications((prevState: any) => ([...prevState, { ...document.data(), id: document.id }]))
+                });
+            } catch (error) {
+                console.log('Error getting notificatioons: ', error);
+            }
+        }
+
+        getNotifications();
+    }, []);
 
     useEffect(() => {
         async function getMessages() {
@@ -105,7 +126,7 @@ export const Header = () => {
                                 <li className='ml-4 mr-4'>
                                     <Link className='w-full flex items-center gap-2' href='/notifications'>
                                         Notifications 
-                                        <DigitCounter count={3} className='bg-[red] pointer-events-none' />
+                                        <DigitCounter count={notifications.length} className='bg-[red] pointer-events-none' />
                                     </Link>
                                 </li>
                                 <li className='ml-4 mr-4'>
@@ -129,7 +150,7 @@ export const Header = () => {
                                 <li className='ml-4 mr-4'>
                                     <Link className='w-full flex items-center gap-2' href='/notifications'>
                                         Notifications 
-                                        <DigitCounter count={3} className='bg-[red] pointer-events-none' />
+                                        <DigitCounter count={notifications.length} className='bg-[red] pointer-events-none' />
                                     </Link>
                                 </li>
                             </ul>
