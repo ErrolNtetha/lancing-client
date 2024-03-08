@@ -37,30 +37,31 @@ export const Header = () => {
             clearProfile();
             setNav(!nav);
             router.push('/login');
-        } catch(error) {
+        } catch (error) {
             console.log(error);
         }
     };
 
     useEffect(() => {
         async function getNotifications() {
-            const uid = doc(db, `/users/${currentUser?.uid}`);
-
             try {
                 const notificationsRef = collection(db, 'notifications');
-                const q = query(notificationsRef, where('to', '==', uid));
+                const authorRef = doc(db, `/users/${currentUser?.uid}`);
+                const q = query(notificationsRef, where('to', '==', authorRef));
 
                 const querySnapshots = await getDocs(q);
-                querySnapshots.forEach(document => {
-                    setNotifications((prevState: any) => ([...prevState, { ...document.data(), id: document.id }]))
+                console.log('Docs length: ', querySnapshots.docs.length);
+                querySnapshots.forEach((document) => {
+                    setNotifications((prevState: any) => [...prevState, { ...document.data(), id: document.id }]);
                 });
+                console.log('Notifications: ', notifications);
             } catch (error) {
                 console.log('Error getting notificatioons: ', error);
             }
         }
 
         getNotifications();
-    }, []);
+    }, [currentUser?.uid]);
 
     useEffect(() => {
         async function getMessages() {
@@ -69,7 +70,7 @@ export const Header = () => {
 
                 const querySnapshot = await getDocs(messagesRef);
                 querySnapshot.forEach(async (doc) => {
-                    p.push({ id: doc.id, proposal: doc.data()});
+                    p.push({ id: doc.id, proposal: doc.data() });
                 })
                 setProposals(p);
             } catch (error) {
@@ -86,46 +87,46 @@ export const Header = () => {
                 <Link href={currentUser ? '/feed' : '/'} className='max-w-full'>
                     <Image src='/assets/images/svg/blackLogo.svg' alt='Company logo' className='fill-current text-white' width={120} height={120} />
                 </Link>
-                    {!currentUser && (
-                        <section className='hidden md:flex ml-auto'>
-                            <ul className='p-0 md:flex items-center'>
-                                <li className='ml-4 mr-4' >
-                                    <Link className='block w-full' href='/feed'>Home</Link>
-                                </li>
-                                <li className='ml-4 mr-4'>
-                                    <Link className='block w-full' href='/blog'>Blog</Link>
-                                </li>
-                                <li className='ml-4 mr-4'>
-                                    <Link href='/contact'>Contact</Link>
-                                </li>
-                                <li className='ml-4 mr-4'>
-                                    <Link href='/about'>About</Link>
-                                </li>
-                                <li className='ml-4 mr-4'>
-                                    <Link href='/faq'>FAQ</Link>
-                                </li>
-                            </ul>
-                        </section>
+                {!currentUser && (
+                    <section className='hidden md:flex ml-auto'>
+                        <ul className='p-0 md:flex items-center'>
+                            <li className='ml-4 mr-4' >
+                                <Link className='block w-full' href='/feed'>Home</Link>
+                            </li>
+                            <li className='ml-4 mr-4'>
+                                <Link className='block w-full' href='/blog'>Blog</Link>
+                            </li>
+                            <li className='ml-4 mr-4'>
+                                <Link href='/contact'>Contact</Link>
+                            </li>
+                            <li className='ml-4 mr-4'>
+                                <Link href='/about'>About</Link>
+                            </li>
+                            <li className='ml-4 mr-4'>
+                                <Link href='/faq'>FAQ</Link>
+                            </li>
+                        </ul>
+                    </section>
                 )}
                 {currentUser && !profile?.isClient
                     ? (
                         <section className='hidden md:flex ml-auto'>
                             <ul className='p-0 md:flex items-center'>
                                 <li className='ml-4 mr-4' >
-                                    <Link className='w-full flex items-center gap-2' href='/messages'> 
-                                        Messages 
+                                    <Link className='w-full flex items-center gap-2' href='/messages'>
+                                        Messages
                                         <DigitCounter count={6} className='bg-[red] pointer-events-none' />
                                     </Link>
                                 </li>
                                 <li className='ml-4 mr-4'>
                                     <Link className='w-full flex items-center gap-2' href='/offers'>
-                                        Offers 
+                                        Offers
                                         <DigitCounter count={1} className='bg-[red] pointer-events-none' />
                                     </Link>
                                 </li>
                                 <li className='ml-4 mr-4'>
                                     <Link className='w-full flex items-center gap-2' href='/notifications'>
-                                        Notifications 
+                                        Notifications
                                         <DigitCounter count={notifications.length} className='bg-[red] pointer-events-none' />
                                     </Link>
                                 </li>
@@ -134,13 +135,13 @@ export const Header = () => {
                                 </li>
                             </ul>
                         </section>
-                )
-                : (
+                    )
+                    : (
                         <section className='hidden md:flex ml-auto'>
                             <ul className='p-0 text-sm md:flex md:items-center'>
                                 <li className='ml-3 mr-3' >
-                                    <Link className='w-full flex items-center gap-2' href='/messages'> 
-                                        Messages 
+                                    <Link className='w-full flex items-center gap-2' href='/messages'>
+                                        Messages
                                         <DigitCounter count={1} className='bg-[red] pointer-events-none' />
                                     </Link>
                                 </li>
@@ -149,14 +150,14 @@ export const Header = () => {
                                 </li>
                                 <li className='ml-4 mr-4'>
                                     <Link className='w-full flex items-center gap-2' href='/notifications'>
-                                        Notifications 
+                                        Notifications
                                         <DigitCounter count={notifications.length} className='bg-[red] pointer-events-none' />
                                     </Link>
                                 </li>
                             </ul>
                         </section>
-                )}
-                <section className='flex items-center gap-2'>
+                    )}
+                <section className='flex items-center gap-1'>
                     {currentUser && (
                         <Link href='/notifications' className='relative p-2 hover:cursor-pointer md:hidden gap-2'>
                             <DigitCounter count={notifications.length} className='bg-[red] pointer-events-none top-0 right-0 md:hidden' absolute={true} />
@@ -173,18 +174,18 @@ export const Header = () => {
                         type='button'
                         className='text-white bg-primary font-extrabold py-2 px-10 hidden md:block'
                         asChild
-                    > 
+                    >
                         <Link href='/apply/getting-started'> Apply </Link>
                     </Button>
                 )}
-                <span className='hidden md:block ml-4'> 
+                <span className='hidden md:block ml-4'>
                     {currentUser
-                        ? <UserHead 
-                            avatar={profile?.avatar} 
-                            names={profile?.names} 
+                        ? <UserHead
+                            avatar={profile?.avatar}
+                            names={profile?.names}
                             isClient={profile?.isClient}
-                        /> 
-                        : <LoginButton />} 
+                        />
+                        : <LoginButton />}
                 </span>
                 {nav && (
                     <section className='fixed bg-primary top-0 left-0 bottom-0 w-full'>
@@ -198,21 +199,21 @@ export const Header = () => {
                             totalMessages={proposals.length}
                         />
                         <section className='flex items-center justify-center flex-col px-3 gap-3 absolute w-full left-0 bottom-4'>
-                        {(!profile?.isClient && profile?.hasOwnProperty('application')) && (
-                            <Button
-                                type='button'
-                                className='text-black bg-background font-extrabold w-full'
-                                asChild
-                            > 
-                                <Link href='/apply/getting-started'> Apply </Link>
-                            </Button>
+                            {(!profile?.isClient && profile?.hasOwnProperty('application')) && (
+                                <Button
+                                    type='button'
+                                    className='text-black bg-background font-extrabold w-full'
+                                    asChild
+                                >
+                                    <Link href='/apply/getting-started'> Apply </Link>
+                                </Button>
                             )}
                             <Button
                                 type='button'
                                 className='text-white border-2 border-white font-extrabold w-full p-2 my-1 mx-4'
                                 onClick={() => `${currentUser ? handleLogout() : handleLogIn()}`}
-                            > 
-                                {`${currentUser ? 'Logout' : 'Login'}`} 
+                            >
+                                {`${currentUser ? 'Logout' : 'Login'}`}
                             </Button>
                         </section>
                     </section>
