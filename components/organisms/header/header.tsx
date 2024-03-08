@@ -158,10 +158,10 @@ export const Header = () => {
                 )}
                 <section className='flex items-center gap-2'>
                     {currentUser && (
-                        <section className='relative p-2 hover:cursor-pointer md:hidden gap-2'>
+                        <Link href='/notifications' className='relative p-2 hover:cursor-pointer md:hidden gap-2'>
                             <DigitCounter count={notifications.length} className='bg-[red] pointer-events-none top-0 right-0 md:hidden' absolute={true} />
                             <FiBell className='text-[1.8rem] block' />
-                        </section>
+                        </Link>
                     )}
                     <section className='relative p-2 hover:cursor-pointer gap-2'>
                         {profile?.isClient && <DigitCounter count={proposals.length} className='bg-[red] pointer-events-none top-0 right-0' absolute={true} />}

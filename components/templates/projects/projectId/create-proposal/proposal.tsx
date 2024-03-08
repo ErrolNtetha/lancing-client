@@ -29,7 +29,7 @@ const ProposalScheme = z.object({
 
 export default function Proposal() {
     const [loading, setLoading] = React.useState(false);
-    const [clientId, setClientId] = React.useState<DocumentReference>();
+    const [clientId, setClientId] = React.useState<string | undefined>('');
     const [previewLoading, setPreviewLoading] = React.useState(true);
     const [project, setProject] = React.useState<DocumentData>({});
     const params = useParams();
@@ -44,6 +44,15 @@ export default function Proposal() {
         }
     });
 
+    async function getAuthor(authorId: DocumentReference) {
+        const doc = await getDoc(authorId);
+
+        if (doc.exists()) {
+            // ts-ignore
+            return { ...doc.data(), id: doc.id };
+        }
+    }
+
     React.useEffect(() => {
         const getProjectDetails = async () => {
             try {
@@ -52,7 +61,10 @@ export default function Proposal() {
 
                 if (document.exists()) {
                     setProject(document.data());
-                    setClientId(document.data().postedBy);
+
+                    // Get ID of the user who posted the project
+                    const author = await getAuthor(document.data().postedBy);
+                    setClientId(author?.id);
                 }
             } catch (error) {
                 console.log('Error occured: ', error);
