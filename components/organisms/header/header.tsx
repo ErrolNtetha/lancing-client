@@ -44,7 +44,7 @@ export const Header = () => {
 
     useEffect(() => {
         async function getNotifications() {
-            const uid = doc(db, `users/${currentUser?.uid}`);
+            const uid = doc(db, `/users/${currentUser?.uid}`);
 
             try {
                 const notificationsRef = collection(db, 'notifications');
