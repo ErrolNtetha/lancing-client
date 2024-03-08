@@ -17,7 +17,7 @@ export const Footer = () => {
         <footer className='max-md:p-3 md:container bg-slate text-white'>
             <section className='flex flex-col justify-center gap-3 text-sm md:text-md px-4 py-6'>
                 <section className='flex justify-center items-center'>
-                    <ul className='flex items-center space-x-2'>
+                    <ul className='flex items-center divide divide-gray-200 space-x-3'>
                         <li>
                             <Link href='/'> Home </Link>
                         </li>
@@ -25,7 +25,7 @@ export const Footer = () => {
                             <Link href='/contact-us'> Contact </Link>
                         </li>
                         <li>
-                            <Link href='/faq'> FAQs </Link>
+                            <Link href='/faq'> FAQ </Link>
                         </li>
                         <li>
                             <Link href='/about'> About </Link>
