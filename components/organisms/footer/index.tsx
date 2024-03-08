@@ -15,10 +15,9 @@ export const Footer = () => {
 
     return (
         <footer className='max-md:p-3 md:container bg-slate text-white'>
-            <section className='flex justify-between gap-3 text-sm md:text-md px-4 py-6'>
-                <section>
-                    <h4 className='font-bold text-md mb-2'> Company </h4>
-                    <ul className='space-y-2'>
+            <section className='flex flex-col justify-center gap-3 text-sm md:text-md px-4 py-6'>
+                <section className='flex justify-center items-center'>
+                    <ul className='flex items-center space-x-2'>
                         <li>
                             <Link href='/'> Home </Link>
                         </li>
@@ -29,7 +28,7 @@ export const Footer = () => {
                             <Link href='/faq'> FAQs </Link>
                         </li>
                         <li>
-                            <Link href='/about'> About Us </Link>
+                            <Link href='/about'> About </Link>
                         </li>
                         {!currentUser && (
                             <li>
@@ -38,10 +37,9 @@ export const Footer = () => {
                         )}
                     </ul>
                 </section>
-                <section className='self-end'>
+                <section className=''>
                     <section>
-                        <p className='text-right'> Follow us: </p>
-                        <ul className='mb-3 text-sm flex items-center justify-end gap-3'>
+                        <ul className='mb-3 text-sm flex items-center justify-center gap-3'>
                             <li> 
                                 <Link href='www.facebook.com' target='_blank'> <FiFacebook className={iconClassName} /> </Link> 
                             </li>
@@ -49,16 +47,16 @@ export const Footer = () => {
                                 <Link href='www.linkedin.com' target='_blank'> <FiLinkedin className={iconClassName} /> </Link> 
                             </li>
                             <li>
-                                <Link href='/'> <MdOutlineWhatsapp className={iconClassName} /> </Link>
+                                <Link href='https://wa.me/0029VaPxChUFCCodaRqssH1M'> <MdOutlineWhatsapp className={iconClassName} /> </Link>
                             </li>
                         </ul>
-                        <span className='flex'>
+                        <span className='flex items-center justify-center'>
                             <Image src='/images/logo.svg' alt='Company logo' className='fill-current self-end text-white' width={80} height={80} />
                         </span>
                     </section>
-                    </section>
+                </section>
             </section>
-            <section className='flex items-center justify-center text-sm p-2'>
+            <section className='flex items-center justify-center text-xs p-2'>
                 <p> &#169; {COMPANY_NAME}, {getCurrentYear()}. All Rights Reserved. </p>
             </section>
         </footer>
