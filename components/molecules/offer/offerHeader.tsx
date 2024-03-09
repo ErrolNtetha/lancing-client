@@ -27,7 +27,7 @@ export default function OfferHeader({ client }: OProps) {
                     <span className='text-sm'> 
                         ({client?.rating || 0}/5) 
                     </span> -
-                    Spent: <span className='text-[green] text-sm font-semibold'> R{formatAmountSuffix(client?.amountSpent || 0)} </span>
+                    Spent: <span className='text-[green] text-sm font-semibold'> {formatAmountSuffix(client?.amountSpent || 0)} </span>
                 </span>
             </span>
         </section>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { formatNumber } from '../../../utilities/format';
+import { formatAmountSuffix, formatNumber } from '../../../utilities/format';
 import { Modal } from '../modal';
 import { Proposal } from './proposal';
 import { MdVerifiedUser } from 'react-icons/md';
@@ -16,6 +16,7 @@ type ClientProps = {
         };
         verifiedPayment: boolean;
         occupation: string;
+        amountSpent: number;
     };
     projectId: string;
     createdAt: {
@@ -59,6 +60,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
         },
         verifiedPayment,
         occupation,
+        amountSpent
     } = postedBy;
 
     const hasVerifiedPayment = verifiedPayment ? 'Verified Payment' : 'Unverified Payment';
@@ -77,8 +79,8 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                     <span className='flex gap-3'>
                         <span>
                             <h2 className='text-sm md:text-lg font-semibold'>{firstName} {lastName} </h2>
-                            <p className='flex items-center gap-1'> {occupation} </p>
-                            <section className='flex items-center gap-1'> <FiCheckCircle className={verifiedPayment ? 'text-green-900' : 'text-gray-400' } /> {hasVerifiedPayment} </section>
+                            <p className='flex items-center gap-1 text-xs'> Spent: <span className='text-[green] font-bold'>{formatAmountSuffix(amountSpent || 0)}</span> </p>
+                            <section className='flex items-center gap-1 text-xs'> <FiCheckCircle className={verifiedPayment ? 'text-green-900' : 'text-gray-400' } /> {hasVerifiedPayment} </section>
                         </span>
                     </span>
                     <span className='flex items-center gap-1 self-start'> <FiClock /> {createdAtTime} </span>
