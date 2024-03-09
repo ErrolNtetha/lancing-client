@@ -93,7 +93,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                     <section className='py-1 flex justify-between'>
                         <span className=''>
                             <p className='flex items-center gap-2'> <FiActivity /> {contract} </p>
-                            <p className={`flex items-center gap-2 ${hasDeadlinePassed && 'text-red'}`}> <FiCalendar /> {deadlineTime} </p>
+                            <p className={`flex items-center gap-2 ${hasDeadlinePassed && 'text-red-900'}`}> <FiCalendar /> {deadlineTime} </p>
                         </span>
                         <span className=''>
                             <p className='flex items-center gap-2'> <FiDollarSign /> R{formatNumber(budget)} </p>
