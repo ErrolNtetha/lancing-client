@@ -6,6 +6,10 @@ export const formatNumber = (number: number) => {
 }
 
 export const formatAmount = (amount: number | null, formatType = '$,') => {
+    /*
+     * R12 400 ==> R12,4k (use '$,~s')
+     *
+     */
     formatDefaultLocale({
         decimal: ".",
         thousands: ",",
