@@ -1,9 +1,9 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { addDoc, collection, doc, DocumentData, getDoc, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, doc, DocumentData, DocumentReference, getDoc, serverTimestamp } from 'firebase/firestore';
 import { useParams, useRouter } from 'next/navigation';
-import React, { Suspense } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '../../../../../@/components/ui/button';
@@ -13,10 +13,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Separator } from '../../../../../@/components/ui/separator';
 import { Textarea } from '../../../../../@/components/ui/textarea';
 import { useToast } from '../../../../../@/components/ui/use-toast';
+import { NOTIFICATION_TYPES } from '../../../../../constants/notifications_types';
 import { db } from '../../../../../firebaseConfig';
 import { useAuth } from '../../../../../hooks/useAuth';
 import ProjectPreview from '../../../../organisms/client/project/projectPreview';
-import PaymentCard from '../../../../organisms/paystack/paymentCard';
 
 const ProposalScheme = z.object({
     title: z.string({ required_error: 'This field is required.' }).min(30, 'Title is too short.'),
@@ -29,6 +29,7 @@ const ProposalScheme = z.object({
 
 export default function Proposal() {
     const [loading, setLoading] = React.useState(false);
+    const [clientId, setClientId] = React.useState<string | undefined>('');
     const [previewLoading, setPreviewLoading] = React.useState(true);
     const [project, setProject] = React.useState<DocumentData>({});
     const params = useParams();
@@ -43,6 +44,15 @@ export default function Proposal() {
         }
     });
 
+    async function getAuthor(authorId: DocumentReference) {
+        const doc = await getDoc(authorId);
+
+        if (doc.exists()) {
+            // ts-ignore
+            return { ...doc.data(), id: doc.id };
+        }
+    }
+
     React.useEffect(() => {
         const getProjectDetails = async () => {
             try {
@@ -50,8 +60,11 @@ export default function Proposal() {
                 const document = await getDoc(projectRef);
 
                 if (document.exists()) {
-                    console.log('Data: ', document.data());
                     setProject(document.data());
+
+                    // Get ID of the user who posted the project
+                    const author = await getAuthor(document.data().postedBy);
+                    setClientId(author?.id);
                 }
             } catch (error) {
                 console.log('Error occured: ', error);
@@ -68,6 +81,7 @@ export default function Proposal() {
 
         try {
             const proposalsRef = collection(db, 'proposals');
+            const notificationsRef = collection(db, 'notifications');
 
             await addDoc(proposalsRef, {
                 freelancer: doc(db, `users/${currentUser.uid}`),
@@ -77,15 +91,25 @@ export default function Proposal() {
             });
 
             toast({
-                className: 'bg-[green]',
+                className: '',
                 title: 'Success',
                 description: 'Proposal successfully sent.'
+            });
+
+            // Send notification to alert the client of a new 
+            // proposal coming in
+            await addDoc(notificationsRef, {
+                from: doc(db, `users/${currentUser.uid}`),
+                to: doc(db, `users/${clientId}`),
+                createdAt: serverTimestamp(),
+                type: NOTIFICATION_TYPES.INCOMING_PROPOSAL,
+                read: false,
+                ...data
             });
 
             router.push('/feed');
 
         } catch (error) {
-            console.log(error);
             toast({
                 variant: 'destructive',
                 title: 'Failed',

@@ -6,7 +6,7 @@ type ApplyCardProps = {
 
 function ApplyCard({ children }: ApplyCardProps) {
     return (
-        <section className='max-w-xl'>
+        <section className='my-3 max-w-xl'>
             {children}
         </section>
     );
