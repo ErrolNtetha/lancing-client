@@ -61,7 +61,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
         occupation,
     } = postedBy;
 
-    const hasVerifiedPayment = verifiedPayment ? 'Unverified Payment' : 'Verified Payment';
+    const hasVerifiedPayment = verifiedPayment ? 'Verified Payment' : 'Unverified Payment';
     const deadlineTime = deadline?.seconds
         ? formatDistance(new Date(Number(deadline.seconds) * 1000), new Date(), { addSuffix: true }) 
         : 'Not Applicable';
@@ -78,7 +78,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                         <span>
                             <h2 className='text-sm md:text-lg font-semibold'>{firstName} {lastName} </h2>
                             <p className='flex items-center gap-1'> {occupation} </p>
-                            <section className='flex items-center gap-1'> <FiCheckCircle className={verifiedPayment ? 'fill-[green]' : 'fill-gray-200' } /> {hasVerifiedPayment} </section>
+                            <section className='flex items-center gap-1'> <FiCheckCircle className={verifiedPayment ? 'text-green-900' : 'text-gray-100' } /> {hasVerifiedPayment} </section>
                         </span>
                     </span>
                     <span className='flex items-center gap-1 self-start'> <FiClock /> {createdAtTime} </span>
