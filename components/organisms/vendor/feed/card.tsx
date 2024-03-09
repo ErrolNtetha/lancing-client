@@ -18,6 +18,7 @@ type CardProps = {
     uid: string;
     avatar: string;
     title: string;
+    ratings: object[];
     packages: {
         price: number;
         rate: string;
@@ -29,7 +30,7 @@ export default function Card({
     names,
     description,
     cover,
-    id,
+    ratings,
     uid,
     avatar,
     title,
@@ -43,17 +44,15 @@ export default function Card({
             <section>
                 <section className='flex items-center justify-between mb-4'>
                     <span className='flex gap-2'>
-                        <Link href={`/vendors/${uid}`}>
-                            <Avatar
-                                src={avatar}
-                                alt={`${names?.firstName}&apos;s avatar`}
-                                size='w-12 h-12'
-                            />
-                        </Link>
+                        <Avatar
+                            src={avatar}
+                            alt={`${names?.firstName}&apos;s avatar`}
+                            size='w-12 h-12'
+                        />
                         <section>
                             <Link href={`/vendors/${uid}`} className='text-sm font-semibold'>{names?.firstName} {names?.lastName} </Link>
                             <p className='flex items-center gap-1'> {title} </p>
-                            <span className='flex items-center gap-1'> <StarRating value={5} /> ({5}/5) </span>
+                            <span className='flex items-center gap-1'> <StarRating value={ratings.length} /> ({ratings.length}/5) </span>
                         </section>
                     </span>
                     {/* <FiMoreHorizontal className='self-start text-md' /> */}

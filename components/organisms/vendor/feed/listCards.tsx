@@ -6,6 +6,7 @@ import { db } from '../../../../firebaseConfig';
 
 export default function ListCards() {
     const [cards, setCards] = React.useState<any>([]);
+    const [ratings, setRatings] = React.useState<any>([]);
 
     const getAuthor = async(authorRef: any) => {
         const doc = await getDoc(authorRef);
@@ -45,6 +46,7 @@ export default function ListCards() {
             names={item.names}
             cover={item.cover}
             description={item.description}
+            ratings={ratings}
         />
     ))
     return (
