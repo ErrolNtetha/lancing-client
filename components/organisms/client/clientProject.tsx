@@ -4,7 +4,7 @@ import { Modal } from '../modal';
 import { Proposal } from './proposal';
 import { MdVerifiedUser } from 'react-icons/md';
 import { FiActivity, FiBriefcase, FiCalendar, FiCheckCircle, FiClock, FiCreditCard, FiDollarSign } from 'react-icons/fi';
-import { formatDistance } from 'date-fns';
+import { formatDistance, isPast } from 'date-fns';
 import { Button } from '../../../@/components/ui/button';
 import Link from 'next/link';
 
@@ -68,6 +68,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
         ? formatDistance(new Date(Number(deadline.seconds) * 1000), new Date(), { addSuffix: true }) 
         : 'Not Applicable';
 
+    const hasDeadlinePassed = isPast(new Date(Number(deadline.seconds) * 1000));
     const createdAtTime = createdAt?.seconds
         ? formatDistance(new Date(Number(createdAt.seconds) * 1000), new Date(), { addSuffix: true }) 
         : 'Not Applicable';
@@ -92,7 +93,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                     <section className='py-1 flex justify-between'>
                         <span className=''>
                             <p className='flex items-center gap-2'> <FiActivity /> {contract} </p>
-                            <p className='flex items-center gap-2'> <FiCalendar /> {deadlineTime} </p>
+                            <p className={`flex items-center gap-2 ${hasDeadlinePassed && 'text-[red] font-bold'}`}> <FiCalendar /> {deadlineTime} </p>
                         </span>
                         <span className=''>
                             <p className='flex items-center gap-2'> <FiDollarSign /> R{formatNumber(budget)} </p>
