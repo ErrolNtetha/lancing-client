@@ -34,8 +34,7 @@ export default function CardList({ cover, isActive, category, description, packa
             <section className='flex justify-between'>
                 <span>
                     <h2 className='font-bold text-sm text-gray-600'> STARTING FROM </h2>
-                    <h2 className='flex font-bold'> 
-                        <span className='text-sm'> R </span> 
+                    <h2 className='flex font-bold float-right'> 
                         <span className='text-2xl'>{formatAmount(minimumPrice)}<span className='text-sm'>/hr</span> </span>
                     </h2>
                 </span>

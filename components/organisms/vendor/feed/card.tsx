@@ -43,18 +43,20 @@ export default function Card({
             <section>
                 <section className='flex items-center justify-between mb-4'>
                     <span className='flex gap-2'>
-                        <Avatar
-                            src={avatar}
-                            alt={`${names?.firstName}&apos;s avatar`}
-                            size='w-12 h-12'
-                        />
+                        <Link href={`/vendors/${uid}`}>
+                            <Avatar
+                                src={avatar}
+                                alt={`${names?.firstName}&apos;s avatar`}
+                                size='w-12 h-12'
+                            />
+                        </Link>
                         <section>
                             <Link href={`/vendors/${uid}`} className='text-sm font-semibold'>{names?.firstName} {names?.lastName} </Link>
                             <p className='flex items-center gap-1'> {title} </p>
                             <span className='flex items-center gap-1'> <StarRating value={5} /> ({5}/5) </span>
                         </section>
                     </span>
-                    <FiMoreHorizontal className='self-start text-md' />
+                    {/* <FiMoreHorizontal className='self-start text-md' /> */}
                 </section>
                 <p className='mb-4 text-sm'> {description} </p>
                 <section className='w-full border border-gray-100'>
@@ -68,8 +70,7 @@ export default function Card({
                         <section />
                         <span className=''>
                             <h6 className='font-bold text-sm text-gray-600'> STARTING FROM </h6>
-                            <h2 className='flex font-bold'> 
-                                <span className='text-sm'> R </span> 
+                            <h2 className='flex font-bold float-right'> 
                                 <span className='text-2xl'>{formatAmount(minimumPrice)}<span className='text-sm'>/hr</span> </span>
                             </h2>
                         </span>
