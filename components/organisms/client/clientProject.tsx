@@ -78,7 +78,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                         <span>
                             <h2 className='text-sm md:text-lg font-semibold'>{firstName} {lastName} </h2>
                             <p className='flex items-center gap-1'> {occupation} </p>
-                            <section className='flex items-center gap-1'> <FiCheckCircle className={verifiedPayment ? 'text-green-900' : 'text-gray-100' } /> {hasVerifiedPayment} </section>
+                            <section className='flex items-center gap-1'> <FiCheckCircle className={verifiedPayment ? 'text-green-900' : 'text-gray-400' } /> {hasVerifiedPayment} </section>
                         </span>
                     </span>
                     <span className='flex items-center gap-1 self-start'> <FiClock /> {createdAtTime} </span>
