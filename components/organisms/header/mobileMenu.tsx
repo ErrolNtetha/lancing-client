@@ -17,9 +17,10 @@ type MenuProps = {
     isClient: boolean;
     totalMessages: number;
     totalProposals: number;
+    totalOffers: number;
 };
 
-export const MobileMenu = ({ handleMenuToggle, isClient, auth, names, avatar, totalMessages, totalProposals }: MenuProps) => {
+export const MobileMenu = ({ handleMenuToggle, isClient, auth, names, avatar, totalMessages, totalProposals, totalOffers }: MenuProps) => {
     const accountType = isClient ? 'Client Account' : 'Freelancer Account';
     return (
         <section className='relative p-3'>
@@ -50,7 +51,7 @@ export const MobileMenu = ({ handleMenuToggle, isClient, auth, names, avatar, to
                         {isClient && <li className='p-1 hover:cursor-pointer'> <Link href='/myprojects' className='flex items-center justify-between w-full'> My Projects </Link></li>}
                         {isClient && <li className='p-1 hover:cursor-pointer'> <Link href='/proposals' className='flex items-center justify-between w-full'> Proposals <DigitCounter count={totalProposals} /> </Link></li>}
                         {!isClient && <li className='flex items-center justify-between p-1 hover:cursor-pointer'> <Link href='/mylistings' className='flex items-center justify-between w-full'> My Lists </Link></li>}
-                        {!isClient && <li className='flex items-center justify-between p-1 hover:cursor-pointer'> <Link href='/offers' className='flex items-center justify-between w-full'> Offers </Link> </li>}
+                        {!isClient && <li className='flex items-center justify-between p-1 hover:cursor-pointer'> <Link href='/offers' className='flex items-center justify-between w-full'> Offers <DigitCounter count={totalOffers} /> </Link> </li>}
                     </ul>
                 </section>
             )}
