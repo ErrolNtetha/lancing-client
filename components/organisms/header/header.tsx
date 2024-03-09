@@ -21,6 +21,8 @@ import { Button } from '../../../@/components/ui/button';
 export const Header = () => {
     const [nav, setNav] = useState(false);
     const [proposals, setProposals] = useState([]);
+    const [messages, setMessages] = useState([]);
+    const [offers, setOffers] = useState([]);
     const [notifications, setNotifications] = useState<any>([]);
     const p: any = [];
     const { profile, clearProfile } = useProfileStore();
@@ -64,11 +66,11 @@ export const Header = () => {
     }, [currentUser?.uid]);
 
     useEffect(() => {
-        async function getMessages() {
+        async function getProposals() {
             try {
-                const messagesRef = collection(db, 'proposals');
+                const proposalsRef = collection(db, 'proposals');
 
-                const querySnapshot = await getDocs(messagesRef);
+                const querySnapshot = await getDocs(proposalsRef);
                 querySnapshot.forEach(async (doc) => {
                     p.push({ id: doc.id, proposal: doc.data() });
                 })
@@ -78,7 +80,7 @@ export const Header = () => {
             }
         }
 
-        getMessages();
+        getProposals();
     }, []);
 
     return (
@@ -115,13 +117,13 @@ export const Header = () => {
                                 <li className='ml-4 mr-4' >
                                     <Link className='w-full flex items-center gap-2' href='/messages'>
                                         Messages
-                                        <DigitCounter count={6} className='bg-[red] pointer-events-none' />
+                                        <DigitCounter count={messages.length} className='bg-[red] pointer-events-none' />
                                     </Link>
                                 </li>
                                 <li className='ml-4 mr-4'>
                                     <Link className='w-full flex items-center gap-2' href='/offers'>
                                         Offers
-                                        <DigitCounter count={1} className='bg-[red] pointer-events-none' />
+                                        <DigitCounter count={offers.length} className='bg-[red] pointer-events-none' />
                                     </Link>
                                 </li>
                                 <li className='ml-4 mr-4'>
@@ -142,7 +144,7 @@ export const Header = () => {
                                 <li className='ml-3 mr-3' >
                                     <Link className='w-full flex items-center gap-2' href='/messages'>
                                         Messages
-                                        <DigitCounter count={1} className='bg-[red] pointer-events-none' />
+                                        <DigitCounter count={messages.length} className='bg-[red] pointer-events-none' />
                                     </Link>
                                 </li>
                                 <li className='ml-4 mr-4'>
@@ -196,7 +198,9 @@ export const Header = () => {
                             avatar={profile?.avatar}
                             names={profile?.names}
                             handleMenuToggle={() => setNav(!nav)}
-                            totalMessages={proposals.length}
+                            totalProposals={proposals.length}
+                            totalMessages={messages.length}
+                            totalOffers={offers.length}
                         />
                         <section className='flex items-center justify-center flex-col px-3 gap-3 absolute w-full left-0 bottom-4'>
                             {(!profile?.isClient && profile?.hasOwnProperty('application')) && (
