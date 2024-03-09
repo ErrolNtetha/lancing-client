@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { formatAmountSuffix } from '../../../utilities/format';
+import { formatAmount } from '../../../utilities/format';
 import { StarRating } from '../star-rating';
 
 type OProps = {
@@ -27,7 +27,7 @@ export default function OfferHeader({ client }: OProps) {
                     <span className='text-sm'> 
                         ({client?.rating || 0}/5) 
                     </span> -
-                    Spent: <span className='text-[green] text-sm font-semibold'> {formatAmountSuffix(client?.amountSpent || 0)} </span>
+                    Spent: <span className='text-[green] text-sm font-semibold'> {formatAmount(client?.amountSpent || 0)} </span>
                 </span>
             </span>
         </section>
