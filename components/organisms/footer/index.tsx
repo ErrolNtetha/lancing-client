@@ -47,7 +47,7 @@ export const Footer = () => {
                                 <Link href='www.linkedin.com' target='_blank'> <FiLinkedin className={iconClassName} /> </Link> 
                             </li>
                             <li>
-                                <Link href='https://wa.me/0029VaPxChUFCCodaRqssH1M'> <MdOutlineWhatsapp className={iconClassName} /> </Link>
+                                <Link href='https://whatsapp.com/channel/0029VaPxChUFCCodaRqssH1M'> <MdOutlineWhatsapp className={iconClassName} /> </Link>
                             </li>
                         </ul>
                         <span className='flex items-center justify-center'>
