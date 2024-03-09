@@ -3,7 +3,7 @@ import { formatNumber } from '../../../utilities/format';
 import { Modal } from '../modal';
 import { Proposal } from './proposal';
 import { MdVerifiedUser } from 'react-icons/md';
-import { FiActivity, FiBriefcase, FiCalendar, FiClock, FiDollarSign } from 'react-icons/fi';
+import { FiActivity, FiBriefcase, FiCalendar, FiCheckCircle, FiClock, FiDollarSign } from 'react-icons/fi';
 import { formatDistance } from 'date-fns';
 import { Button } from '../../../@/components/ui/button';
 import Link from 'next/link';
@@ -61,6 +61,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
         occupation,
     } = postedBy;
 
+    const hasVerifiedPayment = verifiedPayment ? 'Unverified Payment' : 'Verified Payment';
     const deadlineTime = deadline?.seconds
         ? formatDistance(new Date(Number(deadline.seconds) * 1000), new Date(), { addSuffix: true }) 
         : 'Not Applicable';
@@ -77,7 +78,7 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                         <span>
                             <h2 className='text-sm md:text-lg font-semibold'>{firstName} {lastName} </h2>
                             <p className='flex items-center gap-1'> {occupation} </p>
-                            {verifiedPayment && <section className='flex items-center gap-1'> <MdVerifiedUser className='fill-[green]' /> Verified Payment </section>}
+                            <section className='flex items-center gap-1'> <FiCheckCircle className={verifiedPayment ? 'fill-[green]' : 'fill-gray-200' } /> {hasVerifiedPayment} </section>
                         </span>
                     </span>
                     <span className='flex items-center gap-1 self-start'> <FiClock /> {createdAtTime} </span>
