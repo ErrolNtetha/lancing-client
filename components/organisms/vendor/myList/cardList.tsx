@@ -35,7 +35,9 @@ export default function CardList({ cover, isActive, category, description, packa
                 <span>
                     <h2 className='font-bold text-sm text-gray-600'> STARTING FROM </h2>
                     <h2 className='flex font-bold float-right'> 
-                        <span className='text-2xl'>{formatAmount(minimumPrice)}<span className='text-sm'>/hr</span> </span>
+                        <span className='text-2xl float-left'>
+                            {formatAmount(minimumPrice)}<span className='text-sm'>/hr</span> 
+                        </span>
                     </h2>
                 </span>
                 <p className={`${toggleColor} font-bold flex items-center gap-1`}> <FiCircle className={`${toggleColor} ${isActive ? 'fill-[green]' : 'fill-[red]'} text-xs`}/> {isActive ? 'Active' : 'Inactive'}</p>

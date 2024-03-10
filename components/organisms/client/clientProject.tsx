@@ -59,7 +59,6 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
             lastName
         },
         verifiedPayment,
-        occupation,
         amountSpent
     } = postedBy;
 
@@ -79,21 +78,32 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                 <section className='flex items-center justify-between mb-4'>
                     <span className='flex gap-3'>
                         <span>
-                            <h2 className='text-sm md:text-lg font-semibold'>{firstName} {lastName} </h2>
-                            <section className='flex items-center gap-1 text-xs'> <FiCheckCircle className={verifiedPayment ? 'text-green-900' : 'text-gray-400' } /> {hasVerifiedPayment} </section>
-                            {verifiedPayment && <p className='flex items-center gap-1 text-xs'> <FiCreditCard className={`${amountSpent <= 0 && 'text-gray-400'}`} /> Spent: <span className='text-[green] font-bold'>{formatAmount(amountSpent || 0, '$,~s')}</span> </p>}
+                            <h2 className='text-sm md:text-lg font-semibold'> {firstName} {lastName} </h2>
+                            <section className='flex items-center gap-1 text-xs'>
+                                <FiCheckCircle className={verifiedPayment ? 'text-[green]' : 'text-gray-400' } /> {hasVerifiedPayment}
+                            </section>
+                            {verifiedPayment && (
+                                <p className='flex items-center gap-1 text-xs'>
+                                    <FiCreditCard className={`${amountSpent <= 0 && 'text-gray-400'}`} /> 
+                                    Spent: <span className='text-[green] font-bold'> {formatAmount(amountSpent || 0, '$,~s')} </span>
+                                </p>
+                            )}
                         </span>
                     </span>
-                    <span className='flex items-center gap-1 self-start'> <FiClock /> {createdAtTime} </span>
+                    <span className='flex items-center gap-1 self-start'>
+                        <FiClock /> {createdAtTime}
+                    </span>
                 </section>
                 <section className='border border-gray p-2'>
-                    <h5 className='font-semibold'>{title}</h5>
+                    <h5 className='font-semibold'> {title} </h5>
                     <p className='mb-2'> {description} </p>
                     <hr className='opacity-10' />
                     <section className='py-1 flex justify-between'>
                         <span className=''>
                             <p className='flex items-center gap-2'> <FiActivity /> {contract} </p>
-                            <p className={`flex items-center gap-2 ${hasDeadlinePassed && 'text-[red] font-bold'}`}> <FiCalendar /> {deadlineTime} </p>
+                            <p className={`flex items-center gap-2 ${hasDeadlinePassed && 'text-[red] font-bold'}`}>
+                                <FiCalendar /> {deadlineTime}
+                            </p>
                         </span>
                         <span className=''>
                             <p className='flex items-center gap-2'> <FiDollarSign /> R{formatNumber(budget)} </p>
