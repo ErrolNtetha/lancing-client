@@ -58,7 +58,7 @@ export default function List() {
     ));
 
     const renderEmptyList = (
-        <section className='flex items-center justify-center screen-[95vh]'>
+        <section className='flex items-center justify-center h-[95vh]'>
             <section className='flex items-center justify-center flex-col'>
                 <h2 className='font-bold text-center'> No lists added </h2>
                 <p className='max-w-lg text-center'> All your lists will appear here once they are added. </p>
