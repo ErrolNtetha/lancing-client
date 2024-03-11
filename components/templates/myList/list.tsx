@@ -57,11 +57,22 @@ export default function List() {
         />
     ));
 
+    const renderEmptyList = (
+        <section className='flex items-center justify-center h-[92vh]'>
+            <section className='flex items-center justify-center flex-col'>
+                <h2 className='font-bold text-center'> No lists added yet </h2>
+                <p className='max-w-md text-center'> All your lists will appear here once you add them. </p>
+            </section>
+        </section>
+    )
+
     return (
         <section className='flex flex-col gap-4'>
             {loading 
                 ? <ListLoader />
-                : allLists
+                    : !allLists.length
+                ? renderEmptyList
+                    : allLists
             }
         </section>
     )
