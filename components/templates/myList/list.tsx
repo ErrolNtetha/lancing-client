@@ -70,9 +70,9 @@ export default function List() {
         <section className='flex flex-col gap-4'>
             {loading 
                 ? <ListLoader />
-                : !allLists 
+                    : !allLists.length
                 ? renderEmptyList
-                : allLists
+                    : allLists
             }
         </section>
     )
