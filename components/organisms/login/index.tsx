@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useProfileStore } from '../../../hooks/useGlobalStore';
 import { doc, getDoc } from 'firebase/firestore';
 import { Button } from '../../../@/components/ui/button';
+import { COMPANY_NAME } from '../../../constants/companyName';
 
 const loginSchema = z.object({
     username: z.string().email({ message: 'Your email is invalid.' }),
@@ -79,13 +80,13 @@ export const LoginForm = () => {
             <section className='w-[20rem] md:w-[23rem]'>
                 <form onSubmit={handleSubmit(handleLogin)} className='text-xs md:text-sm shadow-2xl w-full p-6'>
                     <section className='pb-4'>
-                        <h1 className='pt-2 text-xl font-extrabold'> Welcome to Duello </h1>
+                        <h1 className='pt-2 text-xl font-extrabold'> Welcome to {COMPANY_NAME} </h1>
                         <h5 className='inline text-[gray] font-bold'> New here? </h5> <Link href='/register' className='font-bold text-[green]'> Create Account </Link>
                     </section>
                     <FormLabel
                         type='text'
-                        placeholder='Enter username'
-                        labelName='Username'
+                        placeholder='Enter email'
+                        labelName='Email'
                         name='username'
                         register={register}
                         required={true}

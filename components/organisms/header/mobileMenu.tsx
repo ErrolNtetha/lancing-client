@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import { FiX } from 'react-icons/fi';
 import { DigitCounter } from '../../molecules/digitCounter';
@@ -7,14 +8,19 @@ import { Nav } from '../../molecules/nav';
 type MenuProps = {
     handleMenuToggle: React.MouseEventHandler<HTMLSpanElement>;
     auth: object | null;
-    displayName: string;
+    names: {
+        firstName: string;
+        lastName: string;
+    };
     email: string;
     avatar: string;
     isClient: boolean;
     totalMessages: number;
+    totalProposals: number;
+    totalOffers: number;
 };
 
-export const MobileMenu = ({ handleMenuToggle, isClient, auth, displayName, avatar, totalMessages }: MenuProps) => {
+export const MobileMenu = ({ handleMenuToggle, isClient, auth, names, avatar, totalMessages, totalProposals, totalOffers }: MenuProps) => {
     const accountType = isClient ? 'Client Account' : 'Freelancer Account';
     return (
         <section className='relative p-3'>
@@ -29,10 +35,10 @@ export const MobileMenu = ({ handleMenuToggle, isClient, auth, displayName, avat
                     <Avatar
                         src={avatar}
                         size='w-12 h-12'
-                        alt={`${displayName} avatar`}
+                        alt={`${names?.firstName} avatar`}
                     />
                     <span className='self-start'>
-                        <h3 className='text-white font-semibold'>{displayName}</h3>
+                        <h3 className='text-white font-semibold'> {names?.firstName} {names?.lastName} </h3>
                         <p className='text-sm font-semibold text-[blue]'> {accountType} </p>
                     </span>
                 </section>
@@ -40,10 +46,12 @@ export const MobileMenu = ({ handleMenuToggle, isClient, auth, displayName, avat
             {auth && (
                 <section className='bg-gray-100 p-2 mb-4 rounded-lg'>
                     <ul className='text-black divide-y divide-slate divide-opacity-10'>
-                        <li className={`flex items-center justify-between  ${totalMessages && 'font-bold'} p-1 hover:bg-opacity-10 hover:cursor-pointer`}> Messages <DigitCounter count={totalMessages} /> </li>
-                        <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Notifications </li>
-                        <li className='flex items-center justify-between p-1 hover:cursor-pointer'> My Projects </li>
-                        <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Offers </li>
+                        {/* <li className='flex items-center justify-between p-1 hover:cursor-pointer'> Notifications </li> */}
+                        <li className={`${totalMessages && 'font-bold'} p-1 hover:bg-opacity-10 hover:cursor-pointer`}> <Link href='/messages' className='flex items-center justify-between w-full'> Messages <DigitCounter count={totalMessages} /> </Link></li>
+                        {isClient && <li className='p-1 hover:cursor-pointer'> <Link href='/myprojects' className='flex items-center justify-between w-full'> My Projects </Link></li>}
+                        {isClient && <li className='p-1 hover:cursor-pointer'> <Link href='/proposals' className='flex items-center justify-between w-full'> Proposals <DigitCounter count={totalProposals} /> </Link></li>}
+                        {!isClient && <li className='flex items-center justify-between p-1 hover:cursor-pointer'> <Link href='/mylistings' className='flex items-center justify-between w-full'> My Lists </Link></li>}
+                        {!isClient && <li className='flex items-center justify-between p-1 hover:cursor-pointer'> <Link href='/offers' className='flex items-center justify-between w-full'> Offers <DigitCounter count={totalOffers} /> </Link> </li>}
                     </ul>
                 </section>
             )}

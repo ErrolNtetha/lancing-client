@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { COMPANY_NAME } from '../../../constants/companyName';
 
 export const Features = () => {
     return (
@@ -11,7 +12,7 @@ export const Features = () => {
                         Our platform stands out for several reasons
                     </h1>
                     <section className='w-full text-md mb-8'> 
-                        <p className='md:max-w-md'>At Duello, we are not just another freelancing platform; we are a community of dreamers and doers.</p>
+                        <p className='md:max-w-md'>At {COMPANY_NAME}, we are not just another freelancing platform; we are a community of dreamers and doers.</p>
                         <br />
                         <br />
                         <ul className='flex flex-col md:flex md:flex-row gap-6'>
@@ -60,7 +61,7 @@ export const Features = () => {
                                 <section>
                                     <h4 className='text-md md:text-lg font-bold'> Innovation Hub </h4>
                                     <p> 
-                                        Duello is not just a platform; It is a hub for innovation. From creative challenges to skill-building resources, 
+                                        {COMPANY_NAME} is not just a platform; It is a hub for innovation. From creative challenges to skill-building resources, 
                                         we are committed to fostering a culture of continuous growth.
                                     </p>
                                 </section>

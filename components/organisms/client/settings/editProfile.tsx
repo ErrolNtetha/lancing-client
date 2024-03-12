@@ -7,11 +7,11 @@ import { Button } from '../../../atoms/button';
 import { FormLabel } from '../../../molecules/formLabel';
 
 const EditProfileClient = () => {
-    const { name, isClient } = useProfileStore().profile;
+    const { names, isClient } = useProfileStore((state: any) => state?.profile);
     const { register } = useForm({
         defaultValues: {
-            firstName: name.firstName,
-            lastName: name.lastName,
+            firstName: names.firstName,
+            lastName: names.lastName,
             title: 'Product Director'
         }
     });

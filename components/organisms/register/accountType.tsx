@@ -21,7 +21,7 @@ export const AccountType = ({ component, register, account }: Props) => {
                         <span>
                             <section> Register a </section>
                             <h1 className='text-lg font-extrabold'> Client Account </h1>
-                            <p className='w-70'> Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt beatae esse </p>
+                            <p className='w-70'> I want to find and hire freelancers for my projects. </p>
                         </span>
                         <span className={`p-[.2em] border-[.3em] ${account === 'client' && 'bg-[green]'} rounded-full border-[green]`}>
                             {account === 'client' && <FiCheck className='text-lg text-[white] font-extrabold' />}
@@ -34,7 +34,7 @@ export const AccountType = ({ component, register, account }: Props) => {
                         <span>
                             <section> Register a </section>
                             <h1 className='text-lg font-extrabold'> Vendor Account </h1>
-                            <p className='w-70'> Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum minus. </p>
+                            <p className='w-70'> I am a freelancer and want to apply for jobs I qualify for. </p>
                         </span>
                         <span className={`p-[.2em] border-[.3em] ${account === 'vendor' && 'bg-[green]'} rounded-full border-[green]`}>
                             {account === 'vendor' && <FiCheck className='text-lg text-[white] font-extrabold' />}

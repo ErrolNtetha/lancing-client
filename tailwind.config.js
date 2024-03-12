@@ -9,13 +9,20 @@ module.exports = {
     './@/**/*.{ts,tsx}',
 	],
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
+      container: {
+          center: true,
+          padding: {
+              DEFAULT: '0.75rem',
+              sm: '1.2rem',
+              md: '2rem',
+              lg: '4rem',
+              xl: '5rem',
+              '2xl': '6rem'
+          },
+          screens: {
+              "2xl": "1400px",
+          },
       },
-    },
     extend: {
       colors: {
         border: "hsl(var(--border))",

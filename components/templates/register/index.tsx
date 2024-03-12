@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 // import { Button } from '../../atoms/button';
 import { Navigation } from '../../organisms/navigation';
 import { PersonalDetails, AccountType } from '../../organisms/register';
@@ -16,23 +16,32 @@ import { Button } from '../../../@/components/ui/button';
 
 const registrationSchema = z.object({
     accountType: z.string(),
-    firstName: z.string().min(2, { message: 'First name must be at least 2 characters long.' }),
-    lastName: z.string().min(3, { message: 'Last name must be at least 3 characters long.' }),
-    email: z.string().email({ message: 'Email is invalid.' }),
-    password: z.string().min(6, { message: 'Password must be at least 6 characters long.' }),
+    firstName: z.string({ required_error: 'First name is required.' }).min(2, { message: 'First name must be at least 2 characters long.' }),
+    lastName: z.string({ required_error: 'Last name is required.' }).min(3, { message: 'Last name must be at least 3 characters long.' }),
+    email: z.string({ required_error: 'Email is required.' }).email({ message: 'Email is invalid.' }),
+    password: z.string({ required_error: 'Password is required.' }).min(6, { message: 'Password must be at least 6 characters long.' }),
 });
 
 export const Registration = () => {
-    const [currentPage, setCurrentPage] = useState(0);
+    const searchParams = useSearchParams();
+    const search = searchParams?.get('accountType');
+
+    const [currentPage, setCurrentPage] = useState(search ? 1 : 0);
     const [firstPage, setFirstPage] = useState<boolean | null>(true);
     const [lastPage, setLastPage] = useState(false);
+
     const { register, watch, handleSubmit, formState: { errors } } = useForm({
-        resolver: zodResolver(registrationSchema)
+        resolver: zodResolver(registrationSchema),
+        defaultValues: {
+            accountType: 'client',
+            password: ''
+        }
     });
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<null | string>(null);
     const router = useRouter();
     const showIcon = watch('password');
+
  
     const handleNext = () => {
         if (currentPage !== (forms.length - 1)) {
@@ -78,16 +87,33 @@ export const Registration = () => {
 
             if (user && auth.currentUser) {
                 await updateProfile(auth.currentUser, { displayName: `${firstName} ${lastName}`});
-                await setDoc(userRef, {
-                    email: user.email,
-                    emailVerified: user.emailVerified,
-                    avatar: user.photoURL,
-                    isClient: accountType === 'client',
-                    names: {
-                        firstName,
-                        lastName
-                    }
-                });
+
+                if (accountType === 'client') {
+                    await setDoc(userRef, {
+                        email: user.email,
+                        emailVerified: user.emailVerified,
+                        avatar: user.photoURL,
+                        isClient: true,
+                        names: {
+                            firstName,
+                            lastName
+                        },
+                    });
+                } else {
+                    await setDoc(userRef, {
+                        email: user.email,
+                        emailVerified: user.emailVerified,
+                        avatar: user.photoURL,
+                        isClient: false,
+                        names: {
+                            firstName,
+                            lastName
+                        },
+                        application: {
+                            hasApplied: false,
+                        },
+                    });
+                }
             }
             router.push('/feed');
 

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { COMPANY_NAME } from '../../../constants/companyName';
 
 export const Vision = () => {
     return (
@@ -13,7 +14,7 @@ export const Vision = () => {
                         Striving to be the go-to destination for anyone seeking quality freelance services.
                     </h1>
                     <p className='max-w-lg text-md mb-8 md:text-md'> 
-                        At Duello, our vision is to empower freelancers in South Africa to work smarter, not harder.
+                        At {COMPANY_NAME}, our vision is to empower freelancers in South Africa to work smarter, not harder.
                         We believe that by simplifying the process of finding and hiring top talent, we can enable individuals to 
                         achieve their goals faster and more efficiently.
                         <br />

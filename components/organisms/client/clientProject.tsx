@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { formatNumber } from '../../../utilities/format';
+import { formatAmount, formatAmountSuffix, formatNumber } from '../../../utilities/format';
 import { Modal } from '../modal';
 import { Proposal } from './proposal';
 import { MdVerifiedUser } from 'react-icons/md';
-import { FiActivity, FiBriefcase, FiCalendar, FiClock, FiDollarSign } from 'react-icons/fi';
-import { formatDistance } from 'date-fns';
+import { FiActivity, FiBriefcase, FiCalendar, FiCheckCircle, FiClock, FiCreditCard, FiDollarSign } from 'react-icons/fi';
+import { formatDistance, isPast } from 'date-fns';
+import { Button } from '../../../@/components/ui/button';
+import Link from 'next/link';
 
 type ClientProps = {
     postedBy: {
@@ -14,6 +16,7 @@ type ClientProps = {
         };
         verifiedPayment: boolean;
         occupation: string;
+        amountSpent: number;
     };
     projectId: string;
     createdAt: {
@@ -56,38 +59,51 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
             lastName
         },
         verifiedPayment,
-        occupation,
+        amountSpent
     } = postedBy;
 
+    const hasVerifiedPayment = verifiedPayment ? 'Verified Payment' : 'Unverified Payment';
     const deadlineTime = deadline?.seconds
         ? formatDistance(new Date(Number(deadline.seconds) * 1000), new Date(), { addSuffix: true }) 
         : 'Not Applicable';
 
+    const hasDeadlinePassed = isPast(new Date(Number(deadline.seconds) * 1000));
     const createdAtTime = createdAt?.seconds
         ? formatDistance(new Date(Number(createdAt.seconds) * 1000), new Date(), { addSuffix: true }) 
         : 'Not Applicable';
 
     return (
-        <section className='text-black text-[.8rem] md:text-sm my-3 border-2 border-gray bg-white shadow-md w-full md:w-full max-h-max p-2'>
+        <section className='text-black text-sm md:text-sm my-3 border-2 border-gray bg-white shadow-md w-full md:w-full max-h-max p-2'>
             <section>
                 <section className='flex items-center justify-between mb-4'>
                     <span className='flex gap-3'>
                         <span>
-                            <h2 className='text-sm md:text-lg font-semibold'>{firstName} {lastName} </h2>
-                            <p className='flex items-center gap-1'> {occupation} </p>
-                            {verifiedPayment && <section className='flex items-center gap-1'> <MdVerifiedUser className='fill-[green]' /> Verified Payment </section>}
+                            <h2 className='text-sm md:text-lg font-semibold'> {firstName} {lastName} </h2>
+                            <section className='flex items-center gap-1 text-xs'>
+                                <FiCheckCircle className={verifiedPayment ? 'text-[green]' : 'text-gray-400' } /> {hasVerifiedPayment}
+                            </section>
+                            {verifiedPayment && (
+                                <p className='flex items-center gap-1 text-xs'>
+                                    <FiCreditCard className={`${amountSpent <= 0 && 'text-gray-400'}`} /> 
+                                    Spent: <span className='text-[green] font-bold'> {formatAmount(amountSpent || 0, '$,~s')} </span>
+                                </p>
+                            )}
                         </span>
                     </span>
-                    <span className='flex items-center gap-1 self-start'> <FiClock /> {createdAtTime} </span>
+                    <span className='flex items-center gap-1 self-start'>
+                        <FiClock /> {createdAtTime}
+                    </span>
                 </section>
                 <section className='border border-gray p-2'>
-                    <h5 className='font-semibold'>{title}</h5>
+                    <h5 className='font-semibold'> {title} </h5>
                     <p className='mb-2'> {description} </p>
                     <hr className='opacity-10' />
                     <section className='py-1 flex justify-between'>
                         <span className=''>
                             <p className='flex items-center gap-2'> <FiActivity /> {contract} </p>
-                            <p className='flex items-center gap-2'> <FiCalendar /> {deadlineTime} </p>
+                            <p className={`flex items-center gap-2 ${hasDeadlinePassed && 'text-[red] font-bold'}`}>
+                                <FiCalendar /> {deadlineTime}
+                            </p>
                         </span>
                         <span className=''>
                             <p className='flex items-center gap-2'> <FiDollarSign /> R{formatNumber(budget)} </p>
@@ -100,19 +116,12 @@ export const ClientProject: React.FC<ClientProps> = (props) => {
                         {/* <span className='flex items-center gap-1 hover:cursor-pointer'> <FiFolder /> {project.files} files </span> */}
                         {/* <span className='py-2 text-sm'> Budget: R{formatNumber(project.budget)} </span> */}
                     </span>
-                    <button className='border-2 border-gray px-2 py-1 hover:cursor-pointer hover:bg-gray' onClick={handleModal}>
-                        Send Proposal
-                    </button>
-                    { modal && 
-                    <Modal>
-                        <Proposal
-                            handleModal={handleModal}
-                            recipient={props.postedBy.names}
-                            budget={budget}
-                            projectId={projectId}
-                        />
-                    </Modal> 
-                    }
+                    <Button
+                        variant='outline'
+                        asChild
+                        >
+                            <Link href={`/projects/${projectId}/create-proposal`}> Send Proposal </Link>
+                    </Button>
                 </section>
             </section>
         </section>
